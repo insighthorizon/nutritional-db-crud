@@ -3,15 +3,14 @@
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
 <body class="min-vh-100 d-flex flex-column">
-<header th:replace="~{fragments/layout.html :: header}"></header>
+<header th:replace="~{fragments/layout.html :: header (homeLink='active')}"></header>
 
-<main class="text-center my-5 flex-fill">
-    <h3>Ham ham</h3>
-    <ol>
-        <li>Musime</li>
-        <li>to</li>
-        <li>spapat.</li>
-    </ol>
+<main class="my-5 mx-3 flex-fill">
+    <h3 class="text-center">Databáze potravin</h3>
+
+    <p class="text-center">Tato aplikace poskytuje jednoduchý přístup k databázi výživových údajů potravin.</p>
+
+    <p class="text-center">Aplikace dále umožňuje spravovat data jednotlivých potravin a přidávat potraviny nové.</p>
 </main>
 
 <footer th:replace="~{fragments/layout.html :: footer}"></footer>

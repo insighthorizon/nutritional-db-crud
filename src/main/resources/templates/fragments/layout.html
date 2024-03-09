@@ -3,25 +3,91 @@
 
 <head th:fragment="head">
     <meta charset="UTF-8">
-    <meta name="description" content="Nutricni databaze - cvicební projekt." />
-    <meta name="keywords" content="cvičení projekt nutricni databaze spring boot mysql auathentikace autorizace" />
-    <meta name="author" content="Marek Jiricek" />
+    <meta name="description" content="Nutricni databaze - cvicební projekt."/>
+    <meta name="keywords" content="cvičení projekt nutricni databaze spring boot mysql auathentikace autorizace"/>
+    <meta name="author" content="Marek Jiricek"/>
 
     <title>Nutriční databáze</title>
 
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css" />
-    <link rel="shortcut icon" th:href="@{/images/apple.ico}" />
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
+    <link rel="shortcut icon" th:href="@{/images/apple.svg}"/>
 </head>
 
 <body>
 <header th:fragment="header">
+    <nav class="navbar navbar-expand-sm bg-dark" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a th:href="@{/}" class="navbar-brand">NutrDB App</a>
+            <div class="navbar-nav">
+                <a th:href="@{/}" th:class="'nav-link ' + ${homeLink}">Domů</a>
+                <a th:href="@{/foods}" th:class="'nav-link ' + ${foodsLink}">Potraviny</a>
+                <a th:href="@{/account/login}" th:class="'nav-link ' + ${loginLink}">Přihlásit</a>
+                <a th:href="@{/account/register}" th:class="'nav-link ' + ${registerLink}">Zaregistrovat</a>
+                <form method="post"
+                      th:action="@{account/logout}">
+                    <button class="nav-link">Odhlásit</button>
+                </form>
+            </div>
+        </div>
 
+    </nav>
 </header>
+
+
+<form th:fragment="foodForm (formAction, buttonName)"
+      method="post"
+      th:action="@{${formAction}}"
+      class="container">
+    <div class="row align-items-center">
+        <label for="name" class="col form-label">Název potraviny:</label>
+        <div class="col"><input id="name" type="text" class="form-control"/></div>
+    </div>
+
+    <hr>
+    <div class="row">
+        <label class="col fw-bold">Výživový údaj</label>
+        <div class="col fw-bold">na 100 g</div>
+    </div>
+    <hr>
+
+    <div class="row">
+        <label for="energy" class="col px-0 form-label">Energetická hodnota:</label>
+        <div class="col input-group">
+            <input type="number" step="0.01" min="0" id="energy" class="form-control"/>
+            <span class="input-group-text">kcal</span>
+        </div>
+        <div class="row">
+            <div class="col offset-6">
+                <small th:text="'zadejte kladné číslo'" class="text-danger"></small>
+            </div>
+        </div>
+
+    </div>
+
+    <!--        <div class="col">Bílkoviny</div>-->
+    <!--        <div class="col" th:text="'10.8' + ' g'"></div>-->
+
+    <!--        <div class="col">Sacharidy</div>-->
+    <!--        <div class="col" th:text="'71.2' + ' g'"></div>-->
+
+    <!--        <div class="col">Tuky</div>-->
+    <!--        <div class="col" th:text="'3.5' + ' g'"></div>-->
+
+    <button></button>
+    <hr>
+</form>
 
 
 <footer th:fragment="footer">
     <hr>
-    <p class="mx-5">&#127279; 2024 - Marek Jiříček</p>
+    <p class="mx-5" xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><span
+            property="dct:title">NutrDB App</span> by <span property="cc:attributionName">Marek Jiříček</span> is marked
+        with <a href="http://creativecommons.org/publicdomain/zero/1.0?ref=chooser-v1" target="_blank"
+                rel="license noopener noreferrer" style="display:inline-block;">CC0 1.0<img
+                style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+                src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img
+                style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+                src="https://mirrors.creativecommons.org/presskit/icons/zero.svg?ref=chooser-v1"></a></p>
 </footer>
 </body>
 </html>
