@@ -5,23 +5,24 @@
 <body class="min-vh-100 d-flex flex-column">
 <header th:replace="~{fragments/layout.html :: header (loginLink='active')}"></header>
 
-<main class="my-5 mx-3 flex-fill container">
+<main class="my-5 mx-3 flex-fill row justify-content-center">
 
-    <h3>Přihlášení</h3>
-    <hr/>
+    <div class="col-auto">
 
-    <div class="py-2 alert alert-success" th:text="${success}" th:if="${success}"></div>
-    <div class="py-2 alert alert-danger" th:if="${param.error}">Neplatný email nebo heslo.</div>
+        <h3>Přihlášení</h3>
+        <hr/>
 
-    <div class="row">
+        <div class="py-2 alert alert-success" th:text="${success}" th:if="${success}"></div>
+        <div class="py-2 alert alert-danger" th:if="${param.error}">Neplatný email nebo heslo.</div>
+
+
         <form th:action="@{/account/login}"
-              class="col-md-4 d-flex flex-column gap-2"
               method="post">
             <div class="mb-2">
                 <label for="email" class="form-label">Uživatelský email</label>
                 <input id="email" name="email" type="email" class="form-control"/>
             </div>
-            <div class="mb-2">
+            <div class="mb-4">
                 <label for="password" class="form-label">Heslo</label>
                 <input id="password" name="password" type="password" class="form-control"/>
             </div>

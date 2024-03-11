@@ -8,7 +8,7 @@
 <main class="my-5 mx-3 flex-fill">
     <h3 class="text-center mb-4">Vytvořit potravinu:</h3>
 
-    <form th:replace="~{fragments/layout.html :: foodForm (formAction='/foods/create', buttonName='Vytvořit')}"></form>
+    <div th:replace="~{fragments/layout.html :: foodForm (formAction='/foods/create', buttonName='Vytvořit')}"></div>
 
     <p class="text-center">
         <a th:href="@{/foods}">Zpět</a>

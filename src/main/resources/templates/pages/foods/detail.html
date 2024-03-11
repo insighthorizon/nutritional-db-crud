@@ -8,38 +8,40 @@
 <main class="my-5 mx-3 flex-fill">
     <h3 class="text-center">Detail potraviny</h3>
 
-
-
-    <div class="container my-3">
-        <div class="row align-items-center">
-            <h5 class="col" th:text="'Ovesné vločky'"></h5>
-            <a class="col" th:href="@{/foods/edit/1}">Upravit</a>
+    <div class="row justify-content-center">
+        <div class="col-auto container my-3 text-nowrap">
+            <div class="row align-items-center">
+                <h5 class="col" th:text="'Ovesné vločky'"></h5>
+                <a class="col" th:href="@{/foods/edit/1}">Upravit</a>
+            </div>
+            <hr>
+            <div class="row align-items-center">
+                <div class="col fw-bold">Výživový údaj</div>
+                <div class="col fw-bold text-end">na 100 g</div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">Energetická hodnota</div>
+                <div class="col text-end" th:text="'343' + ' kcal'"></div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">Bílkoviny</div>
+                <div class="col text-end" th:text="'10.8' + ' g'"></div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">Sacharidy</div>
+                <div class="col text-end" th:text="'71.2' + ' g'"></div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col">Tuky</div>
+                <div class="col text-end" th:text="'3.5' + ' g'"></div>
+            </div>
+            <hr>
         </div>
-        <hr>
-        <div class="row">
-            <div class="col fw-bold">Výživový údaj</div>
-            <div class="col fw-bold">na 100 g</div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col">Energetická hodnota</div>
-            <div class="col" th:text="'343' + ' kcal'"></div>
-        </div>
-        <div class="row">
-            <div class="col">Bílkoviny</div>
-            <div class="col" th:text="'10.8' + ' g'"></div>
-        </div>
-        <div class="row">
-            <div class="col">Sacharidy</div>
-            <div class="col" th:text="'71.2' + ' g'"></div>
-        </div>
-        <div class="row">
-            <div class="col">Tuky</div>
-            <div class="col" th:text="'3.5' + ' g'"></div>
-        </div>
-        <hr>
     </div>
-
 
     <p class="text-center">
         <a th:href="@{/foods}">Zpět</a>

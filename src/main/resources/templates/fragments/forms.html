@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
+<head></head>
+<body>
+
+<form th:fragment="searchForm"
+      method="get"
+      th:action="@{/foods/search}">
+    <div class="input-group">
+        <input class="form-control" type="search" name="foodName" placeholder="Vyhledat potravinu..."/>
+        <button class="btn btn-dark" type="submit">Hledat</button>
+    </div>
+</form>
+
+<div th:fragment="foodForm (formAction, buttonName)" class="row justify-content-center">
+    <form method="post"
+          th:action="@{${formAction}}"
+          class="col-auto container">
+        <div class="py-2 alert alert-danger" th:if="${param.error}">Součet v gramech nesmí přesáhnout 100.</div>
+
+        <div class="row align-items-center">
+            <label for="name" class="col form-label">Název potraviny:</label>
+            <div class="col">
+                <input id="name" type="text" class="form-control"/>
+                <small class="text-danger" th:text="'Název nemůže být prázdný.'"></small>
+            </div>
+        </div>
+
+        <hr> <!-- hlavička tabulky -->
+        <div class="row">
+            <label class="col fw-bold">Výživový údaj</label>
+            <div class="col fw-bold">na 100 g</div>
+        </div>
+        <hr>
+
+        <div class="mb-2">
+            <div class="row align-items-center">
+                <label for="energy" class="col form-label">Energetická hodnota:</label>
+                <div class="col">
+                    <div class="input-group">
+                        <input type="number" step="1.0" min="0" id="energy" class="form-control"/>
+                        <span class="input-group-text">kcal</span>
+                    </div>
+                    <small class="text-danger" th:text="'Zadejte číslo od 0 do 100.'"></small>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <div class="row align-items-center">
+                <label for="protein" class="col form-label">Bílkoviny</label>
+                <div class="col">
+                    <div class="input-group">
+                        <input type="number" step="0.1" min="0" id="protein" class="form-control"/>
+                        <span class="input-group-text">g</span>
+                    </div>
+
+                    <small class="text-danger" th:text="'Zadejte číslo od 0 do 100.'"></small>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mb-2">
+            <div class="row align-items-center">
+                <label for="carbs" class="col form-label">Sacharidy</label>
+                <div class="col">
+                    <div class="input-group">
+                        <input type="number" step="0.1" min="0" id="carbs" class="form-control"/>
+                        <span class="input-group-text">g</span>
+                    </div>
+
+                    <small class="text-danger" th:text="'Zadejte číslo od 0 do 100.'"></small>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <div class="row align-items-center">
+                <label for="fats" class="col form-label">Tuky</label>
+                <div class="col">
+                    <div class="input-group">
+                        <input type="number" step="0.1" min="0" id="fats" class="form-control"/>
+                        <span class="input-group-text">g</span>
+                    </div>
+
+                    <small class="text-danger" th:text="'Zadejte číslo od 0 do 100.'"></small>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-dark" type="submit" th:text="${buttonName}"></button>
+        </div>
+
+        <hr>
+    </form>
+</div>
+
+</body>
+</html>

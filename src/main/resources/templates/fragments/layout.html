@@ -4,7 +4,7 @@
 <head th:fragment="head">
     <meta charset="UTF-8">
     <meta name="description" content="Nutricni databaze - cvicební projekt."/>
-    <meta name="keywords" content="cvičení projekt nutricni databaze spring boot mysql auathentikace autorizace"/>
+    <meta name="keywords" content="cvičení projekt nutricni databaze spring boot mysql auatentifikace autorizace"/>
     <meta name="author" content="Marek Jiricek"/>
 
     <title>Nutriční databáze</title>
@@ -33,81 +33,73 @@
     </nav>
 </header>
 
-<div th:fragment="foodList">
-    <h5 class="text-center text-secondary mt-3">Nebyly nalezeny žádné potraviny.</h5> <!-- th:if="${foods.isEmpty()}"  -->
+<div th:fragment="foodList" class="my-5 row justify-content-center">
+    <h5 class="text-center text-secondary">Nebyly nalezeny žádné potraviny.</h5> <!-- th:if="${foods.isEmpty()}"  -->
 
-    <table class="table"> <!-- th:if="${!foods.isEmpty()}" -->
-        <thead>
-        <tr>
-            <th scope="col">Název potraviny</th>
-            <th scope="col">Energie na 100 g</th>
-            <th scope="col">Bílkovin na 100 g</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr> <!-- th:each="food : ${foods}" -->
-            <td>Ovesné vločky</td>
-            <td th:text="'343' + ' kcal'"></td>
-            <td th:text="'10.8' + ' g'"></td>
-            <td>
-                <a th:href="@{'/foods/detail/1'}">Detail</a>
-                <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
-                <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
-            </td>
-        </tr>
-        <tr>
-            <td>Ovesné vločky</td>
-            <td th:text="'343' + ' kcal'"></td>
-            <td th:text="'10.8' + ' g'"></td>
-            <td>
-                <a th:href="@{'/foods/detail/1'}">Detail</a>
-                <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
-                <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
-            </td>
-        </tr>
-        <tr>
-            <td>Ovesné vločky</td>
-            <td th:text="'343' + ' kcal'"></td>
-            <td th:text="'10.8' + ' g'"></td>
-            <td>
-                <a th:href="@{'/foods/detail/1'}">Detail</a>
-                <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
-                <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
-            </td>
-        </tr>
-        <tr>
-            <td>Ovesné vločky</td>
-            <td th:text="'343' + ' kcal'"></td>
-            <td th:text="'10.8' + ' g'"></td>
-            <td>
-                <a th:href="@{'/foods/detail/1'}">Detail</a>
-                <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
-                <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-<!--    <div class="container mt-3"> &lt;!&ndash; th:if="${!foods.isEmpty()}" &ndash;&gt;-->
-<!--        <div class="row">-->
-<!--            <div class="col fw-bold">Název potraviny</div>-->
-<!--            <div class="col fw-bold">kcal na 100 g</div>-->
-<!--            <div class="col"></div>-->
-<!--            <hr class="border border-2 opacity-100">-->
-<!--        </div>-->
-<!--        <div class="row" th:each="food : ${foods}">-->
-<!--            <div class="col" th:text="${food.name}"></div>-->
-<!--            <div class="col" th:text="${food.description}"></div>-->
-<!--            <div class="col" th:text="${food.price}"></div>-->
-<!--            <div class="col">-->
-<!--                <a th:href="@{'/foods/detail/' + ${food.foodId}}">Detail</a>-->
-<!--                <span> | <a th:href="@{'/foods/edit/' + ${food.foodId}}">Upravit</a></span>-->
-<!--                <span> | <a th:href="@{'/foods/delete/' + ${food.foodId}}">Smazat</a></span>-->
-<!--            </div>-->
-<!--            <hr>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div class="col-auto container">
+        <table class="table"> <!-- th:if="${!foods.isEmpty()}" -->
+            <thead>
+            <tr>
+                <th scope="col">Název potraviny</th>
+                <th scope="col">Energie na 100 g</th>
+                <th scope="col">Bílkovin na 100 g</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr> <!-- th:each="food : ${foods}" -->
+                <td>Ovesné vločky</td>
+                <td th:text="'343' + ' kcal'"></td>
+                <td th:text="'10.8' + ' g'"></td>
+                <td>
+                    <a th:href="@{'/foods/detail/1'}">Detail</a>
+                    <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
+                    <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
+                </td>
+            </tr>
+            <tr> <!-- th:each="food : ${foods}" -->
+                <td>Ovesné vločky</td>
+                <td th:text="'343' + ' kcal'"></td>
+                <td th:text="'10.8' + ' g'"></td>
+                <td>
+                    <a th:href="@{'/foods/detail/1'}">Detail</a>
+                    <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
+                    <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
+                </td>
+            </tr>
+            <tr> <!-- th:each="food : ${foods}" -->
+                <td>Ovesné vločky</td>
+                <td th:text="'343' + ' kcal'"></td>
+                <td th:text="'10.8' + ' g'"></td>
+                <td>
+                    <a th:href="@{'/foods/detail/1'}">Detail</a>
+                    <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
+                    <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
+                </td>
+            </tr>
+            <tr> <!-- th:each="food : ${foods}" -->
+                <td>Ovesné vločky</td>
+                <td th:text="'343' + ' kcal'"></td>
+                <td th:text="'10.8' + ' g'"></td>
+                <td>
+                    <a th:href="@{'/foods/detail/1'}">Detail</a>
+                    <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
+                    <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
+                </td>
+            </tr>
+            <tr> <!-- th:each="food : ${foods}" -->
+                <td>Ovesné vločky</td>
+                <td th:text="'343' + ' kcal'"></td>
+                <td th:text="'10.8' + ' g'"></td>
+                <td>
+                    <a th:href="@{'/foods/detail/1'}">Detail</a>
+                    <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
+                    <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
 </div>
 
@@ -117,15 +109,18 @@
     <!-- inbetween -->
     <li th:if="${currentPage} gt 3" class="page-item disabled"><a class="page-link">...</a></li>
     <!-- previous page -->
-    <li th:if="${currentPage gt 2}" class="page-item"><a th:href="@{'/foods?page=' + ${currentPage - 1}}" th:text="${currentPage - 1}" class="page-link"></a></li>
+    <li th:if="${currentPage gt 2}" class="page-item"><a th:href="@{'/foods?page=' + ${currentPage - 1}}"
+                                                         th:text="${currentPage - 1}" class="page-link"></a></li>
     <!-- current page -->
     <li class="page-item active"><a th:text="${currentPage}" class="page-link" href=""></a></li>
     <!-- next page -->
-    <li th:if="${currentPage + 1} lt ${totalPages}" class="page-item"><a th:href="@{'/foods?page=' + ${currentPage + 1}}" th:text="${currentPage + 1}" class="page-link"></a></li>
+    <li th:if="${currentPage + 1} lt ${totalPages}" class="page-item"><a
+            th:href="@{'/foods?page=' + ${currentPage + 1}}" th:text="${currentPage + 1}" class="page-link"></a></li>
     <!-- inbetween -->
     <li th:if="${currentPage + 2} lt ${totalPages}" class="page-item disabled"><a class="page-link">...</a></li>
     <!-- last page -->
-    <li th:if="${currentPage} lt ${totalPages}" class="page-item"><a th:href="@{'foods?page=' + ${totalPages}}" th:text="${totalPages}" class="page-link"></a></li>
+    <li th:if="${currentPage} lt ${totalPages}" class="page-item"><a th:href="@{'foods?page=' + ${totalPages}}"
+                                                                     th:text="${totalPages}" class="page-link"></a></li>
 </ul>
 
 <form th:fragment="searchForm"
@@ -137,89 +132,91 @@
     </div>
 </form>
 
-<form th:fragment="foodForm (formAction, buttonName)"
-      method="post"
-      th:action="@{${formAction}}"
-      class="container">
-    <div class="py-2 alert alert-danger" th:if="${param.error}">Součet v gramech nesmí přesáhnout 100.</div>
 
-    <div class="row align-items-center">
-        <label for="name" class="col-3 form-label">Název potraviny:</label>
-        <div class="col">
-            <input id="name" type="text" class="form-control"/>
-            <small class="text-danger" th:text="'Název nemůže být prázdný.'"></small>
-        </div>
-    </div>
+<div th:fragment="foodForm (formAction, buttonName)" class="row justify-content-center">
+    <form method="post"
+          th:action="@{${formAction}}"
+          class="col-auto container">
+        <div class="py-2 alert alert-danger" th:if="${param.error}">Součet v gramech nesmí přesáhnout 100.</div>
 
-    <hr> <!-- hlavička tabulky -->
-    <div class="row">
-        <label class="col fw-bold">Výživový údaj</label>
-        <div class="col fw-bold">na 100 g</div>
-    </div>
-    <hr>
-
-    <div class="mb-2">
         <div class="row align-items-center">
-            <label for="energy" class="col-3 form-label">Energetická hodnota:</label>
+            <label for="name" class="col form-label">Název potraviny:</label>
             <div class="col">
-                <div class="input-group">
-                    <input type="number" step="1.0" min="0" id="energy" class="form-control"/>
-                    <span class="input-group-text">kcal</span>
-                </div>
-                <small class="text-danger" th:text="'Zadejte číslo od 0 do 100.'"></small>
-            </div>
-        </div>
-    </div>
-
-    <div class="mb-2">
-        <div class="row align-items-center">
-            <label for="protein" class="col-3 form-label">Bílkoviny</label>
-            <div class="col">
-                <div class="input-group">
-                    <input type="number" step="0.1" min="0" id="protein" class="form-control"/>
-                    <span class="input-group-text">g</span>
-                </div>
-
-                <small class="text-danger" th:text="'Zadejte číslo od 0 do 100.'"></small>
+                <input id="name" type="text" class="form-control"/>
+                <small class="text-danger" th:text="'Název nemůže být prázdný.'"></small>
             </div>
         </div>
 
-    </div>
+        <hr> <!-- hlavička tabulky -->
+        <div class="row">
+            <label class="col fw-bold">Výživový údaj</label>
+            <div class="col fw-bold">na 100 g</div>
+        </div>
+        <hr>
 
-    <div class="mb-2">
-        <div class="row align-items-center">
-            <label for="carbs" class="col-3 form-label">Sacharidy</label>
-            <div class="col">
-                <div class="input-group">
-                    <input type="number" step="0.1" min="0" id="carbs" class="form-control"/>
-                    <span class="input-group-text">g</span>
+        <div class="mb-2">
+            <div class="row align-items-center">
+                <label for="energy" class="col form-label">Energetická hodnota:</label>
+                <div class="col">
+                    <div class="input-group">
+                        <input type="number" step="1.0" min="0" id="energy" class="form-control"/>
+                        <span class="input-group-text">kcal</span>
+                    </div>
+                    <small class="text-danger" th:text="'Zadejte číslo od 0 do 100.'"></small>
                 </div>
-
-                <small class="text-danger" th:text="'Zadejte číslo od 0 do 100.'"></small>
             </div>
         </div>
-    </div>
 
-    <div class="mb-2">
-        <div class="row align-items-center">
-            <label for="fats" class="col-3 form-label">Tuky</label>
-            <div class="col">
-                <div class="input-group">
-                    <input type="number" step="0.1" min="0" id="fats" class="form-control"/>
-                    <span class="input-group-text">g</span>
+        <div class="mb-2">
+            <div class="row align-items-center">
+                <label for="protein" class="col form-label">Bílkoviny</label>
+                <div class="col">
+                    <div class="input-group">
+                        <input type="number" step="0.1" min="0" id="protein" class="form-control"/>
+                        <span class="input-group-text">g</span>
+                    </div>
+
+                    <small class="text-danger" th:text="'Zadejte číslo od 0 do 100.'"></small>
                 </div>
+            </div>
 
-                <small class="text-danger" th:text="'Zadejte číslo od 0 do 100.'"></small>
+        </div>
+
+        <div class="mb-2">
+            <div class="row align-items-center">
+                <label for="carbs" class="col form-label">Sacharidy</label>
+                <div class="col">
+                    <div class="input-group">
+                        <input type="number" step="0.1" min="0" id="carbs" class="form-control"/>
+                        <span class="input-group-text">g</span>
+                    </div>
+
+                    <small class="text-danger" th:text="'Zadejte číslo od 0 do 100.'"></small>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="text-center">
-        <button class="btn btn-dark" type="submit" th:text="${buttonName}"></button>
-    </div>
+        <div class="mb-2">
+            <div class="row align-items-center">
+                <label for="fats" class="col form-label">Tuky</label>
+                <div class="col">
+                    <div class="input-group">
+                        <input type="number" step="0.1" min="0" id="fats" class="form-control"/>
+                        <span class="input-group-text">g</span>
+                    </div>
 
-    <hr>
-</form>
+                    <small class="text-danger" th:text="'Zadejte číslo od 0 do 100.'"></small>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-dark" type="submit" th:text="${buttonName}"></button>
+        </div>
+
+        <hr>
+    </form>
+</div>
 
 
 <footer th:fragment="footer">

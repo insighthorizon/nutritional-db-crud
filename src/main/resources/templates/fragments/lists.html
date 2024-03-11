@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
+<head></head>
+<body>
+
+<div th:fragment="foodList" class="my-5 row justify-content-center">
+    <h5 class="text-center text-secondary">Nebyly nalezeny žádné potraviny.</h5> <!-- th:if="${foods.isEmpty()}"  -->
+
+    <div class="col-auto container">
+        <table class="table"> <!-- th:if="${!foods.isEmpty()}" -->
+            <thead>
+            <tr>
+                <th scope="col">Název potraviny</th>
+                <th scope="col">Energie na 100 g</th>
+                <th scope="col">Bílkovin na 100 g</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr> <!-- th:each="food : ${foods}" -->
+                <td>Ovesné vločky</td>
+                <td th:text="'343' + ' kcal'"></td>
+                <td th:text="'10.8' + ' g'"></td>
+                <td>
+                    <a th:href="@{'/foods/detail/1'}">Detail</a>
+                    <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
+                    <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
+                </td>
+            </tr>
+            <tr> <!-- th:each="food : ${foods}" -->
+                <td>Ovesné vločky</td>
+                <td th:text="'343' + ' kcal'"></td>
+                <td th:text="'10.8' + ' g'"></td>
+                <td>
+                    <a th:href="@{'/foods/detail/1'}">Detail</a>
+                    <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
+                    <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
+                </td>
+            </tr>
+            <tr> <!-- th:each="food : ${foods}" -->
+                <td>Ovesné vločky</td>
+                <td th:text="'343' + ' kcal'"></td>
+                <td th:text="'10.8' + ' g'"></td>
+                <td>
+                    <a th:href="@{'/foods/detail/1'}">Detail</a>
+                    <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
+                    <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
+                </td>
+            </tr>
+            <tr> <!-- th:each="food : ${foods}" -->
+                <td>Ovesné vločky</td>
+                <td th:text="'343' + ' kcal'"></td>
+                <td th:text="'10.8' + ' g'"></td>
+                <td>
+                    <a th:href="@{'/foods/detail/1'}">Detail</a>
+                    <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
+                    <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
+                </td>
+            </tr>
+            <tr> <!-- th:each="food : ${foods}" -->
+                <td>Ovesné vločky</td>
+                <td th:text="'343' + ' kcal'"></td>
+                <td th:text="'10.8' + ' g'"></td>
+                <td>
+                    <a th:href="@{'/foods/detail/1'}">Detail</a>
+                    <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
+                    <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<ul th:fragment="pagination"  th:with="currentPage=1, totalPages=8" class="pagination justify-content-center">
+    <!-- first page -->
+    <li th:if="${currentPage} gt 1" class="page-item">
+        <a class="page-link" th:href="@{/foods?page=1}">1</a>
+    </li>
+    <!-- inbetween -->
+    <li th:if="${currentPage} gt 3" class="page-item disabled">
+        <a class="page-link">...</a>
+    </li>
+    <!-- previous page -->
+    <li th:if="${currentPage gt 2}" class="page-item">
+        <a th:href="@{'/foods?page=' + ${currentPage - 1}}" th:text="${currentPage - 1}" class="page-link"></a>
+    </li>
+    <!-- current page -->
+    <li class="page-item active"><a th:text="${currentPage}" class="page-link" href=""></a></li>
+    <!-- next page -->
+    <li th:if="${currentPage + 1} lt ${totalPages}" class="page-item">
+        <a th:href="@{'/foods?page=' + ${currentPage + 1}}" th:text="${currentPage + 1}" class="page-link"></a>
+    </li>
+    <!-- inbetween -->
+    <li th:if="${currentPage + 2} lt ${totalPages}" class="page-item disabled">
+        <a class="page-link">...</a>
+    </li>
+    <!-- last page -->
+    <li th:if="${currentPage} lt ${totalPages}" class="page-item">
+        <a th:href="@{'foods?page=' + ${totalPages}}" th:text="${totalPages}" class="page-link"></a>
+    </li>
+</ul>
+
+</body>
+</html>

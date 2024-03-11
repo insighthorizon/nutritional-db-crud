@@ -5,7 +5,7 @@
 <body class="min-vh-100 d-flex flex-column">
 <header th:replace="~{fragments/layout.html :: header (foodsLink='active')}"></header>
 
-<main class="my-5 mx-3 flex-fill container">
+<main class="my-5 mx-3 flex-fill">
     <!-- potravina vytvorena / potravina upravena -->
     <div class="py-2 alert alert-success" th:text="${success}" th:if="${success}"></div>
 
