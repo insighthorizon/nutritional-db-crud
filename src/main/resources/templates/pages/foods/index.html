@@ -6,28 +6,24 @@
 <header th:replace="~{fragments/layout.html :: header (foodsLink='active')}"></header>
 
 <main class="my-5 mx-3 flex-fill container">
+    <!-- potravina vytvorena / potravina upravena -->
+    <div class="py-2 alert alert-success" th:text="${success}" th:if="${success}"></div>
+
 
     <div class="row row-cols-auto align-items-center">
         <a class="col me-5" th:href="@{/foods/create}">Vytvořit novou potravinu</a>
 
         <div class="col">
-        <form method="get"
-              th:action="@{/foods/search}">
-            <div class="input-group">
-                <input class="form-control" type="search" name="foodName" placeholder="Vyhledat potravinu..."/>
-                <button class="btn btn-dark" type="submit">Hledat</button>
-            </div>
-        </form>
+            <form th:replace="~{fragments/layout.html :: searchForm}"></form>
         </div>
     </div>
 
-    <h3>Seznam všech potravin</h3>
+    <hr>
+    <h3>Všechny potraviny</h3>
 
-    <a th:href="@{/foods/detail/1}">Detail</a> |
-    <a th:href="@{/foods/edit/1}">Upravit</a> |
-    <a th:href="@{/foods/delete/1}">Smazat</a>
+    <div th:replace="~{fragments/layout.html :: foodList}"></div>
 
-    <h5>Pagination</h5>
+    <ul th:replace="~{fragments/layout.html :: pagination}"></ul>
 
 </main>
 

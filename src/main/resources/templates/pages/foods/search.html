@@ -5,10 +5,20 @@
 <body class="min-vh-100 d-flex flex-column">
 <header th:replace="~{fragments/layout.html :: header (foodsLink='active')}"></header>
 
-<main class="my-5 mx-3 flex-fill">
-    <h3 class="text-center">Vyhledat potravinu</h3>
+<main class="my-5 mx-3 flex-fill container">
 
+    <div class="row">
+        <div class="col-auto">
+            <h3>Nalezené potraviny</h3>
+        </div>
+        <div class="col-auto">
+            <form th:replace="~{fragments/layout.html :: searchForm}"></form>
+        </div>
+    </div>
 
+    <div th:replace="~{fragments/layout.html :: foodList}"></div>
+
+    <ul th:replace="~{fragments/layout.html :: pagination}"></ul>
 
     <p class="text-center">
         <a th:href="@{/foods}">Zpět</a>
