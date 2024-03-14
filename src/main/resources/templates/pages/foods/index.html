@@ -14,16 +14,16 @@
         <a class="col me-5" th:href="@{/foods/create}">Vytvořit novou potravinu</a>
 
         <div class="col">
-            <form th:replace="~{fragments/layout.html :: searchForm}"></form>
+            <form th:replace="~{fragments/forms.html :: searchForm}"></form>
         </div>
     </div>
 
     <hr>
     <h3>Všechny potraviny</h3>
 
-    <div th:replace="~{fragments/layout.html :: foodList}"></div>
+    <div th:replace="~{fragments/lists.html :: foodList}"></div>
 
-    <ul th:replace="~{fragments/layout.html :: pagination}"></ul>
+    <ul th:replace="~{fragments/lists.html :: pagination}"></ul>
 
 </main>
 

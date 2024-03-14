@@ -3,7 +3,7 @@
 <head></head>
 <body>
 
-<div th:fragment="foodList" class="my-5 row justify-content-center">
+<div th:fragment="foodList" class="my-3 row justify-content-center">
     <h5 class="text-center text-secondary">Nebyly nalezeny žádné potraviny.</h5> <!-- th:if="${foods.isEmpty()}"  -->
 
     <div class="col-auto container">
@@ -98,7 +98,7 @@
     </li>
     <!-- last page -->
     <li th:if="${currentPage} lt ${totalPages}" class="page-item">
-        <a th:href="@{'foods?page=' + ${totalPages}}" th:text="${totalPages}" class="page-link"></a>
+        <a th:href="@{'/foods?page=' + ${totalPages}}" th:text="${totalPages}" class="page-link"></a>
     </li>
 </ul>
 

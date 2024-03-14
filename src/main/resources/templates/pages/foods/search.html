@@ -12,13 +12,13 @@
             <h3>Nalezené potraviny</h3>
         </div>
         <div class="col-auto">
-            <form th:replace="~{fragments/layout.html :: searchForm}"></form>
+            <form th:replace="~{fragments/forms.html :: searchForm}"></form>
         </div>
     </div>
 
-    <div th:replace="~{fragments/layout.html :: foodList}"></div>
+    <div th:replace="~{fragments/lists.html :: foodList}"></div>
 
-    <ul th:replace="~{fragments/layout.html :: pagination}"></ul>
+    <ul th:replace="~{fragments/lists.html :: pagination}"></ul>
 
     <p class="text-center">
         <a th:href="@{/foods}">Zpět</a>

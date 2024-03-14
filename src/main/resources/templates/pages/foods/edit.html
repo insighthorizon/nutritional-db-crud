@@ -8,7 +8,7 @@
 <main class="my-5 mx-3 flex-fill">
     <h3 class="text-center mb-4">Upravit potravinu</h3>
 
-    <div th:replace="~{fragments/layout.html :: foodForm (formAction='/foods/edit', buttonName='Upravit')}"></div>
+    <div th:replace="~{fragments/forms.html :: foodForm (formAction='/foods/edit/' + ${foodId}, formMethod='PUT', buttonName='Upravit')}"></div>
 
     <p class="text-center">
         <a th:href="@{/foods}">Zpět</a>
