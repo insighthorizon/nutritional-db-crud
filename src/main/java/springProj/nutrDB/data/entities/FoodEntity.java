@@ -2,6 +2,7 @@ package springProj.nutrDB.data.entities;
 
 import jakarta.persistence.*;
 
+
 @Entity
 public class FoodEntity {
     @Id
@@ -12,16 +13,18 @@ public class FoodEntity {
     private String name;
 
     @Column(nullable = false)
-    private Integer kcal;
+    private short kcal;
+
+    //@Column(precision = 3, scale = 1, nullable = false)
+    // private BigDecimal protein;
+    @Column(nullable = false)
+    private short protein;
 
     @Column(nullable = false)
-    private Integer protein;
+    private short carbs;
 
     @Column(nullable = false)
-    private Integer carbs;
-
-    @Column(nullable = false)
-    private Integer fats;
+    private short fats;
 
     public long getFoodId() {
         return foodId;
@@ -39,35 +42,35 @@ public class FoodEntity {
         this.name = name;
     }
 
-    public Integer getKcal() {
+    public short getKcal() {
         return kcal;
     }
 
-    public void setKcal(Integer kcal) {
+    public void setKcal(short kcal) {
         this.kcal = kcal;
     }
 
-    public Integer getProtein() {
+    public short getProtein() {
         return protein;
     }
 
-    public void setProtein(Integer protein) {
+    public void setProtein(short protein) {
         this.protein = protein;
     }
 
-    public Integer getCarbs() {
+    public short getCarbs() {
         return carbs;
     }
 
-    public void setCarbs(Integer carbs) {
+    public void setCarbs(short carbs) {
         this.carbs = carbs;
     }
 
-    public Integer getFats() {
+    public short getFats() {
         return fats;
     }
 
-    public void setFats(Integer fats) {
+    public void setFats(short fats) {
         this.fats = fats;
     }
 }

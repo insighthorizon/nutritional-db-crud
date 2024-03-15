@@ -7,16 +7,16 @@ import springProj.nutrDB.data.entities.FoodEntity;
 import springProj.nutrDB.models.dto.FoodDTO;
 
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+// using my own custom mapper to convert between macros
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses=MacronutrientMapper.class)
 public interface FoodMapper {
 
-    abstract FoodEntity toFoodEntity(FoodDTO source);
+    FoodEntity toFoodEntity(FoodDTO source);
 
-    abstract FoodDTO toFoodDTO(FoodEntity source);
+    FoodDTO toFoodDTO(FoodEntity source);
 
-    abstract void updateFoodEntity(FoodDTO source, @MappingTarget FoodEntity target);
+    void updateFoodEntity(FoodDTO source, @MappingTarget FoodEntity target);
 
-    abstract void updateFoodDTO(FoodDTO source, @MappingTarget FoodDTO target);
-
+    void updateFoodDTO(FoodDTO source, @MappingTarget FoodDTO target);
 
 }

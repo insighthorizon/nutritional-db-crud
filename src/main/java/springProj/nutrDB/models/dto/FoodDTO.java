@@ -3,7 +3,6 @@ package springProj.nutrDB.models.dto;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class FoodDTO {
 
@@ -16,8 +15,9 @@ public class FoodDTO {
 
     @Min(value = 0, message = "Množství kalorií musí být kladné.")
     @Max(value = 900, message = "Nelze přesáhnou 900 kcal na 100 g.")
-    private int kcal = 0;
+    private short kcal = 0;
 
+    // BigDecimal needs to be used for proper validation
     @DecimalMin(value = "0.0", message = "Množství gramů musí být kladné.")
     @DecimalMax(value = "100.0", message = "Nelze přesáhnout 100 g.")
     @Digits(integer = 3, fraction = 1, message = "Bude registrována maximálně třímístná hodnota.")
@@ -49,11 +49,11 @@ public class FoodDTO {
         this.name = name;
     }
 
-    public int getKcal() {
+    public short getKcal() {
         return kcal;
     }
 
-    public void setKcal(int kcal) {
+    public void setKcal(short kcal) {
         this.kcal = kcal;
     }
 
@@ -61,13 +61,8 @@ public class FoodDTO {
         return protein;
     }
 
-    // These setters are not default generated
-    // they perform rounding!
-    // TODO that's something to UNIT TEST
-    // this problem could be avoided by not using floats in the database - even short integer would be enough
-       // that would require more complicated mapper - can be done with MapStruct though https://mapstruct.org/documentation/stable/reference/html/#adding-custom-methods
     public void setProtein(BigDecimal protein) {
-        this.protein = protein.setScale(1, RoundingMode.HALF_UP);
+        this.protein = protein;
     }
 
     public BigDecimal getCarbs() {
@@ -75,7 +70,7 @@ public class FoodDTO {
     }
 
     public void setCarbs(BigDecimal carbs) {
-        this.carbs = carbs.setScale(1, RoundingMode.HALF_UP);
+        this.carbs = carbs;
     }
 
     public BigDecimal getFats() {
@@ -83,6 +78,6 @@ public class FoodDTO {
     }
 
     public void setFats(BigDecimal fats) {
-        this.fats = fats.setScale(1, RoundingMode.HALF_UP);
+        this.fats = fats;
     }
 }
