@@ -8,7 +8,7 @@ import springProj.nutrDB.models.dto.FoodDTO;
 
 
 // using my own custom mapper to convert between macros
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses=MacronutrientMapper.class)
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface FoodMapper {
 
     FoodEntity toFoodEntity(FoodDTO source);

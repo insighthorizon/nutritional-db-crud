@@ -2,12 +2,14 @@ package springProj.nutrDB.models.services;
 
 import org.springframework.data.domain.Page;
 import springProj.nutrDB.models.dto.FoodDTO;
+import springProj.nutrDB.models.exceptions.GramValueException;
+import springProj.nutrDB.models.exceptions.KcalMismatchException;
 
 import java.util.List;
 
 public interface FoodService {
 
-    void create(FoodDTO food);
+    void create (FoodDTO food) throws GramValueException, KcalMismatchException;
 
     List<FoodDTO> getAll();
 
@@ -17,7 +19,7 @@ public interface FoodService {
 
     FoodDTO getById(long foodId);
 
-    void edit(FoodDTO food);
+    void edit(FoodDTO food) throws GramValueException, KcalMismatchException;
 
     void remove(long foodId);
 

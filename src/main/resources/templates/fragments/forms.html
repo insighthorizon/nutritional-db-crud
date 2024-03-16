@@ -17,19 +17,17 @@
           th:method="${formMethod}"
           th:action="@{${formAction}}"
           th:object="${foodDTO}">
-        <div class="py-2 alert alert-danger" th:if="${param.error}">Součet v gramech nesmí přesáhnout 100.</div>
-
         <div class="row align-items-center">
             <label for="name" class="col form-label">Název potraviny:</label>
             <div class="col">
-                <input th:field="*{name}" id="name" type="text" class="form-control"/>
+                <input th:field="*{name}" id="name" type="text" class="form-control" autocomplete="on"/>
                 <small th:errors="*{name}" class="text-danger"></small>
             </div>
         </div>
 
         <hr> <!-- hlavička tabulky -->
         <div class="row">
-            <label class="col fw-bold">Výživový údaj</label>
+            <div class="col fw-bold">Výživový údaj</div>
             <div class="col fw-bold">na 100 g</div>
         </div>
         <hr>

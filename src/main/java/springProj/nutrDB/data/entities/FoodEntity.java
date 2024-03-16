@@ -2,6 +2,8 @@ package springProj.nutrDB.data.entities;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 
 @Entity
 public class FoodEntity {
@@ -15,16 +17,15 @@ public class FoodEntity {
     @Column(nullable = false)
     private short kcal;
 
-    //@Column(precision = 3, scale = 1, nullable = false)
-    // private BigDecimal protein;
-    @Column(nullable = false)
-    private short protein;
+    // ukladame 3-mistne cislo ktere ma 2 mista pred a 1 misto za desetinnou carkou
+    @Column(precision = 3, scale = 1, nullable = false)
+    private BigDecimal protein;
 
-    @Column(nullable = false)
-    private short carbs;
+    @Column(precision = 3, scale = 1, nullable = false)
+    private BigDecimal carbs;
 
-    @Column(nullable = false)
-    private short fats;
+    @Column(precision = 3, scale = 1, nullable = false)
+    private BigDecimal fats;
 
     public long getFoodId() {
         return foodId;
@@ -50,27 +51,27 @@ public class FoodEntity {
         this.kcal = kcal;
     }
 
-    public short getProtein() {
+    public BigDecimal getProtein() {
         return protein;
     }
 
-    public void setProtein(short protein) {
+    public void setProtein(BigDecimal protein) {
         this.protein = protein;
     }
 
-    public short getCarbs() {
+    public BigDecimal getCarbs() {
         return carbs;
     }
 
-    public void setCarbs(short carbs) {
+    public void setCarbs(BigDecimal carbs) {
         this.carbs = carbs;
     }
 
-    public short getFats() {
+    public BigDecimal getFats() {
         return fats;
     }
 
-    public void setFats(short fats) {
+    public void setFats(BigDecimal fats) {
         this.fats = fats;
     }
 }

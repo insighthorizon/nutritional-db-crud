@@ -18,6 +18,7 @@ public class FoodDTO {
     private short kcal = 0;
 
     // BigDecimal needs to be used for proper validation
+    // pracujeme s desetinnym cislem: 2 cislice pres desetinnou ., 1 cislice za
     @DecimalMin(value = "0.0", message = "Množství gramů musí být kladné.")
     @DecimalMax(value = "100.0", message = "Nelze přesáhnout 100 g.")
     @Digits(integer = 3, fraction = 1, message = "Bude registrována maximálně třímístná hodnota.")
