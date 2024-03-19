@@ -2,6 +2,7 @@ package springProj.nutrDB.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,13 +11,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import springProj.nutrDB.models.dto.FoodDTO;
 import springProj.nutrDB.models.dto.mappers.FoodMapper;
 import springProj.nutrDB.models.exceptions.FoodNotFoundException;
-import springProj.nutrDB.models.exceptions.GramValueException;
-import springProj.nutrDB.models.exceptions.KcalMismatchException;
 import springProj.nutrDB.models.services.FoodService;
+
 
 @Controller
 @RequestMapping("/foods")
 public class FoodsController {
+    /**
+     * max size of one page in food listing
+     */
+    private static final int PAGE_SIZE = 2;
+
     @Autowired
     private FoodService foodService;
 
@@ -25,23 +30,56 @@ public class FoodsController {
 
     @GetMapping
     public String renderIndex(
-            @RequestParam(name = "page", defaultValue = "1") int pageNumber,
+            @RequestParam(name = "page", defaultValue = "1") int currentPageNumber,
             Model model
     ) {
-        if (pageNumber < 1) pageNumber = 1;
+        if (currentPageNumber < 1) currentPageNumber = 1;
+
+        Page<FoodDTO> foodsPage = foodService.getPage(currentPageNumber, PAGE_SIZE);
+        int totalPages = foodsPage.getTotalPages();
+
+        // keep looking even if client requested non-existent page
+        while (totalPages != 0 && (currentPageNumber > totalPages) /* foodsPage.isEmpty() */) {
+            currentPageNumber = totalPages;
+            foodsPage = foodService.getPage(currentPageNumber, PAGE_SIZE);
+            totalPages = foodsPage.getTotalPages();
+        }
+
+        fillFoodsModelForTemplate(model, foodsPage, currentPageNumber, totalPages);
 
         return "/pages/foods/index";
     }
 
-    private void produceGramValueErrors(BindingResult result) {
-        result.rejectValue("protein", "error", "Součet gramů celkem nestmí přesáhnout 100 g.");
-        result.rejectValue("carbs", "error", "Součet gramů celkem nestmí přesáhnout 100 g.");
-        result.rejectValue("fats", "error", "Součet gramů celkem nestmí přesáhnout 100 g.");
+    @GetMapping("search")
+    public String renderSearch(@RequestParam(name = "foodName", required = false) String foodName,
+                               @RequestParam(name = "page", defaultValue = "1") int currentPageNumber,
+                               Model model) {
+        if (currentPageNumber < 1) currentPageNumber = 1;
+
+        Page<FoodDTO> foodsPage = foodService.getNamesearchPage(currentPageNumber, PAGE_SIZE, foodName);
+        int totalPages = foodsPage.getTotalPages();
+
+        // keep looking even if client requested non-existent page
+        while (totalPages != 0 && (currentPageNumber > totalPages) /* foodsPage.isEmpty() */) {
+            currentPageNumber = totalPages;
+            foodsPage = foodService.getNamesearchPage(currentPageNumber, PAGE_SIZE, foodName);
+            totalPages = foodsPage.getTotalPages();
+        }
+
+        fillFoodsModelForTemplate(model, foodsPage, currentPageNumber, totalPages);
+
+        return "/pages/foods/search";
     }
 
-    private void produceKcalMismatchError(BindingResult result) {
-        result.rejectValue("kcal", "error", "Kalorická hodnota neodpovídá hodnotám makronutrientů.");
+    private void fillFoodsModelForTemplate(Model model,
+                                           Page foodsPage,
+                                           int currentPageNumber,
+                                           int totalPages) {
+        model.addAttribute("foods", foodsPage.getContent());
+        model.addAttribute("currentPageNumber", currentPageNumber);
+        model.addAttribute("totalPages", totalPages);
     }
+
 
     @GetMapping("create")
     public String renderCreateForm(@ModelAttribute FoodDTO food) {
@@ -60,17 +98,7 @@ public class FoodsController {
             return renderCreateForm(food);
         // pripadne errory uz budou obsazeny na zaklade predani DTO, protoze DTO ma specifikovane validacni zpravy
 
-        try {
-            foodService.create(food);
-        } catch (GramValueException e) {
-            produceGramValueErrors(result);
-
-            return renderCreateForm(food);
-        } catch (KcalMismatchException e) {
-            produceKcalMismatchError(result);
-
-            return renderCreateForm(food);
-        }
+        foodService.create(food);
 
         redirectAttributes.addFlashAttribute("success", "Potravina vytvořena.");
 
@@ -98,17 +126,7 @@ public class FoodsController {
         if (result.hasErrors())
             return renderEditForm(foodId, food);
 
-        try {
-            foodService.edit(food);
-        } catch (GramValueException e) {
-            produceGramValueErrors(result);
-
-            return renderEditForm(foodId, food);
-        } catch (KcalMismatchException e) {
-            produceKcalMismatchError(result);
-
-            return renderEditForm(foodId, food);
-        }
+        foodService.edit(food);
 
         redirectAttributes.addFlashAttribute("success", "Potravina upravena.");
 
@@ -116,14 +134,21 @@ public class FoodsController {
     }
 
     @GetMapping("detail/{foodId}")
-    public String renderDetail(@PathVariable("foodId") long foodId) {
+    public String renderDetail(@PathVariable("foodId") long foodId,
+                               @ModelAttribute FoodDTO food) {
+        FoodDTO fetchedFood = foodService.getById(foodId);
+        foodMapper.updateFoodDTO(fetchedFood, food);
+
         return "/pages/foods/detail";
     }
 
+    @DeleteMapping("delete/{foodId}")
+    public String deleteFood(@PathVariable("foodId") long foodId,
+                             RedirectAttributes redirectAttributes) {
+        foodService.remove(foodId);
+        redirectAttributes.addFlashAttribute("success", "Potravina smazána.");
 
-    @GetMapping("search")
-    public String renderSearchResults() {
-        return "/pages/foods/search";
+        return "redirect:/foods";
     }
 
     @ExceptionHandler({FoodNotFoundException.class})

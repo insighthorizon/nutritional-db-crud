@@ -24,28 +24,8 @@ public class FoodServiceImpl implements FoodService {
     @Autowired
     private FoodMapper foodMapper;
 
-    private void validateFood(FoodDTO food)  throws GramValueException, KcalMismatchException {
-        BigDecimal protein = food.getProtein();
-        BigDecimal carbs = food.getCarbs();
-        BigDecimal fats = food.getFats();
-        final BigDecimal gramLimit = BigDecimal.valueOf(100);
-
-        // Total grams exceed 100 g
-        if (protein.add(carbs).add(fats).compareTo(gramLimit) == 1) {
-            throw new GramValueException();
-        }
-
-        // TODO implement exceptions
-        // Kcal value doesn't match the macronutrient values
-        if (false) {
-            throw new KcalMismatchException();
-        }
-    }
-
     @Override
-    public void create(FoodDTO food) throws GramValueException, KcalMismatchException {
-        validateFood(food);
-
+    public void create(FoodDTO food){
         FoodEntity newFood = foodMapper.toFoodEntity(food);
         foodRepository.save(newFood);
 
@@ -91,9 +71,7 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public void edit(FoodDTO food) throws GramValueException, KcalMismatchException {
-        validateFood(food);
-
+    public void edit(FoodDTO food) {
         FoodEntity fetchedEntity = getFoodOrThrow(food.getFoodId());
         foodMapper.updateFoodEntity(food, fetchedEntity);
         foodRepository.save(fetchedEntity);

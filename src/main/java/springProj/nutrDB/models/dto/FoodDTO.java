@@ -4,6 +4,13 @@ import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 
+
+// TODO validate consistency of the entire food (total being <= 100 g, kcal matching gram values)
+// - using Cross-parameter constraint (implementing own validator)
+// https://docs.jboss.org/hibernate/validator/5.1/reference/en-US/html/validator-gettingstarted.html#validator-gettingstarted
+// https://docs.jboss.org/hibernate/validator/5.1/reference/en-US/html/validator-customconstraints.html#section-custom-property-paths
+// https://docs.jboss.org/hibernate/validator/8.0/reference/en-US/html_single/#section-cross-parameter-constraints
+
 public class FoodDTO {
 
     private long foodId;

@@ -4,10 +4,10 @@
 <body>
 
 <div th:fragment="foodList" class="my-3 row justify-content-center">
-    <h5 class="text-center text-secondary">Nebyly nalezeny žádné potraviny.</h5> <!-- th:if="${foods.isEmpty()}"  -->
+    <h5 class="text-center text-secondary" th:if="${foods.isEmpty()}">Nebyly nalezeny žádné potraviny.</h5>
 
-    <div class="col-auto container">
-        <table class="table"> <!-- th:if="${!foods.isEmpty()}" -->
+    <div class="col-auto container" th:if="${!foods.isEmpty()}">
+        <table class="table">
             <thead>
             <tr>
                 <th scope="col">Název potraviny</th>
@@ -17,90 +17,58 @@
             </tr>
             </thead>
             <tbody>
-            <tr> <!-- th:each="food : ${foods}" -->
-                <td>Ovesné vločky</td>
-                <td th:text="'343' + ' kcal'"></td>
-                <td th:text="'10.8' + ' g'"></td>
+            <tr th:each="food : ${foods}">
+                <td th:text="${food.name}"></td>
+                <td th:text="${food.kcal}"></td>
+                <td th:text="${food.protein}"></td>
                 <td>
-                    <a th:href="@{'/foods/detail/1'}">Detail</a>
-                    <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
-                    <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
-                </td>
-            </tr>
-            <tr> <!-- th:each="food : ${foods}" -->
-                <td>Ovesné vločky</td>
-                <td th:text="'343' + ' kcal'"></td>
-                <td th:text="'10.8' + ' g'"></td>
-                <td>
-                    <a th:href="@{'/foods/detail/1'}">Detail</a>
-                    <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
-                    <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
-                </td>
-            </tr>
-            <tr> <!-- th:each="food : ${foods}" -->
-                <td>Ovesné vločky</td>
-                <td th:text="'343' + ' kcal'"></td>
-                <td th:text="'10.8' + ' g'"></td>
-                <td>
-                    <a th:href="@{'/foods/detail/1'}">Detail</a>
-                    <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
-                    <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
-                </td>
-            </tr>
-            <tr> <!-- th:each="food : ${foods}" -->
-                <td>Ovesné vločky</td>
-                <td th:text="'343' + ' kcal'"></td>
-                <td th:text="'10.8' + ' g'"></td>
-                <td>
-                    <a th:href="@{'/foods/detail/1'}">Detail</a>
-                    <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
-                    <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
-                </td>
-            </tr>
-            <tr> <!-- th:each="food : ${foods}" -->
-                <td>Ovesné vločky</td>
-                <td th:text="'343' + ' kcal'"></td>
-                <td th:text="'10.8' + ' g'"></td>
-                <td>
-                    <a th:href="@{'/foods/detail/1'}">Detail</a>
-                    <span> | <a th:href="@{'/foods/edit/1'}">Upravit</a></span>
-                    <span> | <a th:href="@{'/foods/delete/1'}">Smazat</a></span>
+                    <a th:href="@{'/foods/detail/' + ${food.foodId}}">Detail</a>
+                    <span> | <a th:href="@{'/foods/edit/' + ${food.foodId}}">Upravit</a></span>
+                    <span> |
+                        <form th:method="DELETE"
+                              th:action="@{'/foods/delete/' + ${food.foodId}}"
+                              class="d-inline">
+                            <button type="submit" class="btn btn-danger py-0 px-1">Smazat</button>
+                        </form>
+                    </span>
                 </td>
             </tr>
             </tbody>
         </table>
+
+        <ul class="pagination justify-content-center">
+            <!-- first page -->
+            <li th:if="${currentPageNumber} gt 1" class="page-item">
+                <a class="page-link" th:href="@{/foods?page=1}">1</a>
+            </li>
+            <!-- inbetween -->
+            <li th:if="${currentPageNumber} gt 3" class="page-item disabled">
+                <a class="page-link">...</a>
+            </li>
+            <!-- previous page -->
+            <li th:if="${currentPageNumber gt 2}" class="page-item">
+                <a th:href="@{'/foods?page=' + ${currentPageNumber - 1}}" th:text="${currentPageNumber - 1}" class="page-link"></a>
+            </li>
+            <!-- current page -->
+            <li class="page-item active"><a th:text="${currentPageNumber}" class="page-link" href=""></a></li>
+            <!-- next page -->
+            <li th:if="${currentPageNumber + 1} lt ${totalPages}" class="page-item">
+                <a th:href="@{'/foods?page=' + ${currentPageNumber + 1}}" th:text="${currentPageNumber + 1}" class="page-link"></a>
+            </li>
+            <!-- inbetween -->
+            <li th:if="${currentPageNumber + 2} lt ${totalPages}" class="page-item disabled">
+                <a class="page-link">...</a>
+            </li>
+            <!-- last page -->
+            <li th:if="${currentPageNumber} lt ${totalPages}" class="page-item">
+                <a th:href="@{'/foods?page=' + ${totalPages}}" th:text="${totalPages}" class="page-link"></a>
+            </li>
+        </ul>
     </div>
+
 
 </div>
 
-<ul th:fragment="pagination"  th:with="currentPage=1, totalPages=8" class="pagination justify-content-center">
-    <!-- first page -->
-    <li th:if="${currentPage} gt 1" class="page-item">
-        <a class="page-link" th:href="@{/foods?page=1}">1</a>
-    </li>
-    <!-- inbetween -->
-    <li th:if="${currentPage} gt 3" class="page-item disabled">
-        <a class="page-link">...</a>
-    </li>
-    <!-- previous page -->
-    <li th:if="${currentPage gt 2}" class="page-item">
-        <a th:href="@{'/foods?page=' + ${currentPage - 1}}" th:text="${currentPage - 1}" class="page-link"></a>
-    </li>
-    <!-- current page -->
-    <li class="page-item active"><a th:text="${currentPage}" class="page-link" href=""></a></li>
-    <!-- next page -->
-    <li th:if="${currentPage + 1} lt ${totalPages}" class="page-item">
-        <a th:href="@{'/foods?page=' + ${currentPage + 1}}" th:text="${currentPage + 1}" class="page-link"></a>
-    </li>
-    <!-- inbetween -->
-    <li th:if="${currentPage + 2} lt ${totalPages}" class="page-item disabled">
-        <a class="page-link">...</a>
-    </li>
-    <!-- last page -->
-    <li th:if="${currentPage} lt ${totalPages}" class="page-item">
-        <a th:href="@{'/foods?page=' + ${totalPages}}" th:text="${totalPages}" class="page-link"></a>
-    </li>
-</ul>
 
 </body>
 </html>

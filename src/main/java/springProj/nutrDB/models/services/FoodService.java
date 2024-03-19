@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface FoodService {
 
-    void create (FoodDTO food) throws GramValueException, KcalMismatchException;
+    void create (FoodDTO food);
 
     List<FoodDTO> getAll();
 
@@ -19,7 +19,7 @@ public interface FoodService {
 
     FoodDTO getById(long foodId);
 
-    void edit(FoodDTO food) throws GramValueException, KcalMismatchException;
+    void edit(FoodDTO food);
 
     void remove(long foodId);
 

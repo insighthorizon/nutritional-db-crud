@@ -4,7 +4,6 @@
 <body>
 
 <form th:fragment="searchForm"
-      method="get"
       th:action="@{/foods/search}">
     <div class="input-group">
         <input class="form-control" type="search" name="foodName" placeholder="Vyhledat potravinu..."/>
@@ -25,7 +24,7 @@
             </div>
         </div>
 
-        <hr> <!-- hlavička tabulky -->
+        <hr> <!-- hlavička "tabulky" -->
         <div class="row">
             <div class="col fw-bold">Výživový údaj</div>
             <div class="col fw-bold">na 100 g</div>
