@@ -20,10 +20,12 @@
     </div>
 
     <hr>
-    <h3>Všechny potraviny</h3>
+    <h3 th:if="${#strings.isEmpty(searchedName) == true}">Všechny potraviny</h3>
+    <h3 th:if="${#strings.isEmpty(searchedName) == false}" th:text="'Výsledky vyhlednání &quot;' + ${searchedName} + '&quot;'"></h3>
 
     <div th:replace="~{fragments/lists.html :: foodList}"></div>
 
+    <a th:if="${#strings.isEmpty(searchedName) == false}" th:href="@{/foods}">Zpět na všechny potraviny</a>
 
 </main>
 

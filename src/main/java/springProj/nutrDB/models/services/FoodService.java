@@ -2,8 +2,6 @@ package springProj.nutrDB.models.services;
 
 import org.springframework.data.domain.Page;
 import springProj.nutrDB.models.dto.FoodDTO;
-import springProj.nutrDB.models.exceptions.GramValueException;
-import springProj.nutrDB.models.exceptions.KcalMismatchException;
 
 import java.util.List;
 
@@ -13,9 +11,10 @@ public interface FoodService {
 
     List<FoodDTO> getAll();
 
-    Page<FoodDTO> getPage(int pageNumber, int pageSize);
-
-    Page<FoodDTO> getNamesearchPage(int pageNumber, int pageSize, String searchedName);
+    // TODO implement choice of sorting
+    // We will do sorting only in ascending order, because user can jump to the end anyway
+    // uses limit/offset pagination (drifting possible) - that's the daful from PagingAndSortingRepository
+    Page<FoodDTO> getPage(int pageNumber, int pageSize, String searchedName, String sortMode);
 
     FoodDTO getById(long foodId);
 

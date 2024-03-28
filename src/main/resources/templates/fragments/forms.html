@@ -4,9 +4,12 @@
 <body>
 
 <form th:fragment="searchForm"
-      th:action="@{/foods/search}">
+      th:action="@{/foods}">
     <div class="input-group">
-        <input class="form-control" type="search" name="foodName" placeholder="Vyhledat potravinu..."/>
+        <!-- submitting this form will result in get request with additional url request attribute
+        with the name given by the html attribute name
+         -->
+        <input class="form-control" type="search" name="search" placeholder="Vyhledat potravinu..."/>
         <button class="btn btn-dark" type="submit">Hledat</button>
     </div>
 </form>

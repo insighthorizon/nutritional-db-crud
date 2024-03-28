@@ -3,16 +3,15 @@ package springProj.nutrDB.models.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import springProj.nutrDB.data.entities.FoodEntity;
 import springProj.nutrDB.data.repositories.FoodRepository;
 import springProj.nutrDB.models.dto.FoodDTO;
 import springProj.nutrDB.models.dto.mappers.FoodMapper;
 import springProj.nutrDB.models.exceptions.FoodNotFoundException;
-import springProj.nutrDB.models.exceptions.GramValueException;
-import springProj.nutrDB.models.exceptions.KcalMismatchException;
 
-import java.math.BigDecimal;
+
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -41,21 +40,36 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Page<FoodDTO> getPage(int pageNumber, int pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
+    public Page<FoodDTO> getPage(int pageNumber, int pageSize, String searchedName, String sortAttribute) {
+        // check that the page we are asking for makes sense
+        if (pageNumber < 1) pageNumber = 1;
 
-        return foodRepository
-                .findAll(pageRequest)
-                .map(x -> foodMapper.toFoodDTO(x));
-    }
+        // handling the mode of sorting
+        Sort sort;
+        if (sortAttribute == null)
+            sortAttribute = "";
+        switch (sortAttribute) { // check that the sorting mode we are asking for is alright
+            // the cases correspond to the attributes we can sort by
+            case "foodId", "name", "kcal" -> sort = Sort.by(Sort.Direction.ASC, sortAttribute);
+            case "protein" -> sort = Sort.by(Sort.Direction.DESC, sortAttribute);
+            default -> {
+                sort = Sort.by(Sort.Direction.ASC, "foodId");}
+        }
 
-    @Override
-    public Page<FoodDTO> getNamesearchPage(int pageNumber, int pageSize, String searchedName) {
-        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
 
-        return foodRepository
-                .findByNameContaining(searchedName, pageRequest)
-                .map(x -> foodMapper.toFoodDTO(x));
+        // getting the page
+        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize, sort);
+        Page<FoodEntity> page = foodRepository.findByNameContaining(searchedName, pageRequest);
+        int totalPages = page.getTotalPages();
+
+        while ((pageNumber > totalPages) && (totalPages != 0)) {
+            pageNumber = totalPages;
+            pageRequest = PageRequest.of(pageNumber - 1, pageSize, sort);
+            page = foodRepository.findByNameContaining(searchedName, pageRequest);
+            totalPages = page.getTotalPages();
+        }
+
+        return page.map(x -> foodMapper.toFoodDTO(x)); // mapping the entity page to dto page
     }
 
     private FoodEntity getFoodOrThrow(long foodId) {

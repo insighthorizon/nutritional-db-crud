@@ -7,20 +7,39 @@
     <h5 class="text-center text-secondary" th:if="${foods.isEmpty()}">Nebyly nalezeny žádné potraviny.</h5>
 
     <div class="col-auto container" th:if="${!foods.isEmpty()}">
-        <table class="table">
+        <table class="table table-bordered">
+            <!-- there will be id column, so that we can also sort by the order the items are added in db -->
             <thead>
             <tr>
-                <th scope="col">Název potraviny</th>
-                <th scope="col">Energie na 100 g</th>
-                <th scope="col">Bílkovin na 100 g</th>
-                <th scope="col"></th>
+                <th><a th:href="@{
+                '/foods?page=' + ${currentPageNumber} +
+                '&search=' + ${searchedName} +
+                '&sort=foodId'}"
+                       scope="col"># id</a></th>
+                <th><a th:href="@{
+                '/foods?page=' + ${currentPageNumber} +
+                '&search=' + ${searchedName} +
+                '&sort=name'}"
+                       scope="col">Název potraviny</a></th>
+                <th><a th:href="@{
+                '/foods?page=' + ${currentPageNumber} +
+                '&search=' + ${searchedName} +
+                '&sort=kcal'}"
+                       scope="col">Energie na 100 g</a></th>
+                <th><a th:href="@{
+                '/foods?page=' + ${currentPageNumber} +
+                '&search=' + ${searchedName} +
+                '&sort=protein'}"
+                       scope="col">Bílkovin na 100 g</a></th>
+                <th></th><a scope="col"></a>
             </tr>
             </thead>
             <tbody>
             <tr th:each="food : ${foods}">
+                <td th:text="${food.foodId}"></td>
                 <td th:text="${food.name}"></td>
-                <td th:text="${food.kcal}"></td>
-                <td th:text="${food.protein}"></td>
+                <td th:text="${food.kcal} + ' kcal'"></td>
+                <td th:text="${food.protein} + ' g'"></td>
                 <td>
                     <a th:href="@{'/foods/detail/' + ${food.foodId}}">Detail</a>
                     <span> | <a th:href="@{'/foods/edit/' + ${food.foodId}}">Upravit</a></span>
@@ -36,10 +55,11 @@
             </tbody>
         </table>
 
+        <!-- TODO fix the links such that they preserve the sort selection -->
         <ul class="pagination justify-content-center">
             <!-- first page -->
             <li th:if="${currentPageNumber} gt 1" class="page-item">
-                <a class="page-link" th:href="@{/foods?page=1}">1</a>
+                <a class="page-link" th:href="@{'/foods?page=1' + '&search=' + ${searchedName}}">1</a>
             </li>
             <!-- inbetween -->
             <li th:if="${currentPageNumber} gt 3" class="page-item disabled">
@@ -47,13 +67,15 @@
             </li>
             <!-- previous page -->
             <li th:if="${currentPageNumber gt 2}" class="page-item">
-                <a th:href="@{'/foods?page=' + ${currentPageNumber - 1}}" th:text="${currentPageNumber - 1}" class="page-link"></a>
+                <a th:href="@{'/foods?page=' + ${currentPageNumber - 1} + '&search=' + ${searchedName}}"
+                   th:text="${currentPageNumber - 1}" class="page-link"></a>
             </li>
             <!-- current page -->
-            <li class="page-item active"><a th:text="${currentPageNumber}" class="page-link" href=""></a></li>
+            <li class="page-item active"><a th:text="${currentPageNumber}" class="page-link" href></a></li>
             <!-- next page -->
             <li th:if="${currentPageNumber + 1} lt ${totalPages}" class="page-item">
-                <a th:href="@{'/foods?page=' + ${currentPageNumber + 1}}" th:text="${currentPageNumber + 1}" class="page-link"></a>
+                <a th:href="@{'/foods?page=' + ${currentPageNumber + 1} + '&search=' + ${searchedName}}"
+                   th:text="${currentPageNumber + 1}" class="page-link"></a>
             </li>
             <!-- inbetween -->
             <li th:if="${currentPageNumber + 2} lt ${totalPages}" class="page-item disabled">
@@ -61,7 +83,8 @@
             </li>
             <!-- last page -->
             <li th:if="${currentPageNumber} lt ${totalPages}" class="page-item">
-                <a th:href="@{'/foods?page=' + ${totalPages}}" th:text="${totalPages}" class="page-link"></a>
+                <a th:href="@{'/foods?page=' + ${totalPages} + '&search=' + ${searchedName}}"
+                   th:text="${totalPages}" class="page-link"></a>
             </li>
         </ul>
     </div>

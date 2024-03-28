@@ -20,7 +20,6 @@ public class FoodsController {
     /**
      * max size of one page in food listing
      */
-    private static final int PAGE_SIZE = 2;
 
     @Autowired
     private FoodService foodService;
@@ -28,56 +27,24 @@ public class FoodsController {
     @Autowired
     private FoodMapper foodMapper;
 
-    @GetMapping
+
+    @GetMapping({"", "/{detailId}"})
     public String renderIndex(
+            @RequestParam(value = "sort", required = false) String sortAttribute,
+            @RequestParam(name = "search", defaultValue = "") String searchedFoodName,
             @RequestParam(name = "page", defaultValue = "1") int currentPageNumber,
-            Model model
-    ) {
-        if (currentPageNumber < 1) currentPageNumber = 1;
+            Model model) {
 
-        Page<FoodDTO> foodsPage = foodService.getPage(currentPageNumber, PAGE_SIZE);
-        int totalPages = foodsPage.getTotalPages();
+        final int PAGE_SIZE = 4;
 
-        // keep looking even if client requested non-existent page
-        while (totalPages != 0 && (currentPageNumber > totalPages) /* foodsPage.isEmpty() */) {
-            currentPageNumber = totalPages;
-            foodsPage = foodService.getPage(currentPageNumber, PAGE_SIZE);
-            totalPages = foodsPage.getTotalPages();
-        }
+        Page foodsPage = foodService.getPage(currentPageNumber, PAGE_SIZE, searchedFoodName, sortAttribute);
 
-        fillFoodsModelForTemplate(model, foodsPage, currentPageNumber, totalPages);
+        model.addAttribute("foods", foodsPage.getContent());
+        model.addAttribute("currentPageNumber", foodsPage.getNumber() + 1);
+        model.addAttribute("totalPages", foodsPage.getTotalPages());
+        model.addAttribute("searchedName", searchedFoodName);
 
         return "/pages/foods/index";
-    }
-
-    @GetMapping("search")
-    public String renderSearch(@RequestParam(name = "foodName", required = false) String foodName,
-                               @RequestParam(name = "page", defaultValue = "1") int currentPageNumber,
-                               Model model) {
-        if (currentPageNumber < 1) currentPageNumber = 1;
-
-        Page<FoodDTO> foodsPage = foodService.getNamesearchPage(currentPageNumber, PAGE_SIZE, foodName);
-        int totalPages = foodsPage.getTotalPages();
-
-        // keep looking even if client requested non-existent page
-        while (totalPages != 0 && (currentPageNumber > totalPages) /* foodsPage.isEmpty() */) {
-            currentPageNumber = totalPages;
-            foodsPage = foodService.getNamesearchPage(currentPageNumber, PAGE_SIZE, foodName);
-            totalPages = foodsPage.getTotalPages();
-        }
-
-        fillFoodsModelForTemplate(model, foodsPage, currentPageNumber, totalPages);
-
-        return "/pages/foods/search";
-    }
-
-    private void fillFoodsModelForTemplate(Model model,
-                                           Page foodsPage,
-                                           int currentPageNumber,
-                                           int totalPages) {
-        model.addAttribute("foods", foodsPage.getContent());
-        model.addAttribute("currentPageNumber", currentPageNumber);
-        model.addAttribute("totalPages", totalPages);
     }
 
 
@@ -107,7 +74,7 @@ public class FoodsController {
 
     @GetMapping("edit/{foodId}")
     public String renderEditForm(
-            @PathVariable("foodId") long foodId,
+            @PathVariable(value = "foodId") long foodId,
             @ModelAttribute FoodDTO food
     ) {
         FoodDTO fetchedFood = foodService.getById(foodId);
