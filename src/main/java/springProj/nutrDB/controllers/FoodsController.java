@@ -13,6 +13,8 @@ import springProj.nutrDB.models.dto.mappers.FoodMapper;
 import springProj.nutrDB.models.exceptions.FoodNotFoundException;
 import springProj.nutrDB.models.services.FoodService;
 
+import java.math.BigDecimal;
+
 
 @Controller
 @RequestMapping("/foods")
@@ -28,14 +30,29 @@ public class FoodsController {
     private FoodMapper foodMapper;
 
 
-    @GetMapping({"", "/{detailId}"})
+    @GetMapping
     public String renderIndex(
             @RequestParam(value = "sort", required = false) String sortAttribute,
             @RequestParam(name = "search", defaultValue = "") String searchedFoodName,
             @RequestParam(name = "page", defaultValue = "1") int currentPageNumber,
             Model model) {
 
-        final int PAGE_SIZE = 4;
+        final int PAGE_SIZE = 6;
+
+        // add test data
+//        FoodDTO food = new FoodDTO();
+//        for (int i = 0; i < 10; i++) {
+//            char c = (char)('a' + i);
+//            String string = Character.toString('a' + i);
+//            string = string + string + string + string;
+//            food.setName(string);
+//            food.setKcal((short)(10 * i));
+//            food.setCarbs(BigDecimal.valueOf(4 * i));
+//            food.setProtein(BigDecimal.valueOf(15 * i, 1));
+//            food.setFats(BigDecimal.valueOf(5 * i, 1));
+//
+//            foodService.create(food);
+//        }
 
         Page foodsPage = foodService.getPage(currentPageNumber, PAGE_SIZE, searchedFoodName, sortAttribute);
 
@@ -43,6 +60,7 @@ public class FoodsController {
         model.addAttribute("currentPageNumber", foodsPage.getNumber() + 1);
         model.addAttribute("totalPages", foodsPage.getTotalPages());
         model.addAttribute("searchedName", searchedFoodName);
+        model.addAttribute("sortAttribute", sortAttribute);
 
         return "/pages/foods/index";
     }
