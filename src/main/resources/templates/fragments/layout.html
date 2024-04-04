@@ -24,7 +24,7 @@
                 <a th:href="@{/account/login}" th:class="'nav-link ' + ${loginLink}">Přihlásit</a>
                 <a th:href="@{/account/register}" th:class="'nav-link ' + ${registerLink}">Zaregistrovat</a>
                 <form method="post"
-                      th:action="@{account/logout}">
+                      th:action="@{/account/logout}">
                     <button class="nav-link">Odhlásit</button>
                 </form>
             </div>

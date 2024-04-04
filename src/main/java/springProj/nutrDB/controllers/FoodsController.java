@@ -13,8 +13,6 @@ import springProj.nutrDB.models.dto.mappers.FoodMapper;
 import springProj.nutrDB.models.exceptions.FoodNotFoundException;
 import springProj.nutrDB.models.services.FoodService;
 
-import java.math.BigDecimal;
-
 
 @Controller
 @RequestMapping("/foods")
@@ -37,11 +35,11 @@ public class FoodsController {
             @RequestParam(name = "page", defaultValue = "1") int currentPageNumber,
             Model model) {
 
-        final int PAGE_SIZE = 6;
+        final int PAGE_SIZE = 10;
 
-        // add test data
+// add test data
 //        FoodDTO food = new FoodDTO();
-//        for (int i = 0; i < 10; i++) {
+//        for (int i = 0; i < 27; i++) {
 //            char c = (char)('a' + i);
 //            String string = Character.toString('a' + i);
 //            string = string + string + string + string;

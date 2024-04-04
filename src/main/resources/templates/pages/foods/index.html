@@ -9,6 +9,7 @@
     <!-- potravina vytvorena / potravina upravena -->
     <div class="py-2 alert alert-success" th:text="${success}" th:if="${success}"></div>
     <div class="py-2 alert alert-danger" th:text="${error}" th:if="${error}"></div>
+    <div class="py-2 alert alert-success" th:if="${param.login}">Uživatel přihlášen.</div>
 
 
     <div class="row row-cols-auto align-items-center">

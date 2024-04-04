@@ -48,6 +48,7 @@ public class FoodServiceImpl implements FoodService {
         Sort sort;
         if (sortAttribute == null)
             sortAttribute = "";
+
         switch (sortAttribute) { // check that the sorting mode we are asking for is alright
             // the cases correspond to the attributes we can sort by
             case "foodId", "name", "kcal" -> sort = Sort.by(Sort.Direction.ASC, sortAttribute);
@@ -56,12 +57,11 @@ public class FoodServiceImpl implements FoodService {
                 sort = Sort.by(Sort.Direction.ASC, "foodId");}
         }
 
-
         // getting the page
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize, sort);
         Page<FoodEntity> page = foodRepository.findByNameContaining(searchedName, pageRequest);
         int totalPages = page.getTotalPages();
-
+        // try to get nonempty page unless the number of pages is 0
         while ((pageNumber > totalPages) && (totalPages != 0)) {
             pageNumber = totalPages;
             pageRequest = PageRequest.of(pageNumber - 1, pageSize, sort);
