@@ -1,0 +1,33 @@
+<!-- default error page - used when "undefined" error occurs -->
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+
+<body class="min-vh-100 d-flex flex-column">
+<header th:replace="~{fragments/layout.html :: header}"></header>
+
+<main class="my-5 mx-3 flex-fill">
+    <h2 class="text-center mb-4">Chyba <span th:text="${status}"></span></h2>
+
+    <p class="text-center">Asi nastalo něco, s čím vývojář nepočítal.</p>
+
+    <p class="text-center">
+        <a th:href="@{/}">Zpět na domovskou stránku</a>
+    </p>
+
+    <hr/>
+
+    <h5>Popis chyby (Pro ladění. U release verze bychom to uživateli neměli ukazovat.) :</h5>
+    <p th:text="${status} + ' ' + ${error}"></p>
+    <p th:text="${message}"></p>
+    <p>V čase: <span th:text="${timestamp}"></span></p>
+    <p>Na adrese: <span th:text="${path}"></span></p>
+
+
+    <pre th:text="${trace}"></pre>
+
+</main>
+
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!-- 404 page - page not found -->
+<!DOCTYPE html>
+<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+
+<body class="min-vh-100 d-flex flex-column">
+<header th:replace="~{fragments/layout.html :: header}"></header>
+
+<main class="my-5 mx-3 flex-fill">
+    <h2 class="text-center mb-4">Chyba <span th:text="${status}"></span></h2>
+
+    <p class="text-center">Stránka nenalezena. Pokoušíte se přistoupit na adresu, která neexistuje.</p>
+
+    <p class="text-center">
+        <a th:href="@{/}">Zpět na domovskou stránku</a>
+    </p>
+
+</main>
+
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+</body>
+</html>
