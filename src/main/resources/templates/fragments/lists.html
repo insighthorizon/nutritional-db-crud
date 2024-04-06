@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head></head>
 <body>
 
@@ -42,8 +42,9 @@
                 <td th:text="${food.protein} + ' g'"></td>
                 <td>
                     <a th:href="@{'/foods/detail/' + ${food.foodId}}">Detail</a>
-                    <span> | <a th:href="@{'/foods/edit/' + ${food.foodId}}">Upravit</a></span>
-                    <span> |
+                    <span sec:authorize="hasRole('ADMIN')"> <!-- edit and delete visible only to admin accounts -->
+                        | <a th:href="@{'/foods/edit/' + ${food.foodId}}">Upravit</a>
+                        |
                         <form th:method="DELETE"
                               th:action="@{'/foods/delete/' + ${food.foodId}}"
                               class="d-inline">
@@ -55,7 +56,6 @@
             </tbody>
         </table>
 
-        <!-- TODO fix the links such that they preserve the sort selection -->
         <ul class="pagination justify-content-center">
             <!-- first page -->
             <li th:if="${currentPageNumber} gt 1" class="page-item">

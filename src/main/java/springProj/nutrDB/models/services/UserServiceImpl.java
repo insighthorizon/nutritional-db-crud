@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
         userEntity.setAdmin(isAdmin);
 
-        // attempt to save the new user
+        // attempt to save a new user
         try {
             userRepository.save(userEntity);
         } catch (DataIntegrityViolationException e) {

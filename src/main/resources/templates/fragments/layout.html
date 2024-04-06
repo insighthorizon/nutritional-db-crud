@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head th:fragment="head">
     <meta charset="UTF-8">
@@ -21,9 +21,12 @@
             <div class="navbar-nav">
                 <a th:href="@{/}" th:class="'nav-link ' + ${homeLink}">Domů</a>
                 <a th:href="@{/foods}" th:class="'nav-link ' + ${foodsLink}">Potraviny</a>
-                <a th:href="@{/account/login}" th:class="'nav-link ' + ${loginLink}">Přihlásit</a>
-                <a th:href="@{/account/register}" th:class="'nav-link ' + ${registerLink}">Zaregistrovat</a>
-                <form method="post"
+<!--                visible only to users who are not logged-in-->
+                <a sec:authorize="isAnonymous()" th:href="@{/account/login}" th:class="'nav-link ' + ${loginLink}">Přihlásit</a>
+                <a sec:authorize="isAnonymous()" th:href="@{/account/register}" th:class="'nav-link ' + ${registerLink}">Zaregistrovat</a>
+<!--                visible only to users who are logged-int-->
+                <form sec:authorize="isAuthenticated()"
+                      method="post"
                       th:action="@{/account/logout}">
                     <button class="nav-link">Odhlásit</button>
                 </form>

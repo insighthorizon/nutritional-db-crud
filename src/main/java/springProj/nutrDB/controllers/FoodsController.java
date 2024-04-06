@@ -3,6 +3,7 @@ package springProj.nutrDB.controllers;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -64,11 +65,13 @@ public class FoodsController {
     }
 
 
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @GetMapping("create")
     public String renderCreateForm(@ModelAttribute FoodDTO food) {
         return "/pages/foods/create";
     }
 
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @PostMapping("create")
     public String create(
             @Valid @ModelAttribute FoodDTO food,
@@ -88,6 +91,7 @@ public class FoodsController {
         return "redirect:/foods";
     }
 
+    @Secured("ROLE_ADMIN") // editing will be available only for admin accounts
     @GetMapping("edit/{foodId}")
     public String renderEditForm(
             @PathVariable(value = "foodId") long foodId,
@@ -99,8 +103,9 @@ public class FoodsController {
         return "/pages/foods/edit";
     }
 
+    @Secured("ROLE_ADMIN") // editing will be available only for admin accounts
     @PutMapping("edit/{foodId}")
-    public String editFood(
+    public String edit(
             @PathVariable("foodId") long foodId,
             @Valid @ModelAttribute FoodDTO food,
             BindingResult result,
@@ -125,6 +130,7 @@ public class FoodsController {
         return "/pages/foods/detail";
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("delete/{foodId}")
     public String deleteFood(@PathVariable("foodId") long foodId,
                              RedirectAttributes redirectAttributes) {
