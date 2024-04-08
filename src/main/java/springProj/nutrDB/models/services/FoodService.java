@@ -11,7 +11,6 @@ public interface FoodService {
 
     List<FoodDTO> getAll();
 
-    // TODO implement choice of sorting
     // We will do sorting only in ascending order, because user can jump to the end anyway
     // uses limit/offset pagination (drifting possible) - that's the daful from PagingAndSortingRepository
     Page<FoodDTO> getPage(int pageNumber, int pageSize, String searchedName, String sortMode);

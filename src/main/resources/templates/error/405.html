@@ -1,17 +1,22 @@
-<!-- 405 page - method not supported -->
+<!-- template: 405 page -->
+<!--user sees this page after sending https request which isn't supported-->
+<!--for example, url address for deletion of a food supports only the DELETE method,-->
+<!--but it is possible for the user to attempt to access the URL (GET request) - which results in error 405-->
 <!DOCTYPE html>
 <html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
 <body class="min-vh-100 d-flex flex-column">
+<!--navbar-->
 <header th:replace="~{fragments/layout.html :: header}"></header>
 
 <main class="my-5 mx-3 flex-fill">
+<!--    informing the user that the action is not supported by the server -->
     <h2 class="text-center mb-4">Chyba <span th:text="${status}"></span></h2>
 
     <p class="text-center">Nepodporovaná akce. Pokoušíte se provést akci, kterou server nepodporuje.</p>
 
-    <p class="text-center">
+    <p class="text-center"> <!-- link to home page -->
         <a th:href="@{/}">Zpět na domovskou stránku</a>
     </p>
 

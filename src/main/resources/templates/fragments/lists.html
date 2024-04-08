@@ -1,46 +1,58 @@
+<!-- template fragments: listing (table) elements that can be reused -->
+<!-- (The file isn't used in standalone way.) -->
+<!--This version of the project doesn't need this to be defined as fragments, because each fragment is used only once.-->
+<!--I had multiple uses before (at multiple pages), but I reduced the number of pages in the application.-->
+<!--But if I later extend the project, it will be useful again.-->
 <!DOCTYPE html>
 <html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head></head>
 <body>
 
+<!--element listing foods with pagination (reusable fragment)-->
+<!--The links in anchor elements are sort of complicated because they need to also transmit/preserve the search and sort option previously selected by the user-->
+<!--It is based on URL parameters.-->
+<!--I have the feeling that this reliance on passing parameters back and forth between client and server is not nice. But I was now focusing on just what I can do with spring boot without any javscript framework in frontend.-->
 <div th:fragment="foodList" class="my-3 row justify-content-center">
+    <!-- message in the case no foods were found -->
     <h5 class="text-center text-secondary" th:if="${foods.isEmpty()}">Nebyly nalezeny žádné potraviny.</h5>
 
+    <!-- table listing the foods found (if not empty) -->
     <div class="col-auto container" th:if="${!foods.isEmpty()}">
         <table class="table table-bordered">
-            <!-- there will be id column, so that we can also sort by the order the items are added in db -->
             <thead>
-            <tr>
+            <tr> <!-- table header contains clickable links for sorting by a given attribute -->
                 <th><a th:href="@{
                 '/foods?page=' + ${currentPageNumber} +
                 '&search=' + ${searchedName} +
                 '&sort=foodId'}"
-                       scope="col"># id</a></th>
+                       scope="col"># id</a></th> <!-- food id column -->
                 <th><a th:href="@{
                 '/foods?page=' + ${currentPageNumber} +
                 '&search=' + ${searchedName} +
                 '&sort=name'}"
-                       scope="col">Název potraviny</a></th>
+                       scope="col">Název potraviny</a></th> <!-- food name column -->
                 <th><a th:href="@{
                 '/foods?page=' + ${currentPageNumber} +
                 '&search=' + ${searchedName} +
                 '&sort=kcal'}"
-                       scope="col">Energie na 100 g</a></th>
+                       scope="col">Energie na 100 g</a></th> <!-- food kcal column -->
                 <th><a th:href="@{
                 '/foods?page=' + ${currentPageNumber} +
                 '&search=' + ${searchedName} +
                 '&sort=protein'}"
-                       scope="col">Bílkovin na 100 g</a></th>
+                       scope="col">Bílkovin na 100 g</a></th> <!-- food protein column -->
                 <th></th><a scope="col"></a>
             </tr>
             </thead>
             <tbody>
+            <!-- this is a generic table row which represents one entry in the list of foods -->
+            <!-- th:each ensures that a row is generated for each entry in the foods list -->
             <tr th:each="food : ${foods}">
                 <td th:text="${food.foodId}"></td>
                 <td th:text="${food.name}"></td>
                 <td th:text="${food.kcal} + ' kcal'"></td>
                 <td th:text="${food.protein} + ' g'"></td>
-                <td>
+                <td> <!-- here are links for detail, edit and delete for the given food -->
                     <a th:href="@{'/foods/detail/' + ${food.foodId}}">Detail</a>
                     <span sec:authorize="hasRole('ADMIN')"> <!-- edit and delete visible only to admin accounts -->
                         | <a th:href="@{'/foods/edit/' + ${food.foodId}}">Upravit</a>
@@ -56,6 +68,15 @@
             </tbody>
         </table>
 
+<!--        PAGINATION - allows us to jump to the beginning, end or to traverse pages one by one-->
+<!--        Teach pagination element represents a link to a page (unclickable if we are already at that page)-->
+<!--        It is based on the following logic:-->
+<!--        - Current page is always present (even if it is empty)-->
+<!--        - first page is present when it is not the current page-->
+<!--        - last page is present when it is not the current page-->
+<!--        - the "previous page" (just before the current page) is present if there is some page between the first and current-->
+<!--        - the "next page" (just before the current page) is present if there is some page between the lat and current-->
+<!--        - "inbetweens" are present if there is even more pages inbetween-->
         <ul class="pagination justify-content-center">
             <!-- first page -->
             <li th:if="${currentPageNumber} gt 1" class="page-item">

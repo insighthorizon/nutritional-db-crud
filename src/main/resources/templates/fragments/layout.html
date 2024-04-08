@@ -1,7 +1,11 @@
+<!--template fragments: page layout - layoud used in every rendered page -->
+<!--(not a standalone page)-->
 <!DOCTYPE html>
 <html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 
+<!-- page head contains page metadata and links to client dependencies (reusable fragment)-->
 <head th:fragment="head">
+    <!-- metadata -->
     <meta charset="UTF-8">
     <meta name="description" content="Nutricni databaze - cvicební projekt."/>
     <meta name="keywords" content="cvičení projekt nutricni databaze spring boot mysql auatentifikace autorizace"/>
@@ -9,26 +13,32 @@
 
     <title>Nutriční databáze</title>
 
+    <!-- link to Bootstrap -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
-    <link rel="shortcut icon" th:href="@{/images/apple.svg}"/>
+    <link rel="shortcut icon" th:href="@{/images/apple.svg}"/> <!-- link to favicon -->
 </head>
 
+
 <body>
+
+<!-- Page header implements a navigation bar (reusable fragment). -->
+<!-- It is a simple horizontal menu tied to the top of the page (doesn't move with the viewport). -->
 <header th:fragment="header">
     <nav class="navbar navbar-expand-sm bg-dark" data-bs-theme="dark">
         <div class="container-fluid">
-            <a th:href="@{/}" class="navbar-brand">NutrDB App</a>
+            <a th:href="@{/}" class="navbar-brand">NutrDB App</a> <!-- logo and home link -->
             <div class="navbar-nav">
-                <a th:href="@{/}" th:class="'nav-link ' + ${homeLink}">Domů</a>
-                <a th:href="@{/foods}" th:class="'nav-link ' + ${foodsLink}">Potraviny</a>
-<!--                visible only to users who are not logged-in-->
-                <a sec:authorize="isAnonymous()" th:href="@{/account/login}" th:class="'nav-link ' + ${loginLink}">Přihlásit</a>
-                <a sec:authorize="isAnonymous()" th:href="@{/account/register}" th:class="'nav-link ' + ${registerLink}">Zaregistrovat</a>
-<!--                visible only to users who are logged-int-->
+                <a th:href="@{/}" th:class="'nav-link ' + ${homeLink}">Domů</a> <!-- home link -->
+                <a th:href="@{/foods}" th:class="'nav-link ' + ${foodsLink}">Potraviny</a> <!-- link to foods page -->
+<!--                visible only to users who are NOT logged-in-->
+                <a sec:authorize="isAnonymous()" th:href="@{/account/login}" th:class="'nav-link ' + ${loginLink}">Přihlásit</a> <!-- login page link -->
+                <a sec:authorize="isAnonymous()" th:href="@{/account/register}" th:class="'nav-link ' + ${registerLink}">Zaregistrovat</a> <!-- registration page link -->
+<!--                visible only to users who ARE logged-int-->
+                <!-- default setting of spring boot requires logout to be done thgouh POST request -->
                 <form sec:authorize="isAuthenticated()"
                       method="post"
                       th:action="@{/account/logout}">
-                    <button class="nav-link">Odhlásit</button>
+                    <button class="nav-link">Odhlásit</button> <!-- logout button -->
                 </form>
             </div>
         </div>
@@ -37,9 +47,12 @@
 </header>
 
 
-
+<!--(reusable fragment)-->
+<!--author, link to license (creative commons)-->
+<!--the license relates to the content presented in the browser (not the source code, source code itself will be open source)-->
 <footer th:fragment="footer">
     <hr>
+    <!-- this is the only piece of html which is styled without bootstrap, because it is directly copied from creativecommons.org -->
     <p class="mx-5" xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><span
             property="dct:title">NutrDB App</span> by <span property="cc:attributionName">Marek Jiříček</span> is marked
         with <a href="http://creativecommons.org/publicdomain/zero/1.0?ref=chooser-v1" target="_blank"

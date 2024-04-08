@@ -1,17 +1,19 @@
+<!-- template: page for creating a new food entry -->
 <!DOCTYPE html>
 <html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
 <body class="min-vh-100 d-flex flex-column">
+<!--navbar-->
 <header th:replace="~{fragments/layout.html :: header (foodsLink='active')}"></header>
 
 <main class="my-5 mx-3 flex-fill">
     <h3 class="text-center mb-4">Vytvořit potravinu:</h3>
-
+    <!-- form for a new food entry creation -->
     <div th:replace="~{fragments/forms.html :: foodForm (formAction='/foods/create', formMethod='POST', buttonName='Vytvořit')}"></div>
 
     <p class="text-center">
-        <a th:href="@{/foods}">Zpět</a>
+        <a th:href="@{/foods}">Zpět</a> <!-- link back to food index -->
     </p>
 </main>
 

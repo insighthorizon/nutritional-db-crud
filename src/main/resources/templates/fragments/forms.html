@@ -1,96 +1,105 @@
+<!-- template fragments: forms for reuse -->
+<!-- (The file isn't used in standalone way.) -->
+<!--This version of the project doesn't need some of those to be defined as fragments, because each fragment is used only once.-->
+<!--I had multiple uses before, but I reduced the number of pages in the application.-->
+<!--But if I later extend the project, it will be useful again.-->
 <!DOCTYPE html>
 <html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
 <head></head>
 <body>
 
+<!--search form for searching foods by name (reusable fragment)-->
 <form th:fragment="searchForm"
       th:action="@{/foods}">
     <div class="input-group">
         <!-- submitting this form will result in get request with additional url request attribute
-        with the name given by the html attribute name
-         -->
-        <input class="form-control" type="search" name="search" placeholder="Vyhledat potravinu..."/>
-        <button class="btn btn-dark" type="submit">Hledat</button>
+        with the name given by the html attribute name-->
+        <input class="form-control" type="search" name="search" placeholder="Vyhledat potravinu..."/> <!-- search field -->
+        <button class="btn btn-dark" type="submit">Hledat</button> <!-- search button -->
     </div>
 </form>
 
+<!--form for food editing and new food creation (reusable fragment)-->
+<!-- working with the foodDTO object -->
+<!-- the fragment has parameters for choice of the form action, method and name of the submit button -->
+<!--Since the form fields are validated in the model, each field shows possible feedback if the validation fails-->
 <div th:fragment="foodForm (formAction, formMethod, buttonName)" class="row justify-content-center">
     <form class="col-auto container"
           th:method="${formMethod}"
           th:action="@{${formAction}}"
           th:object="${foodDTO}">
-        <div class="row align-items-center">
+        <div class="row align-items-center"> <!-- name of the food -->
             <label for="name" class="col form-label">Název potraviny:</label>
             <div class="col">
                 <input th:field="*{name}" id="name" type="text" class="form-control" autocomplete="on"/>
-                <small th:errors="*{name}" class="text-danger"></small>
+                <small th:errors="*{name}" class="text-danger"></small> <!-- validaton error message -->
             </div>
         </div>
 
-        <hr> <!-- hlavička "tabulky" -->
+        <hr> <!-- header of the form layout - legend for the "columns" -->
         <div class="row">
-            <div class="col fw-bold">Výživový údaj</div>
-            <div class="col fw-bold">na 100 g</div>
+            <div class="col fw-bold">Výživový údaj</div> <!-- name of the column containing nutrient name -->
+            <div class="col fw-bold">na 100 g</div> <!-- name of the column containign the quantity -->
         </div>
         <hr>
 
-        <div class="mb-2">
+        <div class="mb-2"> <!-- row that shows / accepts the kcal value -->
             <div class="row align-items-center">
                 <label for="energy" class="col form-label">Energetická hodnota:</label>
                 <div class="col">
-                    <div class="input-group">
+                    <div class="input-group"> <!-- input field -->
                         <input th:field="*{kcal}" type="number" step="1" min="0" id="energy" class="form-control"/>
-                        <span class="input-group-text">kcal</span>
+                        <span class="input-group-text">kcal</span> <!-- quantity unit -->
                     </div>
-                    <small th:errors="*{kcal}" class="text-danger"></small>
+                    <small th:errors="*{kcal}" class="text-danger"></small> <!-- validaton error message -->
                 </div>
             </div>
         </div>
 
-        <div class="mb-2">
+        <div class="mb-2"> <!-- row that shows /accepts the protein content value -->
             <div class="row align-items-center">
                 <label for="protein" class="col form-label">Bílkoviny</label>
                 <div class="col">
-                    <div class="input-group">
+                    <div class="input-group"> <!-- input field -->
                         <input th:field="*{protein}" type="number" step="0.1" min="0" id="protein" class="form-control"/>
-                        <span class="input-group-text">g</span>
+                        <span class="input-group-text">g</span> <!-- quantity unit -->
                     </div>
 
-                    <small th:errors="*{protein}" class="text-danger"></small>
+                    <small th:errors="*{protein}" class="text-danger"></small> <!-- validation error message -->
                 </div>
             </div>
 
         </div>
 
-        <div class="mb-2">
+        <div class="mb-2"> <!-- row that shows / accepts the carbohydrate content value -->
             <div class="row align-items-center">
                 <label for="carbs" class="col form-label">Sacharidy</label>
                 <div class="col">
-                    <div class="input-group">
+                    <div class="input-group"> <!-- input field -->
                         <input th:field="*{carbs}" type="number" step="0.1" min="0" id="carbs" class="form-control"/>
-                        <span class="input-group-text">g</span>
+                        <span class="input-group-text">g</span> <!-- quantity unit-->
                     </div>
 
-                    <small th:errors="*{carbs}" class="text-danger"></small>
+                    <small th:errors="*{carbs}" class="text-danger"></small> <!-- validaton error message -->
                 </div>
             </div>
         </div>
 
-        <div class="mb-4">
+        <div class="mb-4"> <!-- row that shows / accepts the fat content value -->
             <div class="row align-items-center">
                 <label for="fats" class="col form-label">Tuky</label>
                 <div class="col">
-                    <div class="input-group">
+                    <div class="input-group"> <!-- input field -->
                         <input th:field="*{fats}" type="number" step="0.1" min="0" id="fats" class="form-control"/>
-                        <span class="input-group-text">g</span>
+                        <span class="input-group-text">g</span> <!--quantity unit-->
                     </div>
 
-                    <small th:errors="*{fats}" class="text-danger"></small>
+                    <small th:errors="*{fats}" class="text-danger"></small> <!-- validaton error message -->
                 </div>
             </div>
         </div>
 
-        <div class="text-center">
+        <div class="text-center"> <!-- confirmation button -->
             <button class="btn btn-dark" type="submit" th:text="${buttonName}"></button>
         </div>
 

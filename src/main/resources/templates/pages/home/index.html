@@ -1,11 +1,14 @@
+<!-- template: home page -->
 <!DOCTYPE html>
 <html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
 <body class="min-vh-100 d-flex flex-column">
+<!-- navbar -->
 <header th:replace="~{fragments/layout.html :: header (homeLink='active')}"></header>
 
 <main class="my-5 mx-3 flex-fill">
+<!-- simple welcome info-->
     <h3 class="text-center mb-4">Databáze potravin</h3>
 
     <p class="text-center">Tato aplikace poskytuje jednoduchý přístup k databázi výživových údajů potravin.</p>

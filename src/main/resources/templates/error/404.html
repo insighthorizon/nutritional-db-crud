@@ -1,17 +1,20 @@
-<!-- 404 page - page not found -->
+<!-- template : 404 page -->
+<!-- user sees this page after trying to acces a page which doesn't exit -->
 <!DOCTYPE html>
 <html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
 <body class="min-vh-100 d-flex flex-column">
+<!--navbar-->
 <header th:replace="~{fragments/layout.html :: header}"></header>
 
 <main class="my-5 mx-3 flex-fill">
+    <!-- informing the user that he attempted to access nonexistent page -->
     <h2 class="text-center mb-4">Chyba <span th:text="${status}"></span></h2>
 
     <p class="text-center">Stránka nenalezena. Pokoušíte se přistoupit na adresu, která neexistuje.</p>
 
-    <p class="text-center">
+    <p class="text-center"> <!-- link to home page -->
         <a th:href="@{/}">Zpět na domovskou stránku</a>
     </p>
 

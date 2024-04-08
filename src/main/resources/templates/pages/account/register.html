@@ -1,8 +1,10 @@
+<!-- template: page for registering new account -->
 <!DOCTYPE html>
 <html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
 <body class="min-vh-100 d-flex flex-column">
+<!--navbar-->
 <header th:replace="~{fragments/layout.html :: header (registerLink='active')}"></header>
 
 <main class="my-5 mx-3 flex-fill row justify-content-center">
@@ -10,34 +12,35 @@
     <div class="col-auto">
         <h3>Registrace</h3>
 
-        <!-- Zde pozdeji budeme vypisovat, ze email, kterym se uzivatel pokousi prihlasit, je jiz pouzivan -->
+        <!-- error message in case the password and confirmation don't match -->
         <div class="py-2 flash-message message-error" th:text="${error}" th:if="${error}"></div>
 
         <hr/>
-
+<!--        new account registration form - working with userDTO object -->
+<!--Since the form fields are validated in the model, each field shows possible feedback if the validation fails-->
         <form th:action="@{/account/register}"
               method="post"
               th:object="${userDTO}">
-            <div class="mb-2">
+            <div class="mb-2"> <!-- user email -->
                 <label for="email" class="form-label">Uživatelský email</label>
                 <input id="email" name="email" type="email" class="form-control"
                        th:field="*{email}"/>
                 <small class="text-danger" th:errors="*{email}"></small> <!-- jakarta validation error message -->
             </div>
-            <div class="mb-2">
+            <div class="mb-2"> <!-- user password -->
                 <label for="password" class="form-label">Heslo</label>
                 <input id="password" name="password" type="password" class="form-control"
                        th:field="*{password}"/>
                 <small class="text-danger" th:errors="*{password}"></small> <!-- jakarta validation error message -->
             </div>
-            <div class="mb-4">
+            <div class="mb-4"> <!-- password confirmation -->
                 <label for="passwordConfirmation" class="form-label">Heslo znovu</label>
                 <input id="passwordConfirmation" name="passwordConfirmation" type="password" class="form-control"
                        th:field="*{passwordConfirmation}"/>
                 <small class="text-danger" th:errors="*{passwordConfirmation}"></small> <!-- jakarta validation error message -->
             </div>
 
-            <div class="text-center">
+            <div class="text-center"> <!-- registration confirmation button -->
                 <button type="submit" class="btn btn-dark">Zaregistrovat</button>
             </div>
         </form>
