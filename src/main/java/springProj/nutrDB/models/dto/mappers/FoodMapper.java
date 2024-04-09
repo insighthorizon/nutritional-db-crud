@@ -6,6 +6,9 @@ import org.mapstruct.MappingTarget;
 import springProj.nutrDB.data.entities.FoodEntity;
 import springProj.nutrDB.models.dto.FoodDTO;
 
+/**
+ * (saving us typing of calls to all the getters and setters)
+ */
 
 // using my own custom mapper to convert between macros
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)

@@ -14,33 +14,49 @@ import springProj.nutrDB.models.dto.mappers.FoodMapper;
 import springProj.nutrDB.models.exceptions.FoodNotFoundException;
 import springProj.nutrDB.models.services.FoodService;
 
-
+/**
+ * Specifies how to handle http requests at "/foods/**" URL addresses.
+ */
 @Controller
 @RequestMapping("/foods")
 public class FoodsController {
-    /**
-     * max size of one page in food listing
-     */
 
+    /**
+     * The controller interacts with the model (MVC) through service;
+     * Autowired - instance provided by dependency injection.
+     */
     @Autowired
     private FoodService foodService;
 
+    /**
+     * For converting between FoodEntity and FoodDTO and updating one based on the other;
+     * Autowired - instance provided by dependency injection.
+     */
     @Autowired
     private FoodMapper foodMapper;
 
-
+    /**
+     * Handles GET requests at "/foods" by attempting to load a requested page of foods from the database
+     * and subsequently rendering those in /foods/index.html template.
+     * @param sortAttribute Food attribute by which to sort displayed foods;
+     *                      Passed as URL parameter (@RequestParam).
+     * @param searchedFoodName Substring required in food name of all foods being displayed;
+     *                         (Empty string is substring of every string);
+     *                         Passed as URL parameter (@RequestParam).
+     * @param currentPageNumber Number of the requested page;
+     *                          Passed as URL parameter (@RequestParam).
+     * @param model Data being exposed to the view. Contains the list of displayed foods and more.
+     * @return Reference to the /foods/index.html template.
+     */
     @GetMapping
     public String renderIndex(
             @RequestParam(value = "sort", required = false) String sortAttribute,
             @RequestParam(name = "search", defaultValue = "") String searchedFoodName,
             @RequestParam(name = "page", defaultValue = "1") int currentPageNumber,
             Model model) {
-
-        final int PAGE_SIZE = 10;
-
 // add test data
 //        FoodDTO food = new FoodDTO();
-//        for (int i = 0; i < 27; i++) {
+//        for (int i = 0; i < 26; i++) {
 //            char c = (char)('a' + i);
 //            String string = Character.toString('a' + i);
 //            string = string + string + string + string;
@@ -53,8 +69,11 @@ public class FoodsController {
 //            foodService.create(food);
 //        }
 
+        final int PAGE_SIZE = 10; // max size of one page for pagination in food entries
+
         Page foodsPage = foodService.getPage(currentPageNumber, PAGE_SIZE, searchedFoodName, sortAttribute);
 
+        // making data avaiable to the template (view)
         model.addAttribute("foods", foodsPage.getContent());
         model.addAttribute("currentPageNumber", foodsPage.getNumber() + 1);
         model.addAttribute("totalPages", foodsPage.getTotalPages());
@@ -64,10 +83,17 @@ public class FoodsController {
         return "/pages/foods/index";
     }
 
-
+    /**
+     * Handles GET request at "/foods/create" by rendering the /foods/create.html tempalte;
+     * Available only to authenticated users with role "ROLE_USER" or "ROLE_ADMIN" (@Secured).
+     * @param foodDTO Either empty or data previously entered by the user, now to be rendered in the template;
+     *                It will be non-empty only if validation in previous create attempt failed;
+     *                (@ModelAttribute makes it avaiable in the view template.)
+     * @return reference to the /foods/create.html tempalte
+     */
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @GetMapping("create")
-    public String renderCreateForm(@ModelAttribute FoodDTO food) {
+    public String renderCreateForm(@ModelAttribute FoodDTO foodDTO) {
         return "/pages/foods/create";
     }
 
