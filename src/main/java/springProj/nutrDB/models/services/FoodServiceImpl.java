@@ -75,7 +75,7 @@ public class FoodServiceImpl implements FoodService {
     private FoodEntity getFoodOrThrow(long foodId) {
         return foodRepository
                 .findById(foodId)
-                .orElseThrow(() -> new FoodNotFoundException());
+                .orElseThrow(() -> new FoodNotFoundException()); // This would happen if the original entry was deleted before the request for this could be finished
     }
 
     @Override

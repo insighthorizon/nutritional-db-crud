@@ -50,15 +50,16 @@ public class AccountController {
     }
 
     /**
-     * Handles POST request at "/account/register" URL by validating user-provided data
-     * and attempting to create a new account;
+     * Handles POST request at "/account/register" URL by attempting to create a new account
+     * if the user data has been validated without erros and informs the client about the resutl.
      * (The validation is performed before this method is even reached. But it is specified here
      * through @Valid that it has to happen.)
      * @param userDTO Validated user registration data received from the registration form (view);
+     *                DTO is data not saved in database yet or a copy of actual database entry;
      *                (@ModelAttribute makes it avaiable in the view template.)
      * @param result Result of validation
-     * @param redirectAttributes message sent to redirect view
-     * @return a reference to a template to render (or redirection)
+     * @param redirectAttributes Will contain the result message sent to a template this method may redirect to.
+     * @return A redirection to login page or reference to template to render.
      */
     @PostMapping("register")
     public String register(
@@ -67,7 +68,7 @@ public class AccountController {
             RedirectAttributes redirectAttributes
     ) {
         if (result.hasErrors()) // check for validation errors
-            return renderRegister(userDTO);
+            return renderRegister(userDTO); // DTO will automatically contain the error messages (bean validation API)
 
         try { // attempt to add a new user into the database
             userService.create(userDTO, false);
@@ -80,7 +81,7 @@ public class AccountController {
             return "/pages/account/register";
         }
 
-        // The account was succesfully created.
+        // The account was succesfully created. Produce an appropriate response to the client.
         redirectAttributes.addFlashAttribute("success", "Uživatel zaregistrován.");
         return "redirect:/account/login";
     }

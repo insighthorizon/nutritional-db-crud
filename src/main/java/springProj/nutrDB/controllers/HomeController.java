@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
     /**
      * Handle GET request at "/" URL by rendering index.html
-     * @return reference to the index.tml template
+     * @return Reference to the index.tml template.
      */
     @GetMapping("/")
     public String renderIndex() {
