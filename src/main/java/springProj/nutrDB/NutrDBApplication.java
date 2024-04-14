@@ -11,6 +11,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class NutrDBApplication {
 
     /**
+     * No dependencies
+     */
+    public NutrDBApplication() {
+    }
+
+    /**
      * Main method launches the Spring Boot application.
      * @param args command line arguments
      */

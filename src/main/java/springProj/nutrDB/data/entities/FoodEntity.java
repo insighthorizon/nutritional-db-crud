@@ -7,6 +7,11 @@ import java.math.BigDecimal;
 
 @Entity
 public class FoodEntity {
+
+    /**
+     * TODO provide parameter-less constructor
+     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Myslim ze to znamena auto increment v MariaDB
     private long foodId;

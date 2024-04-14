@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
     /**
+     * No dependencies
+     */
+    public HomeController() {
+    }
+
+    /**
      * Handle GET request at "/" URL by rendering index.html
      * @return Reference to the index.tml template.
      */

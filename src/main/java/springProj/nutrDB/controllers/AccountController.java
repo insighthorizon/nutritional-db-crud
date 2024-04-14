@@ -23,7 +23,8 @@ public class AccountController {
 
     /**
      * The controller interacts with the model (MVC) through service;
-     * Autowired (instance provided by dependency injection).
+     * Autowired (instance provided by dependency injection - field injection).
+     * TODO switch to constructor injection
      */
     @Autowired
     private UserService userService;

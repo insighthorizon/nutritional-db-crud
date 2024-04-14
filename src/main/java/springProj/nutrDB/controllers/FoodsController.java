@@ -22,8 +22,9 @@ import springProj.nutrDB.models.services.FoodService;
 public class FoodsController {
 
     /**
-     * The controller interacts with the model (MVC) through service;
-     * Autowired - instance provided by dependency injection.
+     * The controller interacts with the model (persistent data) through service (MVC);
+     * Autowired (instance provided by dependency injection - field injection).
+     * TODO switch to constructor injection
      */
     @Autowired
     private FoodService foodService;

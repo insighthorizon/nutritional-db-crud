@@ -10,6 +10,10 @@ import java.util.List;
 
 @Entity
 public class UserEntity implements UserDetails {
+    /**
+     * TODO implement parameter-less constructor
+     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;

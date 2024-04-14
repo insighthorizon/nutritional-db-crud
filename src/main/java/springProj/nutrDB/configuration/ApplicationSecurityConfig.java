@@ -2,6 +2,7 @@ package springProj.nutrDB.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.AbstractSecurityBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,11 +17,16 @@ import org.springframework.security.web.SecurityFilterChain;
 public class ApplicationSecurityConfig {
 
     /**
+     * No dependencies
+     */
+    public ApplicationSecurityConfig(){}
+
+    /**
      * Global authentication and authorization configuration;
      * (@Bean - This is how we specify Spring IoC should get its sole instance of SecurityFilterChain.)
      * @param http an object with methods for building security filter chain
      * @return security filter chain - resulting configuration applied to all http requests
-     * @throws Exception
+     * @throws Exception {@link AbstractSecurityBuilder#build() abstractSecurityBuilder::build} may throw.
      */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

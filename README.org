@@ -1,0 +1,8 @@
+* Project statement
+- Implement app for ..
+
+* Architecture
+- MVC
+
+* Tech stack
+- Spring Boot

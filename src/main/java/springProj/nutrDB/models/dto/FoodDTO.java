@@ -13,6 +13,10 @@ import java.math.BigDecimal;
 
 public class FoodDTO {
 
+    /**
+     * TODO create parameterless constructor
+     */
+
     private long foodId;
 
     @NotBlank(message = "Vyplňte název potraviny.")
