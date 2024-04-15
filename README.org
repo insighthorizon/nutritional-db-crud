@@ -1,8 +1,31 @@
-* Project statement
-- Implement app for ..
+* Project Purpose
+- A "CRUD" application for administration of database with nutritional data (listing, creation, update, deletion).
+- User interacts through a webpage (by default on address localhost:8080) in order to manipulate the table with nutritional data in MySQL (MariaDB).
+- Webpage provides registration, login and logout. Users have different rights for manipulating the database data depending on their user role.
+- Paging, searching, sorting.
+
+* Technologies used
+- JDK 21 (Java)
+- Maven 3.9.6
+- Spring Boot (spring-boot-starter-web)
+- Spring Security
+- Thymeleaf template system
+- HTML, Bootstrap
+
+* Runtime dependencies
+- JDK or JRE 21 (Java)
+- MariaDB (MySQL)
+- Apache Web Server (optional)
 
 * Architecture
 - MVC
+- Embedded servlet container Tomcat (spring-boot-starter-web)
 
-* Tech stack
-- Spring Boot
+* Documentation
+- Java comments follow the Javadoc convention and Javadoc can be fully generated
+- .html, .xml and .properties also have comments everywhere
+
+* Project structure hints
+pom.xml - Maven configuration (mainly dependencies for build)
+src/main/java - java source code
+src/main/resources - webpage (html) code and .properties for java
