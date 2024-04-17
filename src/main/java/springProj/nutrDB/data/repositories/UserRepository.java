@@ -19,8 +19,8 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
      * Spring Data JPA automatically generates implementation for this method:
      * Corresponding to the sql query "… where x.email = ?1";<br>
      * Source: <a href="https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html">Spring Doc</a>
-     * @param email TODO adfadfas
-     * @return ;k;lkj;lj
+     * @param email Found entry has to have this email.
+     * @return Container either holding a found user entity or null.
      */
     Optional<UserEntity> findByEmail(String email);
 }

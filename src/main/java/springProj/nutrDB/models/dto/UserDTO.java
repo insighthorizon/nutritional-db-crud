@@ -4,11 +4,11 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+/**
+ *
+ * TODO implement parameter-less constructor
+ */
 public class UserDTO {
-
-    /**
-     * TODO implement parameter-less constructor
-     */
 
     @Email(message = "Vyplňte validní email.")
     @NotBlank(message = "Vyplňte uživatelský email.")

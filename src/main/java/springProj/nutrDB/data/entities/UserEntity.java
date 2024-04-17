@@ -8,12 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Constructor: Default constructor
+ * TODO implement parameter-less constructor
+ */
 @Entity
 public class UserEntity implements UserDetails {
-    /**
-     * TODO implement parameter-less constructor
-     */
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;
@@ -67,9 +67,6 @@ public class UserEntity implements UserDetails {
         return userId;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
-    }
 
     public String getEmail() {
         return email;

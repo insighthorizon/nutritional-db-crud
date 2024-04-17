@@ -6,26 +6,38 @@
 
 * Technologies used
 - JDK 21 (Java)
-- Maven 3.9.6
+- Maven 3.9.6, IntelliJ 2024.1
 - Spring Boot (spring-boot-starter-web)
 - Spring Security
+- Spring Boot Validation - Hibernate (providing validation constraints against user-provided data)
+- Spring Boot Data JPA - Hibernate (providing persistence of the data layer)
 - Thymeleaf template system
 - HTML, Bootstrap
 
-* Runtime dependencies
-- JDK or JRE 21 (Java)
-- MariaDB (MySQL)
-- Apache Web Server (optional)
-
 * Architecture
-- MVC
-- Embedded servlet container Tomcat (spring-boot-starter-web)
+- Adhering to the MVC design pattern
+- Using Embedded servlet container Tomcat (provided by spring-boot-starter-web)
 
 * Documentation
 - Java comments follow the Javadoc convention and Javadoc can be fully generated
 - .html, .xml and .properties also have comments everywhere
 
-* Project structure hints
-pom.xml - Maven configuration (mainly dependencies for build)
-src/main/java - java source code
-src/main/resources - webpage (html) code and .properties for java
+* Project directory structure
+./pom.xml - Maven configuration (mainly dependencies for build)
+./src/main/java - java source code
+./src/main/resources - webpage (html) code and .properties for java
+
+* Prerequisites to run
+- JDK or JRE 21 (Java)
+- MariaDB (MySQL)
+- Apache Web Server
+
+* How to run
+1. Have Apache Web Server and MariaDB running (I used XAMPP).
+2. Make sure that mariadb url, username and password agree with those in ./src/main/resources/application.properties.
+By default, they are:
+spring.datasource.url=jdbc:mariadb://localhost:3306/nutr_db?createDatabaseIfNotExist=true
+spring.datasource.username=root
+spring.datasource.password=
+3. Open and run (build) the project in IntelliJ.
+4. To create an admin account, change the is_admin tag by directly acessing the database (I use phpMyAdmin).
