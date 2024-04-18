@@ -54,7 +54,10 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * Doc copied from org.springframework.security.core.userdetails.UserDetailsService:
+     * This is the method required by the UserDetailsService interface.
+     * UserDetailsService needs to be implemented so that spring security can use it for loading user data from the database.
+     * <br><br>
+     * Doc copied from org.springframework.security.core.userdetails.UserDetailsService:<br>
      * Locates the user based on the username. In the actual implementation, the search
      * may possibly be case sensitive, or case insensitive depending on how the
      * implementation instance is configured. In this case, the <code>UserDetails</code>

@@ -9,11 +9,17 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Constructor: Default constructor
- * TODO implement parameter-less constructor
+ * TODO doc
  */
 @Entity
 public class UserEntity implements UserDetails {
+
+    /**
+     * no dependencies, default field values<br>
+     * To avoid Javadoc warning. This is equivalent to auto-generated default constructor.
+     */
+    public UserEntity() {}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long userId;

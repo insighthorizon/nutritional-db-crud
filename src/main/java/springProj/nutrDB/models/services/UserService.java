@@ -5,7 +5,8 @@ import springProj.nutrDB.models.dto.UserDTO;
 
 /**
  * This interface specifies a service which exposes operations for manipulation of user data
- * (entities in the model layer) to the controller layer.
+ * (entities in the model layer) to the controller layer.<br>
+ * UserDetailsService needs to be implemented so that spring security can use it for loading user data from the database.
  */
 public interface UserService extends UserDetailsService {
 

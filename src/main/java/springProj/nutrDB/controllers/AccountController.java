@@ -15,7 +15,9 @@ import springProj.nutrDB.models.exceptions.PasswordsNotEqualException;
 import springProj.nutrDB.models.services.UserService;
 
 /**
- * Specifies how to handle http requests at "/account/**" URL addresses.
+ * Specifies how to handle http requests at "/account/**" URL addresses.<br>
+ * Note: Login has only GET mapping, because handling of the POST at /account/login is provided
+ * by the spring security based on the security configuration {@link springProj.nutrDB.configuration.ApplicationSecurityConfig#securityFilterChain}.
  */
 @Controller
 @RequestMapping("/account")

@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
     /**
-     * No dependencies
+     * No dependencies, no fields<br>
+     * To avoid Javadoc warning. This is equivalent to auto-generated default constructor.
      */
     public HomeController() {
     }

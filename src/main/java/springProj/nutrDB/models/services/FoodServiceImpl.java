@@ -92,7 +92,7 @@ public class FoodServiceImpl implements FoodService {
 
     /**
      * Private helper method for finding food entry by id and handling the case when the entry isn't found.
-     * This would happen for example if the original entry was deleted before the request for this could be finished.
+     * This would happen for example if multiple users access the database and the original entry was deleted before the request for this could be finished.
      *
      * If the optional container returned by foodRepository.findById() is "empty", then this method throws appropriate exception.
      * The exception is supposed to have its own exception handler in the controller.

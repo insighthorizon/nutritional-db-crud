@@ -17,7 +17,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class ApplicationSecurityConfig {
 
     /**
-     * No dependencies
+     * no dependencies, no fields<br>
+     * To avoid Javadoc warning. This is equivalent to auto-generated default constructor.
      */
     public ApplicationSecurityConfig(){}
 
@@ -36,15 +37,14 @@ public class ApplicationSecurityConfig {
                         .anyRequest()
                         .permitAll())
                 .formLogin(auth -> auth
-                        // we redirect unsigned user to login page
-                        .loginPage("/account/login")
-                        .loginProcessingUrl("/account/login")
+                        .loginPage("/account/login") // If client attemps something requiring atuhentication, he will be redirected to this address.
+                        .loginProcessingUrl("/account/login") // This tells spring security that POST at /account/login needs to be handled as login attempt
                         .defaultSuccessUrl("/foods?login", true) // URL parameter login gives information that we were sent to /foods after succesful login
                         .usernameParameter("email") // to receive username from the form field with the attribute name="email"
                         .passwordParameter("password") // to receive the password from the form field with the attribute name="password" (this line of code is redundant when name="password")
                         .permitAll()) // everyone will have access to login page
                 .logout(auth -> auth
-                        .logoutUrl("/account/logout")
+                        .logoutUrl("/account/logout") // we redirect user who logs otu to login page
                         .logoutSuccessUrl("/account/login?logout") // URL parameter tells us that we reached /account/login after succesful logout
                 )
                 .build();

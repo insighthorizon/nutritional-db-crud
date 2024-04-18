@@ -24,8 +24,8 @@ public interface FoodRepository extends CrudRepository<FoodEntity, Long>, Paging
      * to directly address a page (no skipping between pages).
      * @param searchedName Only entries containing this as substring in their name will be contained in the result.
      * @param pageRequest Specifies pagination and sorting of the result - like page size, page number, if sorting is used,
-     *                 what attribute to sort by ...
-     * @return
+     *                    what attribute to sort by ...
+     * @return resulting page of food entities
      */
     Page<FoodEntity> findByNameContaining(String searchedName, Pageable pageRequest);
 }

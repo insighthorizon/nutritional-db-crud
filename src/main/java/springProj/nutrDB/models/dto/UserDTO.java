@@ -5,10 +5,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 /**
- *
- * TODO implement parameter-less constructor
+ * TODO doc
  */
 public class UserDTO {
+
+    /**
+     * no dependencies, default field values<br>
+     * To avoid Javadoc warning. This is equivalent to auto-generated default constructor.
+     */
+    public UserDTO() {}
 
     @Email(message = "Vyplňte validní email.")
     @NotBlank(message = "Vyplňte uživatelský email.")

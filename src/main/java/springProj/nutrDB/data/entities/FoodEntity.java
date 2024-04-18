@@ -17,11 +17,16 @@ import java.math.BigDecimal;
  * Conversion between object and database row is based on ORM (Object-relational mapping)
  * and is provided by Jakarta Persistence API (Hibernate implementation). Both annotation and attribute data type
  * have an effect on how it is represented as a database column.<br>
- * Constructor: Default constructor.
- * TODO provide parameter-less constructor
  */
 @Entity
 public class FoodEntity {
+
+    /**
+     * no dependencies, default field values<br>
+     * To avoid Javadoc warning. This is equivalent to auto-generated default constructor.
+     */
+    public FoodEntity() { }
+
     /**
      * ID - primary key
      * represented as bigint(20), not null, auto_increment in SQL
