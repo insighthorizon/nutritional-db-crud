@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 /**
  * Represents one food entry in the persistence layer (one row of the database table - table structure).
  * A food has an id, name and nutritional content per 100 grams.
- * Nutritinal content consists of four values:<br>
+ * Nutritional content consists of four values:<br>
  * caloric content (kcal),<br>
  * protein content (grams),<br>
  * carbohydrate content (grams),<br>
@@ -16,7 +16,8 @@ import java.math.BigDecimal;
  * The annotations in this class specify representation of FoodEntity in the MySQL database. (See the private fields in source code.)<br>
  * Conversion between object and database row is based on ORM (Object-relational mapping)
  * and is provided by Jakarta Persistence API (Hibernate implementation). Both annotation and attribute data type
- * have an effect on how it is represented as a database column.<br>
+ * have an effect on how it is represented as a database column.
+ * A table database table with corresponding structure and name is automatically created if it doesn't exist.
  */
 @Entity
 public class FoodEntity {
@@ -29,10 +30,10 @@ public class FoodEntity {
 
     /**
      * ID - primary key
-     * represented as bigint(20), not null, auto_increment in SQL
+     * represented as primarky key, bigint, not null, auto_increment in SQL
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Myslim ze to znamena auto increment v MariaDB
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long foodId;
 
     /**

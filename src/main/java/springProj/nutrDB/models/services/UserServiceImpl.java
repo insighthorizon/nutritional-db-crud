@@ -13,35 +13,46 @@ import springProj.nutrDB.models.exceptions.DuplicateEmailException;
 import springProj.nutrDB.models.exceptions.PasswordsNotEqualException;
 
 /**
- * Implementation of {@link springProj.nutrDB.models.services.UserService}
+ * The only implementation of {@link springProj.nutrDB.models.services.UserService}
  */
 @Service
 public class UserServiceImpl implements UserService {
+
     /**
-     * This service manipulates the persistent data in model solely through this repository object.
-     * Autowired (instance provided by dependency injection - field injection).
-     * TODO switch to constructor injection
+     * Constructor used by Spring IoC container to instantiate this class and
+     * to inject dependencies (via constructor parameters).
+     * This class has only one constructor, so no @Autowired annotation needed.
+     * @param userRepository instance provided by dependency injection
+     * @param passwordEncoder instance provided by dependency injection
      */
-    @Autowired
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    /**
+     * This service is used to manipulate the persistent data in model solely through this repository object.
+     */
     private UserRepository userRepository;
 
     /**
-     * Autowired - instance provided by dependency injection.
+     * Needed for conversion from user provided password string to its hash encoding.
      */
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void create(UserDTO user, boolean isAdmin) {
-        if (!user.getPassword().equals(user.getPasswordConfirmation())) // check if password equals confirmation
+    public void create(UserDTO user, boolean isAdmin) throws PasswordsNotEqualException, DuplicateEmailException {
+        if (!user.getPassword().equals(user.getPasswordConfirmation())) // check if password string equals the confirmation string
             throw new PasswordsNotEqualException();
 
         UserEntity userEntity = new UserEntity();
         // transfer the data from DTO to entity
         userEntity.setEmail(user.getEmail());
+        // convert the user provided password string to its hash using the PasswordEncoder (BCrypt)
+        // we store hash, not the user provided password string
         userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
         userEntity.setAdmin(isAdmin);
 
@@ -54,19 +65,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * This is the method required by the UserDetailsService interface.
      * UserDetailsService needs to be implemented so that spring security can use it for loading user data from the database.
-     * <br><br>
-     * Doc copied from org.springframework.security.core.userdetails.UserDetailsService:<br>
-     * Locates the user based on the username. In the actual implementation, the search
-     * may possibly be case sensitive, or case insensitive depending on how the
-     * implementation instance is configured. In this case, the <code>UserDetails</code>
-     * object that comes back may have a username that is of a different case than what
-     * was actually requested..
-     * @param username the username identifying the user whose data is required.
-     * @return a fully populated user record (never <code>null</code>)
-     * @throws UsernameNotFoundException if the user could not be found or the user has no
-     * GrantedAuthority
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

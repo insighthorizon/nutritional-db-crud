@@ -2,6 +2,7 @@ package springProj.nutrDB.models.services;
 
 import org.springframework.data.domain.Page;
 import springProj.nutrDB.models.dto.FoodDTO;
+import springProj.nutrDB.models.exceptions.FoodNotFoundException;
 
 import java.util.List;
 
@@ -40,19 +41,22 @@ public interface FoodService {
      * Get one food entry (as DTO) by its id.
      * @param foodId ID of the food entry we are trying to retrieve from the databse.
      * @return The food entry (as DTO) found.
+     * @throws FoodNotFoundException should be handled by a controller.
      */
-    FoodDTO getById(long foodId);
+    FoodDTO getById(long foodId) throws FoodNotFoundException;
 
     /**
      * Edit food entry in the database. Which entry? The parameter DTO contains ID as well as the new version of the data.
      * @param food DTO representing the new version of the food entry.
+     * @throws FoodNotFoundException should be handled by a controller.
      */
-    void edit(FoodDTO food);
+    void edit(FoodDTO food) throws FoodNotFoundException;
 
     /**
      * Delete food entry from the database by its ID.
      * @param foodId ID of the food we attempt to delete.
+     * @throws FoodNotFoundException should be handled by a controller.
      */
-    void remove(long foodId);
+    void remove(long foodId) throws FoodNotFoundException;
 
 }

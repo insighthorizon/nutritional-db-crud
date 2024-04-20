@@ -22,17 +22,25 @@ import java.util.stream.StreamSupport;
 public class FoodServiceImpl implements FoodService {
 
     /**
-     * Everything in this service reflects into the Model (persistance layer) through this repository.
-     * Autowired (instance provided by dependency injection - field injection).
-     * TODO switch to constructor injection
+     * Constructor used by Spring IoC container to instantiate this class and
+     * to inject dependencies (via constructor parameters).
+     * This class has only one constructor, so no @Autowired annotation needed.
+     * @param foodRepository instance provided by dependency injection
+     * @param foodMapper instance provided by dependency injection
      */
-    @Autowired
+    public FoodServiceImpl(FoodRepository foodRepository, FoodMapper foodMapper) {
+        this.foodRepository = foodRepository;
+        this.foodMapper = foodMapper;
+    }
+
+    /**
+     * Everything in this service reflects into the Model (persistance layer) through this repository.
+     */
     private FoodRepository foodRepository;
 
     /**
-     * Autowired - instance provided by dependency injection.
+     * For conversion between DTO and entity without the need to type all the getters/setters.
      */
-    @Autowired
     private FoodMapper foodMapper;
 
     @Override
@@ -93,33 +101,33 @@ public class FoodServiceImpl implements FoodService {
     /**
      * Private helper method for finding food entry by id and handling the case when the entry isn't found.
      * This would happen for example if multiple users access the database and the original entry was deleted before the request for this could be finished.
-     *
+     * <br>
      * If the optional container returned by foodRepository.findById() is "empty", then this method throws appropriate exception.
      * The exception is supposed to have its own exception handler in the controller.
      * @param foodId ID of the food entry being requested
      * @return The food entity found.
      */
-    private FoodEntity getFoodOrThrow(long foodId) {
+    private FoodEntity getFoodOrThrow(long foodId) throws FoodNotFoundException{
         return foodRepository
                 .findById(foodId)
                 .orElseThrow(() -> new FoodNotFoundException());
     }
 
     @Override
-    public FoodDTO getById(long foodId) {
+    public FoodDTO getById(long foodId) throws FoodNotFoundException {
         FoodEntity fetchedEntity = getFoodOrThrow(foodId);
         return foodMapper.toFoodDTO(fetchedEntity);
     }
 
     @Override
-    public void edit(FoodDTO food) {
+    public void edit(FoodDTO food) throws FoodNotFoundException{
         FoodEntity fetchedEntity = getFoodOrThrow(food.getFoodId());
         foodMapper.updateFoodEntity(food, fetchedEntity);
         foodRepository.save(fetchedEntity);
     }
 
     @Override
-    public void remove(long foodId) {
+    public void remove(long foodId) throws FoodNotFoundException{
         FoodEntity fetchedEntity = getFoodOrThrow(foodId);
         foodRepository.delete(fetchedEntity);
     }

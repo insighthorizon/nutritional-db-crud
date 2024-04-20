@@ -24,11 +24,18 @@ import springProj.nutrDB.models.services.UserService;
 public class AccountController {
 
     /**
-     * The controller interacts with the model (MVC) through service;
-     * Autowired (instance provided by dependency injection - field injection).
-     * TODO switch to constructor injection
+     * Constructor used by Spring IoC container to instantiate this class and
+     * to inject dependencies (via constructor parameters).
+     * This class has only one constructor, so no @Autowired annotation needed.
+     * @param userService instance provided by dependency injection
      */
-    @Autowired
+    public AccountController(UserService userService) {
+        this.userService = userService;
+    }
+
+    /**
+     * The controller interacts with the model (MVC) through service;
+     */
     private UserService userService;
 
     /**

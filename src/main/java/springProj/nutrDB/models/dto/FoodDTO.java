@@ -6,8 +6,8 @@ import java.math.BigDecimal;
 
 /**
  * Defines the Data-transfer object for FoodEntity - for transfering data between model and view. It's structure reflects {@link springProj.nutrDB.data.entities.FoodEntity}.<br><br>
- * The annotations on private fields of this class specify validation of the user intput together with error messages
- * about when the validation constraint gets broken.
+ * The annotations on private fields of this class specify validation constraints of the user intput together with error messages
+ * about when the validation constraint gets broken. WHEN validation is applied is defined by another annotation in a controller.<br>
  * - functionality provided by Jakarta Validation API (Hibernate implementation).
  * TODO validate consistency of the entire food (total being less than 100 g, kcal matching gram values) - probably by using Cross-parameter constraint (implementing own validator). See
  * <a href="https://docs.jboss.org/hibernate/validator/8.0/reference/en-US/html_single/#section-cross-parameter-constraints">Hibernate docs</a>.
@@ -20,7 +20,7 @@ public class FoodDTO {
     public FoodDTO() {}
 
     /**
-     * ID - primary key in the database table
+     * ID (primary key in the database table)
      */
     private long foodId;
 
