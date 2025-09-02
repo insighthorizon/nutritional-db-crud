@@ -24,15 +24,24 @@
 2. cd nutritional-db-crud
 3. docker compose up -d
 4. ./mvnw spring-boot:run # on linux
+   
     mvnw.cmd spring-boot:run # on Windows
+    
     (or use IntelliJ Idea)
 5. To interact through the user interface visit:
+   
     http://localhost:8080
 6. There is now also Adminer running for direct DB access:
+   
     http://localhost:8081
+    
     Server: mariadb
+    
     Username: root
+    
     Password: secret
+    
     Database: nutr_db
+    
    (According to application.properties)
 7. To upgrade an account to admin, change the is_admin boolean tag to true (directly from within Adminer)
