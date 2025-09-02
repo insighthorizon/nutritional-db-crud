@@ -8,42 +8,31 @@
 [[./showcase/food_edit.PNG]]
 [[./showcase/account_login.PNG]]
 
-
-* Technologies used
-- JDK 21 (Java)
-- Maven 3.9.6, IntelliJ 2024.1
-- Spring Boot (spring-boot-starter-web)
-- Spring Security (for user authentication and authorizaiton)
-- Spring Boot Validation - Hibernate (providing validation constraints against user-provided data)
-- Spring Boot Data JPA - Hibernate (providing persistence of the data layer)
+* Frameworks / Libraries
+- Spring Boot (MVC, Tomcat)
+- Hibernate
 - Thymeleaf template system
-- HTML, Bootstrap
-
-* Architecture
-- Adhering to the MVC design pattern
-- Using Embedded servlet container Tomcat (provided by spring-boot-starter-web)
-
-* Documentation
-- Java comments follow the Javadoc convention and Javadoc can be fully generated.
-- .html, .xml and .properties files are also fully commented.
-
-* Project directory structure
-./pom.xml - Maven configuration (mainly dependencies for build)
-
-
-./src/main/java - java source code
-
-
-./src/main/resources - webpage (html) code and .properties for java
+- HTML with Bootstrap
 
 * Prerequisites to run
-- JDK or JRE 21 (Java)
-- MariaDB (MySQL)
-- Apache Web Server
+- Java 21
+- Maven or IntelliJ Idea
+- Docker Engine
 
 * How to run
-1. Have Apache Web Server and MariaDB running (I used XAMPP).
-2. Make sure that mariadb url, username and password agree with spring.datasource.* in ./src/main/resources/application.properties. The default user is root and password empty.
-3. Open and run (build) the project in IntelliJ.
-4. To create an admin account, change the is_admin tag by directly acessing the database (I use phpMyAdmin).
-
+1. git clone https://github.com/insighthorizon/nutritional-db-crud.git
+2. cd nutritional-db-crud
+3. docker compose up -d
+4. ./mvnw spring-boot:run # on linux
+    mvnw.cmd spring-boot:run # on Windows
+    (or use IntelliJ Idea)
+5. To interact through the user interface visit:
+    http://localhost:8080
+6. There is now also Adminer running for direct DB access:
+    http://localhost:8081
+    Server: mariadb
+    Username: root
+    Password: secret
+    Database: nutr_db
+   (According to application.properties)
+7. To upgrade an account to admin, change the is_admin boolean tag to true (directly from within Adminer)
