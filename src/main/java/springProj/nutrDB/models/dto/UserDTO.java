@@ -63,6 +63,7 @@ public class UserDTO {
      * validation contraints: has to be an email address, can't be just blank chars
      * @param email users email
      */
+    @SuppressWarnings("unused")
     public void setEmail(String email) {
         this.email = email;
     }
@@ -105,6 +106,7 @@ public class UserDTO {
      * (Yes, that's short. This is a test/demo application.)
      * @param passwordConfirmation pass confirmation
      */
+    @SuppressWarnings("unused")
     public void setPasswordConfirmation(String passwordConfirmation) {
         this.passwordConfirmation = passwordConfirmation;
     }

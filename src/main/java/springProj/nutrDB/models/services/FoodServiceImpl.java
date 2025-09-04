@@ -1,6 +1,5 @@
 package springProj.nutrDB.models.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -36,12 +35,12 @@ public class FoodServiceImpl implements FoodService {
     /**
      * Everything in this service reflects into the Model (persistance layer) through this repository.
      */
-    private FoodRepository foodRepository;
+    private final FoodRepository foodRepository;
 
     /**
      * For conversion between DTO and entity without the need to type all the getters/setters.
      */
-    private FoodMapper foodMapper;
+    private final FoodMapper foodMapper;
 
     @Override
     public void create(FoodDTO food){
@@ -54,7 +53,7 @@ public class FoodServiceImpl implements FoodService {
     public List<FoodDTO> getAll() {
         return StreamSupport // first conversion to stream: https://www.baeldung.com/java-iterable-to-stream
                 .stream(foodRepository.findAll().spliterator(), false)
-                .map(x -> foodMapper.toFoodDTO(x))
+                .map(foodMapper::toFoodDTO)
                 .toList();
     }
 
@@ -95,7 +94,7 @@ public class FoodServiceImpl implements FoodService {
             totalPages = page.getTotalPages();
         }
 
-        return page.map(x -> foodMapper.toFoodDTO(x)); // mapping the entity page to dto page
+        return page.map(foodMapper::toFoodDTO); // mapping the entity page to dto page
     }
 
     /**
@@ -110,7 +109,7 @@ public class FoodServiceImpl implements FoodService {
     private FoodEntity getFoodOrThrow(long foodId) throws FoodNotFoundException{
         return foodRepository
                 .findById(foodId)
-                .orElseThrow(() -> new FoodNotFoundException());
+                .orElseThrow(FoodNotFoundException::new);
     }
 
     @Override

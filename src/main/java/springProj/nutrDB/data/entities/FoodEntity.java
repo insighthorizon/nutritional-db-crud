@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 /**
  * Represents one food entry in the persistence layer (one row of the database table - table structure).
- * A food has an id, name and nutritional content per 100 grams.
+ * A food entity has an id, name and nutritional content per 100 grams.
  * Nutritional content consists of four values:<br>
  * caloric content (kcal),<br>
  * protein content (grams),<br>

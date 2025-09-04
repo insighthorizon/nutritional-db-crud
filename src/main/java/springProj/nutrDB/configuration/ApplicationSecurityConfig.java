@@ -51,7 +51,7 @@ public class ApplicationSecurityConfig {
     }
 
     /**
-     * Creates instance of PasswordEncoder for IoC dependency injection;
+     * Creates instance of PasswordEncoder for IoC dependency injection in UserService;
      * We use BCrypt for encoding (hashing) passwords.;
      * (@Bean - This is how we specify Spring IoC should get its sole instance of PasswordEncoder.)
      * @return instance of PasswordEncoder

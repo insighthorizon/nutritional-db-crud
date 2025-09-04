@@ -1,7 +1,6 @@
 package springProj.nutrDB.controllers;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +35,7 @@ public class AccountController {
     /**
      * The controller interacts with the model (MVC) through service;
      */
-    private UserService userService;
+    private final UserService userService;
 
     /**
      * Handles GET request at "/account/login" URL by rendering login.html

@@ -1,6 +1,5 @@
 package springProj.nutrDB.models.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -33,12 +32,12 @@ public class UserServiceImpl implements UserService {
     /**
      * This service is used to manipulate the persistent data in model solely through this repository object.
      */
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     /**
      * Needed for conversion from user provided password string to its hash encoding.
      */
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * {@inheritDoc}

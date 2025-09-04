@@ -22,14 +22,7 @@ public class NutrDBApplication {
      * @param args command line arguments
      */
     public static void main(String[] args) {
-// create test BCrypt hash:
-//        final String TEST_PASSWORD = "12345";
-//        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//        System.out.println("Test BCrypt hash for password \"" + TEST_PASSWORD + "\":");
-//        System.out.println(encoder.encode(TEST_PASSWORD));
-
         SpringApplication.run(NutrDBApplication.class, args);
-
     }
 }
 

@@ -114,6 +114,7 @@ public class UserEntity implements UserDetails {
      * represented as primary key, bigint, not null, auto_increment in SQL
      * @return user ID
      */
+    @SuppressWarnings("unused")
     public long getUserId() {
         return userId;
     }
@@ -123,6 +124,7 @@ public class UserEntity implements UserDetails {
      * represented as unique, varchar(255), not null in SQL
      * @return user email
      */
+    @SuppressWarnings("unused")
     public String getEmail() {
         return email;
     }
@@ -152,6 +154,7 @@ public class UserEntity implements UserDetails {
      * represented as bit, not null in SQL
      * @return admin role flag
      */
+    @SuppressWarnings("unused")
     public boolean isAdmin() {
         return isAdmin;
     }

@@ -1,7 +1,6 @@
 package springProj.nutrDB.controllers;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -36,12 +35,12 @@ public class FoodsController {
     /**
      * The controller interacts with the model (persistent data) through service (MVC);
      */
-    private FoodService foodService;
+    private final FoodService foodService;
 
     /**
      * For converting between FoodEntity and FoodDTO and updating one based on the other;
      */
-    private FoodMapper foodMapper;
+    private final FoodMapper foodMapper;
 
     /**
      * Handles GET requests at "/foods" URL by attempting to load a requested page of foods from the database
@@ -192,14 +191,6 @@ public class FoodsController {
         return "redirect:/foods";
     }
 
-    /**
-     * Handles GET request at the "/foods/detail/{foodId}" URL address by renderin gthe /foods/detail.html template;
-     * The URL contains the id of the food as a path variable (@PathVariable).
-     * (@ModelAttribute exposes the food data to the rendered template (view).)
-     * @param foodId ID of the food selected for deletion.
-     * @param foodDTO Data of the selected food.
-     * @return Reference to the /foods/detail.html template.
-     */
     /**
      * Handles GET request at the "/foods/detail/{foodId}" URL address by renderin gthe /foods/detail.html template;
      * The URL contains the id of the food as a path variable (@PathVariable).

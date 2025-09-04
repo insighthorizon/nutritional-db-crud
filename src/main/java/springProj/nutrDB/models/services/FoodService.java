@@ -23,6 +23,7 @@ public interface FoodService {
      * Get all food entries from the database.
      * @return List of all foods (DTO) found in the database.
      */
+    @SuppressWarnings("unused")
     List<FoodDTO> getAll();
 
     /**
