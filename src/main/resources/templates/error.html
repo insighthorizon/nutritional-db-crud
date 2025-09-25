@@ -9,23 +9,23 @@
 
 <main class="my-5 mx-3 flex-fill">
     <!-- telling the user that an error occured -->
-    <h2 class="text-center mb-4">Chyba <span th:text="${status}"></span></h2>
+    <h2 class="text-center mb-4">Error <span th:text="${status}"></span></h2>
 
-    <p class="text-center">Asi nastalo něco, s čím vývojář nepočítal.</p>
+    <p class="text-center">Something unexpected by the developers of the appliccation happened.</p>
 
     <p class="text-center">
-        <a th:href="@{/}">Zpět na domovskou stránku</a> <!-- link to home page -->
+        <a th:href="@{/}">Return to home page</a> <!-- link to home page -->
     </p>
 
     <hr/>
 
-    <h5>Popis chyby (Pro ladění. U release verze bychom to uživateli neměli ukazovat.) :</h5>
+    <h5>Error description (Only for debug. Shouldn't show up in production.):</h5>
     <!-- info about the error that occured -->
     <!-- this shouldn't be in a production version of application, but this is just a demo so why not-->
     <p th:text="${status} + ' ' + ${error}"></p>
     <p th:text="${message}"></p>
-    <p>V čase: <span th:text="${timestamp}"></span></p>
-    <p>Na adrese: <span th:text="${path}"></span></p>
+    <p>Timestamp: <span th:text="${timestamp}"></span></p>
+    <p>Path: <span th:text="${path}"></span></p>
     <pre th:text="${trace}"></pre>
 
 </main>

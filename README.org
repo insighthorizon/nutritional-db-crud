@@ -8,18 +8,25 @@
 [[./showcase/food_edit.PNG]]
 [[./showcase/account_login.PNG]]
 
-* Frameworks / Libraries
+* Frameworks / Libraries used
 - Spring Boot (MVC, Tomcat)
 - Hibernate
 - Thymeleaf template system
 - HTML with Bootstrap
 
-* Prerequisites to run
+* How to run: Demo
+** Prerequisits
+- Docker Engine
+
+** TODO Instructions
+
+* How to run: Development
+** Prerequisites
 - Java 21
 - Maven or IntelliJ Idea
 - Docker Engine
 
-* How to run
+** Instructions
 1. git clone https://github.com/insighthorizon/nutritional-db-crud.git
 2. cd nutritional-db-crud
 3. docker compose up -d
@@ -45,3 +52,4 @@
     
    (According to application.properties)
 7. To upgrade an account to admin, change the is_admin boolean tag to true (directly from within Adminer)
+

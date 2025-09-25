@@ -10,12 +10,12 @@
 
 <main class="my-5 mx-3 flex-fill">
     <!-- informing the user that he attempted to access nonexistent page -->
-    <h2 class="text-center mb-4">Chyba <span th:text="${status}"></span></h2>
+    <h2 class="text-center mb-4">Error <span th:text="${status}"></span></h2>
 
-    <p class="text-center">Stránka nenalezena. Pokoušíte se přistoupit na adresu, která neexistuje.</p>
+    <p class="text-center">Page not found. You are trying to access invalid path.</p>
 
     <p class="text-center"> <!-- link to home page -->
-        <a th:href="@{/}">Zpět na domovskou stránku</a>
+        <a th:href="@{/}">Return to home page</a>
     </p>
 
 </main>
