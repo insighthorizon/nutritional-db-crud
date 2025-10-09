@@ -22,21 +22,22 @@
               method="post"
               th:object="${userDTO}">
             <div class="mb-2"> <!-- user email -->
-                <label for="email" class="form-label">Uživatelský email</label>
+                <label for="email" class="form-label">Your email address:</label>
                 <input id="email" name="email" type="email" class="form-control"
-                       th:field="*{email}"/>
+                       placeholder="jan.novak@example.com"
+                       th:field="*{email}" required/>
                 <small class="text-danger" th:errors="*{email}"></small> <!-- jakarta validation error message -->
             </div>
             <div class="mb-2"> <!-- user password -->
-                <label for="password" class="form-label">Heslo</label>
+                <label for="password" class="form-label">Password</label>
                 <input id="password" name="password" type="password" class="form-control"
-                       th:field="*{password}"/>
+                       th:field="*{password}" required/>
                 <small class="text-danger" th:errors="*{password}"></small> <!-- jakarta validation error message -->
             </div>
             <div class="mb-4"> <!-- password confirmation -->
-                <label for="passwordConfirmation" class="form-label">Heslo znovu</label>
+                <label for="passwordConfirmation" class="form-label">Password confirmation</label>
                 <input id="passwordConfirmation" name="passwordConfirmation" type="password" class="form-control"
-                       th:field="*{passwordConfirmation}"/>
+                       th:field="*{passwordConfirmation}" required/>
                 <small class="text-danger" th:errors="*{passwordConfirmation}"></small> <!-- jakarta validation error message -->
             </div>
 

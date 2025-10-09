@@ -15,7 +15,7 @@
 - HTML with Bootstrap
 
 * How to run: Demo
-** Prerequisits
+** Prerequisites
 - Docker Engine
 
 ** TODO Instructions
