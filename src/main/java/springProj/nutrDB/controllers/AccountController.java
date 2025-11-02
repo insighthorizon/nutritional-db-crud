@@ -82,16 +82,16 @@ public class AccountController {
         try { // attempt to add a new user into the database
             userService.create(userDTO, false);
         } catch (DuplicateEmailException e) {
-            result.rejectValue("email", "error", "Email je již zaregistrován.");
+            result.rejectValue("email", "error", "Email address already used.");
             return "/pages/account/register";
         } catch (PasswordsNotEqualException e) {
-            result.rejectValue("password", "error", "Hesla se neshodují");
-            result.rejectValue("passwordConfirmation", "error", "Hesla se neshodují");
+            result.rejectValue("password", "error", "Passwords do not match.");
+            result.rejectValue("passwordConfirmation", "error", "Passwords do not match.");
             return "/pages/account/register";
         }
 
         // The account was succesfully created. Produce an appropriate response to the client.
-        redirectAttributes.addFlashAttribute("success", "Uživatel zaregistrován.");
+        redirectAttributes.addFlashAttribute("success", "Succesfully registered.");
         return "redirect:/account/login";
     }
 

@@ -24,8 +24,8 @@ public class UserDTO {
      * user email (unique index in the databae table)
      * validation contraints: has to be an email address, can't be just blank chars
      */
-    @Email(message = "Vyplňte validní email.")
-    @NotBlank(message = "Vyplňte uživatelský email.")
+    @Email(message = "Enter a valid email address.")
+    @NotBlank(message = "Email address missing.")
     private String email;
 
     /**
@@ -33,8 +33,8 @@ public class UserDTO {
      * validation constraints: can't contain only blanks, minimum 5 characters long
      * (Yes, that's short. This is a test/demo application.)
      */
-    @NotBlank(message = "Vyplňte heslo.")
-    @Size(min = 5, message = "Heslo musí mít alespoň 5 znaků.")
+    @NotBlank(message = "Password missing.")
+    @Size(min = 5, message = "The password needs to have at least 5 characters.")
     private String password;
 
     /**
@@ -44,8 +44,8 @@ public class UserDTO {
      * validation constraints: can't be blank, minumum size of 5 characters
      * (Yes, that's short. This is a test/demo application.)
      */
-    @NotBlank(message = "Vyplňte heslo.")
-    @Size(min = 5, message = "Heslo musí mít alespoň 5 znaků.")
+    @NotBlank(message = "Password missing.")
+    @Size(min = 5, message = "The password needs to have at least 5 characters.")
     private String passwordConfirmation;
 
 

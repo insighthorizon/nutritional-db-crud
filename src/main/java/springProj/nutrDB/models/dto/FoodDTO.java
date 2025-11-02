@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 public class FoodDTO {
     /**
      * no dependencies, default field values<br>
-     * To avoid Javadoc warning. This is equivalent to auto-generated default constructor.
      */
     public FoodDTO() {}
 
@@ -28,44 +27,44 @@ public class FoodDTO {
      * name of the food
      * validation contraints: Can't be empty, can't be just blank chars, has to be under 20 characters
      */
-    @NotBlank(message = "Vyplňte název potraviny.")
-    @NotNull(message = "Vyplňte název potraviny.")
-    @Size(max = 20, message = "Název potraviny je příliš dlouhý.")
+    @NotBlank(message = "Food name is mandatory.")
+    @NotNull(message = "Food name is mandatory.")
+    @Size(max = 40, message = "Food name is too long.")
     private String name = "";
 
     /**
      * caloric content of the food - kcal per 100 grams of the food
      * validation constraints: has to be between 0 and 900
      */
-    @Min(value = 0, message = "Množství kalorií musí být kladné.")
-    @Max(value = 900, message = "Nelze přesáhnou 900 kcal na 100 g.")
+    @Min(value = 0, message = "Kcal value must be positive.")
+    @Max(value = 900, message = "Impossibly big kcal value.")
     private short kcal = 0;
 
     /**
      * protein content of the food - grams of protein per 100 grams of the food
      * validation constraints: 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part, min=0, max=100
      */
-    @DecimalMin(value = "0.0", message = "Množství gramů musí být kladné.")
-    @DecimalMax(value = "100.0", message = "Nelze přesáhnout 100 g.")
-    @Digits(integer = 3, fraction = 1, message = "Bude registrována maximálně třímístná hodnota.")
+    @DecimalMin(value = "0.0", message = "Gram value must be positive.")
+    @DecimalMax(value = "100.0", message = "Impossibly big gram value.")
+    @Digits(integer = 3, fraction = 1, message = "Maximum three digits can be saved.")
     private BigDecimal protein = BigDecimal.valueOf(0, 1);
 
     /**
      * carbohydrate content of the food - grams of carbohydrates per 100 grams of the food
      * validation constraints: 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part, min=0, max=100
      */
-    @DecimalMin(value = "0.0", message = "Množství gramů musí být kladné.")
-    @DecimalMax(value = "100.0", message = "Nelze přesáhnout 100 g.")
-    @Digits(integer = 3, fraction = 1, message = "Bude registrována maximálně třímístná hodnota.")
+    @DecimalMin(value = "0.0", message = "Gram value must be positive.")
+    @DecimalMax(value = "100.0", message = "Impossibly big gram value.")
+    @Digits(integer = 3, fraction = 1, message = "Maximum three digits can be saved.")
     private BigDecimal carbs = BigDecimal.valueOf(0, 1);
 
     /**
      * fat content of the food - grams of fat per 100 grams of the food
      * validation constraints: 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part, min=0, max=100
      */
-    @DecimalMin(value = "0.0", message = "Množství gramů musí být kladné.")
-    @DecimalMax(value = "100.0", message = "Nelze přesáhnout 100 g.")
-    @Digits(integer = 3, fraction = 1, message = "Bude registrována maximálně třímístná hodnota.")
+    @DecimalMin(value = "0.0", message = "Gram value must be positive.")
+    @DecimalMax(value = "100.0", message = "Impossibly big gram value.")
+    @Digits(integer = 3, fraction = 1, message = "Maximum three digits can be saved.")
     private BigDecimal fats = BigDecimal.valueOf(0, 1);
 
     /**

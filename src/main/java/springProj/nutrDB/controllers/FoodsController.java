@@ -131,7 +131,7 @@ public class FoodsController {
         foodService.create(foodDTO);
 
         // A new food entry was created, produce an appropriate response to the client.
-        redirectAttributes.addFlashAttribute("success", "Potravina vytvořena.");
+        redirectAttributes.addFlashAttribute("success", "Food created.");
         return "redirect:/foods";
     }
 
@@ -187,7 +187,7 @@ public class FoodsController {
         foodService.edit(foodDTO); // can throw FoodNotFoundException
 
         // A food entry was edited, produce an appropriate response to the client.
-        redirectAttributes.addFlashAttribute("success", "Potravina upravena.");
+        redirectAttributes.addFlashAttribute("success", "Food updated.");
         return "redirect:/foods";
     }
 
@@ -225,7 +225,7 @@ public class FoodsController {
         foodService.remove(foodId); // can throw FoodNotFoundException
 
         // The food entry was succesfuly deleted, report that to the client.
-        redirectAttributes.addFlashAttribute("success", "Potravina smazána.");
+        redirectAttributes.addFlashAttribute("success", "Food deleted.");
         return "redirect:/foods";
     }
 
@@ -238,7 +238,7 @@ public class FoodsController {
      */
     @ExceptionHandler({FoodNotFoundException.class})
     public String handleFoodNotFoundException (RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("error", "Potravina nenalezena.");
+        redirectAttributes.addFlashAttribute("error", "Food not found.");
         return "redirect:/foods";
     }
 
