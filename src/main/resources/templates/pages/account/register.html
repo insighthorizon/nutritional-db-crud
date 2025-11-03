@@ -1,6 +1,6 @@
 <!-- template: page for registering new account -->
 <!DOCTYPE html>
-<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
 <body class="min-vh-100 d-flex flex-column">
@@ -10,7 +10,7 @@
 <main class="my-5 mx-3 flex-fill row justify-content-center">
 
     <div class="col-auto">
-        <h3>Registrace</h3>
+        <h3>Registration</h3>
 
         <!-- error message in case the password and confirmation don't match -->
         <div class="py-2 flash-message message-error" th:text="${error}" th:if="${error}"></div>
@@ -24,7 +24,7 @@
             <div class="mb-2"> <!-- user email -->
                 <label for="email" class="form-label">Your email address:</label>
                 <input id="email" name="email" type="email" class="form-control"
-                       placeholder="jan.novak@example.com"
+                       placeholder="john.doe@example.com"
                        th:field="*{email}" required/>
                 <small class="text-danger" th:errors="*{email}"></small> <!-- jakarta validation error message -->
             </div>
@@ -42,7 +42,7 @@
             </div>
 
             <div class="text-center"> <!-- registration confirmation button -->
-                <button type="submit" class="btn btn-dark">Zaregistrovat</button>
+                <button type="submit" class="btn btn-dark">Register</button>
             </div>
         </form>
     </div>

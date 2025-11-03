@@ -1,6 +1,6 @@
 <!-- template: page for editing of a selected food entry -->
 <!DOCTYPE html>
-<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
 <body class="min-vh-100 d-flex flex-column">
@@ -8,12 +8,12 @@
 <header th:replace="~{fragments/layout.html :: header (foodsLink='active')}"></header>
 
 <main class="my-5 mx-3 flex-fill">
-    <h3 class="text-center mb-4">Upravit potravinu</h3>
+    <h3 class="text-center mb-4">Edit the food</h3>
 <!--    form for editing of the selected food entry-->
-    <div th:replace="~{fragments/forms.html :: foodForm (formAction='/foods/edit/' + ${foodId}, formMethod='PUT', buttonName='Upravit')}"></div>
+    <div th:replace="~{fragments/forms.html :: foodForm (formAction='/foods/edit/' + ${foodId}, formMethod='PUT', buttonName='Edit')}"></div>
 
     <p class="text-center">
-        <a th:href="@{/foods}">Zpět</a> <!-- link for returning to foods index -->
+        <a th:href="@{/foods}">Back</a> <!-- link for returning to foods index -->
     </p>
 </main>
 

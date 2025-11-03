@@ -1,6 +1,6 @@
 <!-- template: page for showing details of a particular food entry-->
 <!DOCTYPE html>
-<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
 <body class="min-vh-100 d-flex flex-column">
@@ -9,7 +9,7 @@
 
 <!--the actual details -->
 <main class="my-5 mx-3 flex-fill">
-    <h3 class="text-center">Detail potraviny</h3>
+    <h3 class="text-center">Food detail</h3>
 
 <!--    simple grid that displays contents of the foodDTO object-->
     <div class="row justify-content-center">
@@ -17,31 +17,31 @@
             <div class="row">
                 <h5 class="col" th:text="${foodDTO.name}"></h5> <!-- name of the food -->
                 <!-- link for editing of this food - visible only to admin accounts -->
-                <a sec:authorize="hasRole('ADMIN')" class="col text-end" th:href="@{'/foods/edit/' + ${foodDTO.foodId}}">Upravit</a>
+                <a sec:authorize="hasRole('ADMIN')" class="col text-end" th:href="@{'/foods/edit/' + ${foodDTO.foodId}}">Edit</a>
             </div>
             <hr>
             <div class="row"> <!-- header of the grid - legend for the "columns" -->
-                <div class="col fw-bold">Výživový údaj</div>
-                <div class="col fw-bold text-end">na 100 g</div>
+                <div class="col fw-bold">Nutritional value</div>
+                <div class="col fw-bold text-end">per 100 g</div>
             </div>
             <hr>
             <div class="row"> <!-- kcal content -->
-                <div class="col">Energetická hodnota</div>
+                <div class="col">Energy</div>
                 <div class="col text-end" th:text="${foodDTO.kcal} + ' kcal'"></div>
             </div>
             <hr>
             <div class="row"> <!-- protein content -->
-                <div class="col">Bílkoviny</div>
+                <div class="col">Protein</div>
                 <div class="col text-end" th:text="${foodDTO.protein} + ' g'"></div>
             </div>
             <hr>
             <div class="row"> <!-- carbohydrate content -->
-                <div class="col">Sacharidy</div>
+                <div class="col">Carbohydrates</div>
                 <div class="col text-end" th:text="${foodDTO.carbs} + ' g'"></div>
             </div>
             <hr>
             <div class="row"> <!-- fat content -->
-                <div class="col">Tuky</div>
+                <div class="col">Fat</div>
                 <div class="col text-end" th:text="${foodDTO.fats} + ' g'"></div>
             </div>
             <hr>
@@ -49,7 +49,7 @@
     </div>
 
     <p class="text-center">
-        <a th:href="@{/foods}">Zpět</a> <!-- back to foods index page -->
+        <a th:href="@{/foods}">Back</a> <!-- back to foods index page -->
     </p>
 </main>
 

@@ -4,7 +4,7 @@
 <!--I had multiple uses before, but I reduced the number of pages in the application.-->
 <!--But if I later extend the project, it will be useful again.-->
 <!DOCTYPE html>
-<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head></head>
 <body>
 
@@ -14,8 +14,8 @@
     <div class="input-group">
         <!-- submitting this form will result in get request with additional url request attribute
         with the name given by the html attribute name-->
-        <input class="form-control" type="search" name="search" placeholder="Vyhledat potravinu..."/> <!-- search field -->
-        <button class="btn btn-dark" type="submit">Hledat</button> <!-- search button -->
+        <input class="form-control" type="search" name="search" placeholder="Find a food..."/> <!-- search field -->
+        <button class="btn btn-dark" type="submit">Search</button> <!-- search button -->
     </div>
 </form>
 
@@ -29,36 +29,36 @@
           th:action="@{${formAction}}"
           th:object="${foodDTO}">
         <div class="row align-items-center"> <!-- name of the food -->
-            <label for="name" class="col form-label">Název potraviny:</label>
+            <label for="name" class="col form-label">Food name:</label>
             <div class="col">
                 <input th:field="*{name}" id="name" type="text" class="form-control" autocomplete="on"/>
-                <small th:errors="*{name}" class="text-danger"></small> <!-- validaton error message -->
+                <small th:errors="*{name}" class="text-danger"></small> <!-- validation error message -->
             </div>
         </div>
 
         <hr> <!-- header of the form layout - legend for the "columns" -->
         <div class="row">
-            <div class="col fw-bold">Výživový údaj</div> <!-- name of the column containing nutrient name -->
-            <div class="col fw-bold">na 100 g</div> <!-- name of the column containign the quantity -->
+            <div class="col fw-bold">Nutritional value</div> <!-- name of the column containing nutrient name -->
+            <div class="col fw-bold">per 100 g</div> <!-- name of the column containing the quantity -->
         </div>
         <hr>
 
         <div class="mb-2"> <!-- row that shows / accepts the kcal value -->
             <div class="row align-items-center">
-                <label for="energy" class="col form-label">Energetická hodnota:</label>
+                <label for="energy" class="col form-label">Energy</label>
                 <div class="col">
                     <div class="input-group"> <!-- input field -->
                         <input th:field="*{kcal}" type="number" step="1" min="0" id="energy" class="form-control"/>
                         <span class="input-group-text">kcal</span> <!-- quantity unit -->
                     </div>
-                    <small th:errors="*{kcal}" class="text-danger"></small> <!-- validaton error message -->
+                    <small th:errors="*{kcal}" class="text-danger"></small> <!-- validation error message -->
                 </div>
             </div>
         </div>
 
         <div class="mb-2"> <!-- row that shows /accepts the protein content value -->
             <div class="row align-items-center">
-                <label for="protein" class="col form-label">Bílkoviny</label>
+                <label for="protein" class="col form-label">Protein</label>
                 <div class="col">
                     <div class="input-group"> <!-- input field -->
                         <input th:field="*{protein}" type="number" step="0.1" min="0" id="protein" class="form-control"/>
@@ -73,28 +73,28 @@
 
         <div class="mb-2"> <!-- row that shows / accepts the carbohydrate content value -->
             <div class="row align-items-center">
-                <label for="carbs" class="col form-label">Sacharidy</label>
+                <label for="carbs" class="col form-label">Carbohydrates</label>
                 <div class="col">
                     <div class="input-group"> <!-- input field -->
                         <input th:field="*{carbs}" type="number" step="0.1" min="0" id="carbs" class="form-control"/>
                         <span class="input-group-text">g</span> <!-- quantity unit-->
                     </div>
 
-                    <small th:errors="*{carbs}" class="text-danger"></small> <!-- validaton error message -->
+                    <small th:errors="*{carbs}" class="text-danger"></small> <!-- validation error message -->
                 </div>
             </div>
         </div>
 
         <div class="mb-4"> <!-- row that shows / accepts the fat content value -->
             <div class="row align-items-center">
-                <label for="fats" class="col form-label">Tuky</label>
+                <label for="fats" class="col form-label">Fat</label>
                 <div class="col">
                     <div class="input-group"> <!-- input field -->
                         <input th:field="*{fats}" type="number" step="0.1" min="0" id="fats" class="form-control"/>
                         <span class="input-group-text">g</span> <!--quantity unit-->
                     </div>
 
-                    <small th:errors="*{fats}" class="text-danger"></small> <!-- validaton error message -->
+                    <small th:errors="*{fats}" class="text-danger"></small> <!-- validation error message -->
                 </div>
             </div>
         </div>

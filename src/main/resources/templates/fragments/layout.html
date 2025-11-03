@@ -1,17 +1,17 @@
-<!--template fragments: page layout - layoud used in every rendered page -->
+<!--template fragments: page layout - layout used in every rendered page -->
 <!--(not a standalone page)-->
 <!DOCTYPE html>
-<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <!-- page head contains page metadata and links to client dependencies (reusable fragment)-->
 <head th:fragment="head">
     <!-- metadata -->
     <meta charset="UTF-8">
-    <meta name="description" content="Nutricni databaze - cvicební projekt."/>
-    <meta name="keywords" content="cvičení projekt nutricni databaze spring boot mysql auatentifikace autorizace"/>
+    <meta name="description" content="Nutritional database - personal practice project."/>
+    <meta name="keywords" content="exercise project nutritional database spring boot mysql mariadb authentification authorization paging searching sorting"/>
     <meta name="author" content="Marek Jiricek"/>
 
-    <title>Nutriční databáze</title>
+    <title>Nutritional database</title>
 
     <!-- link to Bootstrap -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
@@ -28,17 +28,17 @@
         <div class="container-fluid">
             <a th:href="@{/}" class="navbar-brand">NutrDB App</a> <!-- logo and home link -->
             <div class="navbar-nav">
-                <a th:href="@{/}" th:class="'nav-link ' + ${homeLink}">Domů</a> <!-- home link -->
-                <a th:href="@{/foods}" th:class="'nav-link ' + ${foodsLink}">Potraviny</a> <!-- link to foods page -->
+                <a th:href="@{/}" th:class="'nav-link ' + ${homeLink}">Home</a> <!-- home link -->
+                <a th:href="@{/foods}" th:class="'nav-link ' + ${foodsLink}">Foods</a> <!-- link to foods page -->
 <!--                visible only to users who are NOT logged-in-->
-                <a sec:authorize="isAnonymous()" th:href="@{/account/login}" th:class="'nav-link ' + ${loginLink}">Přihlásit</a> <!-- login page link -->
-                <a sec:authorize="isAnonymous()" th:href="@{/account/register}" th:class="'nav-link ' + ${registerLink}">Zaregistrovat</a> <!-- registration page link -->
-<!--                visible only to users who ARE logged-int-->
-                <!-- default setting of spring boot requires logout to be done thgouh POST request -->
+                <a sec:authorize="isAnonymous()" th:href="@{/account/login}" th:class="'nav-link ' + ${loginLink}">Login</a> <!-- login page link -->
+                <a sec:authorize="isAnonymous()" th:href="@{/account/register}" th:class="'nav-link ' + ${registerLink}">Register</a> <!-- registration page link -->
+<!--                visible only to users who ARE logged-in -->
+                <!-- default setting of spring boot requires logout to be done through POST request -->
                 <form sec:authorize="isAuthenticated()"
                       method="post"
-                      th:action="@{/account/logout}">
-                    <button class="nav-link">Odhlásit</button> <!-- logout button -->
+                      th:action="@{/account/logout}"> <!-- post not good for RESTfulness -->
+                    <button class="nav-link">Logout</button> <!-- logout button -->
                 </form>
             </div>
         </div>

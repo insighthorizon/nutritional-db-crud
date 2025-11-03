@@ -1,8 +1,9 @@
 * Project Purpose
-- A "CRUD" application for administration of database with nutritional data (listing, creation, update, deletion).
-- User interacts through a webpage (by default on address localhost:8080) in order to manipulate the table with nutritional data in MySQL (MariaDB).
-- Webpage provides registration, login and logout. Users have different rights for manipulating the database data depending on their user role.
-- Paging, searching, sorting.
+- An application for administration of database with nutritional contents of foods (kcal, protein, ...).
+- View, create, update and delete foods through a web interface.
+- Handles paging, searching and sorting.
+- Has registration, login, logout and different user rights.
+
 
 [[./showcase/food_index.PNG]]
 [[./showcase/food_edit.PNG]]

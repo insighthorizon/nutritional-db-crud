@@ -3,7 +3,7 @@
 <!--for example, url address for deletion of a food supports only the DELETE method,-->
 <!--but it is possible for the user to attempt to access the URL (GET request) - which results in error 405-->
 <!DOCTYPE html>
-<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
 <body class="min-vh-100 d-flex flex-column">
@@ -12,12 +12,12 @@
 
 <main class="my-5 mx-3 flex-fill">
 <!--    informing the user that the action is not supported by the server -->
-    <h2 class="text-center mb-4">Chyba <span th:text="${status}"></span></h2>
+    <h2 class="text-center mb-4">Error <span th:text="${status}"></span></h2>
 
-    <p class="text-center">Nepodporovaná akce. Pokoušíte se provést akci, kterou server nepodporuje.</p>
+    <p class="text-center">Unsupported action. You are attempting an action not supported by the server.</p>
 
     <p class="text-center"> <!-- link to home page -->
-        <a th:href="@{/}">Zpět na domovskou stránku</a>
+        <a th:href="@{/}">Return to home page</a>
     </p>
 
 </main>

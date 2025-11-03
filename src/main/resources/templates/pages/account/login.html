@@ -1,6 +1,6 @@
 <!-- template: login page -->
 <!DOCTYPE html>
-<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
 <body class="min-vh-100 d-flex flex-column">
@@ -10,29 +10,29 @@
 <main class="my-5 mx-3 flex-fill row justify-content-center">
 
     <div class="col-auto">
-<!--        messages about succesful logout, succesful registration (user is redirected to login page after registration)-->
-        <div class="py-2 alert alert-success" th:if="${param.logout}">Uživatel byl odhlášen.</div>
+<!--        messages about successful logout, successful registration (user is redirected to login page after registration)-->
+        <div class="py-2 alert alert-success" th:if="${param.logout}">You have been logged out.</div>
         <div class="py-2 alert alert-success" th:if="${success}" th:text="${success}"></div>
 
-        <h3>Přihlášení</h3>
+        <h3>Login</h3>
         <hr/>
-<!--        message about wrong mail or password - this error is caught in service -->
-        <div class="py-2 alert alert-danger" th:if="${param.error}">Neplatný email nebo heslo.</div>
+<!--        message about wrong email or password - this error is caught in service -->
+        <div class="py-2 alert alert-danger" th:if="${param.error}">Invalid email or password.</div>
 
 <!--        login form-->
         <form th:action="@{/account/login}"
               method="post">
             <div class="mb-2">
-                <label for="email" class="form-label">Uživatelský email</label> <!--account email-->
+                <label for="email" class="form-label">User email</label> <!--account email-->
                 <input id="email" name="email" type="text" class="form-control"/>
             </div>
             <div class="mb-4">
-                <label for="password" class="form-label">Heslo</label> <!-- account password -->
+                <label for="password" class="form-label">Password</label> <!-- account password -->
                 <input id="password" name="password" type="password" class="form-control"/>
             </div>
 
             <div class="text-center">
-                <button type="submit" class="btn btn-dark">Přihlásit se</button> <!--login button-->
+                <button type="submit" class="btn btn-dark">Login</button> <!--login button-->
             </div>
         </form>
     </div>

@@ -1,6 +1,6 @@
 <!-- template: index page for interaction with the foods in the database -->
 <!DOCTYPE html>
-<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
 <body class="min-vh-100 d-flex flex-column">
@@ -8,17 +8,17 @@
 <header th:replace="~{fragments/layout.html :: header (foodsLink='active')}"></header>
 
 <main class="mt-3 mx-3 flex-fill">
-    <!-- flash messages for when food is created, deleted, edited or when a user succesfully logs in  -->
-    <!-- (user is redirected to this page after succesful login, new food creation or edit) -->
+    <!-- flash messages for when food is created, deleted, edited or when a user successfully logs in  -->
+    <!-- (user is redirected to this page after successful login, new food creation or edit) -->
     <!-- Error message is used when a food fails to get found in the database. -->
     <div class="py-2 alert alert-success" th:text="${success}" th:if="${success}"></div>
     <div class="py-2 alert alert-danger" th:text="${error}" th:if="${error}"></div>
-    <div class="py-2 alert alert-success" th:if="${param.login}">Uživatel přihlášen.</div>
+    <div class="py-2 alert alert-success" th:if="${param.login}">User logged-in.</div>
 
 
     <div class="row row-cols-auto align-items-center">
         <!-- link to the form for creation of new food entry -->
-        <a class="col me-5" th:href="@{/foods/create}">Vytvořit novou potravinu</a>
+        <a class="col me-5" th:href="@{/foods/create}">Create a new food</a>
 
         <div class="col">
             <!-- search bar -->
@@ -28,12 +28,12 @@
 
     <hr>
     <!-- we display either listing of all the foods or just search results -->
-    <h3 th:if="${#strings.isEmpty(searchedName) == true}">Všechny potraviny</h3>
-    <h3 th:if="${#strings.isEmpty(searchedName) == false}" th:text="'Výsledky vyhlednání &quot;' + ${searchedName} + '&quot;'"></h3>
+    <h3 th:if="${#strings.isEmpty(searchedName) == true}">All foods</h3>
+    <h3 th:if="${#strings.isEmpty(searchedName) == false}" th:text="'Search results &quot;' + ${searchedName} + '&quot;'"></h3>
     <!-- list of the displayed foods with pagination -->
     <div th:replace="~{fragments/lists.html :: foodList}"></div>
     <!-- cancel search query and go back to all foods -->
-    <a th:if="${#strings.isEmpty(searchedName) == false}" th:href="@{/foods}">Zpět na všechny potraviny</a>
+    <a th:if="${#strings.isEmpty(searchedName) == false}" th:href="@{/foods}">Back to all foods</a>
 
 </main>
 

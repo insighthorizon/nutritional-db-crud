@@ -4,17 +4,17 @@
 <!--I had multiple uses before (at multiple pages), but I reduced the number of pages in the application.-->
 <!--But if I later extend the project, it will be useful again.-->
 <!DOCTYPE html>
-<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head></head>
 <body>
 
 <!--element listing foods with pagination (reusable fragment)-->
 <!--The links in anchor elements are sort of complicated because they need to also transmit/preserve the search and sort option previously selected by the user-->
 <!--It is based on URL parameters.-->
-<!--I have the feeling that this reliance on passing parameters back and forth between client and server is not nice. But I was now focusing on just what I can do with spring boot without any javscript framework in frontend.-->
+<!--I have the feeling that this reliance on passing parameters back and forth between client and server is not nice. But I was now focusing on just what I can do with spring boot without any javascript framework in frontend.-->
 <div th:fragment="foodList" class="my-3 row justify-content-center">
     <!-- message in the case no foods were found -->
-    <h5 class="text-center text-secondary" th:if="${foods.isEmpty()}">Nebyly nalezeny žádné potraviny.</h5>
+    <h5 class="text-center text-secondary" th:if="${foods.isEmpty()}">No foods were found.</h5>
 
     <!-- table listing the foods found (if not empty) -->
     <div class="col-auto container" th:if="${!foods.isEmpty()}">
@@ -30,18 +30,18 @@
                 '/foods?page=' + ${currentPageNumber} +
                 '&search=' + ${searchedName} +
                 '&sort=name'}"
-                       scope="col">Název potraviny</a></th> <!-- food name column -->
+                       scope="col">Food name</a></th> <!-- food name column -->
                 <th><a th:href="@{
                 '/foods?page=' + ${currentPageNumber} +
                 '&search=' + ${searchedName} +
                 '&sort=kcal'}"
-                       scope="col">Energie na 100 g</a></th> <!-- food kcal column -->
+                       scope="col">Energy per 100 g</a></th> <!-- food kcal column -->
                 <th><a th:href="@{
                 '/foods?page=' + ${currentPageNumber} +
                 '&search=' + ${searchedName} +
                 '&sort=protein'}"
-                       scope="col">Bílkovin na 100 g</a></th> <!-- food protein column -->
-                <th></th><a scope="col"></a>
+                       scope="col">Protein per 100 g</a></th> <!-- food protein column -->
+                <th></th> <!-- "detail/edit/delete" colum -->
             </tr>
             </thead>
             <tbody>
@@ -55,12 +55,15 @@
                 <td> <!-- here are links for detail, edit and delete for the given food -->
                     <a th:href="@{'/foods/detail/' + ${food.foodId}}">Detail</a>
                     <span sec:authorize="hasRole('ADMIN')"> <!-- edit and delete visible only to admin accounts -->
-                        | <a th:href="@{'/foods/edit/' + ${food.foodId}}">Upravit</a>
+                        | <a th:href="@{'/foods/edit/' + ${food.foodId}}">Edit</a>
                         |
                         <form th:method="DELETE"
                               th:action="@{'/foods/delete/' + ${food.foodId}}"
                               class="d-inline">
-                            <button type="submit" class="btn btn-danger py-0 px-1">Smazat</button>
+                            <button type="submit"
+                                    class="btn btn-danger py-0 px-1"
+                                    onclick="return confirm('Are you sure?')"> <!-- only js I used ... TODO use some modal dialog and separate js-->
+                                Delete</button>
                         </form>
                     </span>
                 </td>
@@ -69,14 +72,14 @@
         </table>
 
 <!--        PAGINATION - allows us to jump to the beginning, end or to traverse pages one by one-->
-<!--        Teach pagination element represents a link to a page (unclickable if we are already at that page)-->
+<!--        Each pagination element represents a link to a page (unclickable if we are already at that page)-->
 <!--        It is based on the following logic:-->
 <!--        - Current page is always present (even if it is empty)-->
 <!--        - first page is present when it is not the current page-->
 <!--        - last page is present when it is not the current page-->
 <!--        - the "previous page" (just before the current page) is present if there is some page between the first and current-->
-<!--        - the "next page" (just before the current page) is present if there is some page between the lat and current-->
-<!--        - "inbetweens" are present if there is even more pages inbetween-->
+<!--        - the "next page" (just before the current page) is present if there is some page between the last and current-->
+<!--        - "in-betweens" are present if there is even more pages in-between-->
         <ul class="pagination justify-content-center">
             <!-- first page -->
             <li th:if="${currentPageNumber} gt 1" class="page-item">
@@ -85,7 +88,7 @@
                 '&search=' + ${searchedName} +
                 '&sort=' + ${sortAttribute}}">1</a>
             </li>
-            <!-- inbetween -->
+            <!-- in-between -->
             <li th:if="${currentPageNumber} gt 3" class="page-item disabled">
                 <a class="page-link">...</a>
             </li>
@@ -107,7 +110,7 @@
                 '&sort=' + ${sortAttribute}}"
                    th:text="${currentPageNumber + 1}" class="page-link"></a>
             </li>
-            <!-- inbetween -->
+            <!-- in-between -->
             <li th:if="${currentPageNumber + 2} lt ${totalPages}" class="page-item disabled">
                 <a class="page-link">...</a>
             </li>

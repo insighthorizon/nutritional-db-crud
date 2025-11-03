@@ -1,7 +1,7 @@
 <!-- template: error 403 page -->
 <!-- user sees this page after attempting unauthorized action -->
 <!DOCTYPE html>
-<html lang="cs-cz" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="~{fragments/layout.html :: head}"></head>
 
 <body class="min-vh-100 d-flex flex-column">
@@ -10,12 +10,12 @@
 
 <main class="my-5 mx-3 flex-fill">
     <!-- informs the user that he attempted to perform an unauthorized action-->
-    <h2 class="text-center mb-4">Chyba <span th:text="${status}"></span></h2>
+    <h2 class="text-center mb-4">Error <span th:text="${status}"></span></h2>
 
-    <p class="text-center">Pokus o neautorizovaný přístup. Pokoušíte se provést akci na kterou nemáte dostatečná práva.</p>
+    <p class="text-center">You are not authorized to access this address or to perform this action.</p>
 
     <p class="text-center"> <!-- link to home page -->
-        <a th:href="@{/}">Zpět na domovskou stránku</a>
+        <a th:href="@{/}">Return to home page</a>
     </p>
 
 </main>
