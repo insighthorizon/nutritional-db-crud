@@ -5,9 +5,9 @@
 - Has registration, login, logout and different user rights.
 
 
-[[./showcase/food_index.PNG]]
-[[./showcase/food_edit.PNG]]
-[[./showcase/account_login.PNG]]
+[[./showcase/food_index.png]]
+[[./showcase/food_edit.png]]
+[[./showcase/account_login.png]]
 
 * Frameworks / Libraries used
 - Spring Boot (MVC, Tomcat)
@@ -24,7 +24,7 @@
 * How to run: Development
 ** Prerequisites
 - Java 21
-- Maven or IntelliJ Idea
+- Maven or IDE (IntelliJ Idea)
 - Docker Engine
 
 ** Instructions

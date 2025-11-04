@@ -38,8 +38,14 @@
                 <form sec:authorize="isAuthenticated()"
                       method="post"
                       th:action="@{/account/logout}"> <!-- post not good for RESTfulness -->
-                    <button class="nav-link">Logout</button> <!-- logout button -->
+                    <button id="logout-button" class="nav-link">Logout</button> <!-- logout button -->
                 </form>
+<!--                <a sec:authorize="isAuthenticated()"-->
+<!--                      class="nav-link disabled"-->
+<!--                      th:text="'User: ' + ${#authentication.principal.username}"></a>-->
+<!--                <a sec:authorize="isAuthenticated()"-->
+<!--                   class="nav-link disabled"-->
+<!--                   sec:authentication="name"></a>-->
             </div>
         </div>
 
