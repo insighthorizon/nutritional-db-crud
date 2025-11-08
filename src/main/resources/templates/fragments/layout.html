@@ -1,72 +1,85 @@
 <!--template fragments: page layout - layout used in every rendered page -->
 <!--(not a standalone page)-->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
-
+<html th:fragment="pageLayout(content)"
+      lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!-- page head contains page metadata and links to client dependencies (reusable fragment)-->
-<head th:fragment="head">
+<head>
     <!-- metadata -->
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content="Nutritional database - personal practice project."/>
-    <meta name="keywords" content="exercise project nutritional database spring boot mysql mariadb authentification authorization paging searching sorting"/>
+    <meta name="keywords"
+          content="exercise project nutritional database spring boot mysql mariadb authentification authorization paging searching sorting"/>
     <meta name="author" content="Marek Jiricek"/>
 
     <title>Nutritional database</title>
 
-    <!-- link to Bootstrap -->
+    <!-- link to Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" type="text/css"/>
     <link rel="shortcut icon" th:href="@{/images/apple.svg}"/> <!-- link to favicon -->
 </head>
 
 
-<body>
-
-<!-- Page header implements a navigation bar (reusable fragment). -->
+<body class="min-vh-100 d-flex flex-column">
+<!-- Page header implements a navbar (navigation bar) -->
 <!-- It is a simple horizontal menu tied to the top of the page (doesn't move with the viewport). -->
-<header th:fragment="header">
+<header>
     <nav class="navbar navbar-expand-sm bg-dark" data-bs-theme="dark">
         <div class="container-fluid">
             <a th:href="@{/}" class="navbar-brand">NutrDB App</a> <!-- logo and home link -->
             <div class="navbar-nav">
-                <a th:href="@{/}" th:class="'nav-link ' + ${homeLink}">Home</a> <!-- home link -->
-                <a th:href="@{/foods}" th:class="'nav-link ' + ${foodsLink}">Foods</a> <!-- link to foods page -->
-<!--                visible only to users who are NOT logged-in-->
-                <a sec:authorize="isAnonymous()" th:href="@{/account/login}" th:class="'nav-link ' + ${loginLink}">Login</a> <!-- login page link -->
-                <a sec:authorize="isAnonymous()" th:href="@{/account/register}" th:class="'nav-link ' + ${registerLink}">Register</a> <!-- registration page link -->
-<!--                visible only to users who ARE logged-in -->
+                <a th:href="@{/}" class="nav-link" th:classappend="${homeLink}">Home</a> <!-- home link -->
+                <a th:href="@{/foods}" class="nav-link" th:classappend="${foodsLink}">Foods</a> <!-- link to foods page -->
+                <!--                visible only to users who are NOT logged-in-->
+                <a sec:authorize="isAnonymous()" th:href="@{/account/login}"
+                   class="nav-link" th:classappend="${loginLink}">Login</a>
+                <!-- login page link -->
+                <a sec:authorize="isAnonymous()" th:href="@{/account/register}"
+                   class="nav-link" th:classappend="${registerLink}">Register</a> <!-- registration page link -->
+                <!--                visible only to users who ARE logged-in -->
                 <!-- default setting of spring boot requires logout to be done through POST request -->
                 <form sec:authorize="isAuthenticated()"
                       method="post"
                       th:action="@{/account/logout}"> <!-- post not good for RESTfulness -->
                     <button id="logout-button" class="nav-link">Logout</button> <!-- logout button -->
                 </form>
-<!--                <a sec:authorize="isAuthenticated()"-->
-<!--                      class="nav-link disabled"-->
-<!--                      th:text="'User: ' + ${#authentication.principal.username}"></a>-->
-<!--                <a sec:authorize="isAuthenticated()"-->
-<!--                   class="nav-link disabled"-->
-<!--                   sec:authentication="name"></a>-->
+                <!--                <a sec:authorize="isAuthenticated()"-->
+                <!--                      class="nav-link disabled"-->
+                <!--                      th:text="'User: ' + ${#authentication.principal.username}"></a>-->
+                <!--                <a sec:authorize="isAuthenticated()"-->
+                <!--                   class="nav-link disabled"-->
+                <!--                   sec:authentication="name"></a>-->
             </div>
         </div>
 
     </nav>
 </header>
 
+<!-- individual content for each page -->
+<main th:replace="${content}"></main>
 
-<!--(reusable fragment)-->
 <!--author, link to license (creative commons)-->
 <!--the license relates to the content presented in the browser (not the source code, source code itself will be open source)-->
-<footer th:fragment="footer">
+<footer>
     <hr>
     <!-- this is the only piece of html which is styled without bootstrap, because it is directly copied from creativecommons.org -->
     <p class="mx-5" xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><span
-            property="dct:title">NutrDB App</span> by <span property="cc:attributionName">Marek Jiříček</span> is marked
+            property="dct:title">NutrDB App</span> by <span property="cc:attributionName">Marek Jiříček</span> is
+        marked
         with <a href="http://creativecommons.org/publicdomain/zero/1.0?ref=chooser-v1" target="_blank"
-                rel="license noopener noreferrer" style="display:inline-block;">CC0 1.0<img
-                style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
-                src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img
+                rel="license noopener noreferrer" style="display:inline-block;">CC0 1.0<img alt
+                                                                                            style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
+                                                                                            src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img
+                alt
                 style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"
                 src="https://mirrors.creativecommons.org/presskit/icons/zero.svg?ref=chooser-v1"></a></p>
 </footer>
+
+<!-- HAS TO BE LAST: bootstrap javascript -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </body>
+
 </html>

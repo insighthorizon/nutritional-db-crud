@@ -1,12 +1,9 @@
 <!-- template: error 403 page -->
 <!-- user sees this page after attempting unauthorized action -->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="~{fragments/layout.html :: head}"></head>
-
-<body class="min-vh-100 d-flex flex-column">
-<!--navbar-->
-<header th:replace="~{fragments/layout.html :: header}"></header>
+<html th:replace="~{fragments/layout.html :: pageLayout(content=~{::main})}"
+      lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <main class="my-5 mx-3 flex-fill">
     <!-- informs the user that he attempted to perform an unauthorized action-->
@@ -20,6 +17,4 @@
 
 </main>
 
-<footer th:replace="~{fragments/layout.html :: footer}"></footer>
-</body>
 </html>

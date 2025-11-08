@@ -3,14 +3,11 @@
 <!--for example, url address for deletion of a food supports only the DELETE method,-->
 <!--but it is possible for the user to attempt to access the URL (GET request) - which results in error 405-->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="~{fragments/layout.html :: head}"></head>
+<html th:replace="~{fragments/layout.html :: pageLayout(content=~{::main})}"
+      lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
-<body class="min-vh-100 d-flex flex-column">
-<!--navbar-->
-<header th:replace="~{fragments/layout.html :: header}"></header>
-
-<main class="my-5 mx-3 flex-fill">
+<main th:fragment="main" class="my-5 mx-3 flex-fill">
 <!--    informing the user that the action is not supported by the server -->
     <h2 class="text-center mb-4">Error <span th:text="${status}"></span></h2>
 
@@ -22,6 +19,4 @@
 
 </main>
 
-<footer th:replace="~{fragments/layout.html :: footer}"></footer>
-</body>
 </html>

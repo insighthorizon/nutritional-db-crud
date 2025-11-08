@@ -1,13 +1,10 @@
 <!-- template: index page for interaction with the foods in the database -->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="~{fragments/layout.html :: head}"></head>
+<html th:replace="~{fragments/layout.html :: pageLayout(content=~{::main}, foodsLink='active')}"
+      lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
-<body class="min-vh-100 d-flex flex-column">
-<!-- navbar -->
-<header th:replace="~{fragments/layout.html :: header (foodsLink='active')}"></header>
-
-<main class="mt-3 mx-3 flex-fill">
+<main class="mt-3 mx-3 flex-fill" th:fragment="foods_main">
     <!-- flash messages for when food is created, deleted, edited or when a user successfully logs in  -->
     <!-- (user is redirected to this page after successful login, new food creation or edit) -->
     <!-- Error message is used when a food fails to get found in the database. -->
@@ -36,7 +33,4 @@
     <a th:if="${#strings.isEmpty(searchedName) == false}" th:href="@{/foods}">Back to all foods</a>
 
 </main>
-
-<footer th:replace="~{fragments/layout.html :: footer}"></footer>
-</body>
 </html>

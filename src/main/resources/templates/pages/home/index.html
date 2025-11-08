@@ -1,13 +1,10 @@
 <!-- template: home page -->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="~{fragments/layout.html :: head}"></head>
+<html th:replace="~{fragments/layout.html :: pageLayout(content=~{::home_main}, homeLink='active')}"
+      lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
-<body class="min-vh-100 d-flex flex-column">
-<!-- navbar -->
-<header th:replace="~{fragments/layout.html :: header (homeLink='active')}"></header>
-
-<main class="my-5 mx-3 flex-fill">
+<main class="my-5 mx-3 flex-fill" th:fragment="home_main">
 <!-- simple welcome info-->
     <h3 class="text-center mb-4">Nutritional database</h3>
 
@@ -15,7 +12,4 @@
 
     <p class="text-center">The application allows you to edit, search and sort the foods in the database.</p>
 </main>
-
-<footer th:replace="~{fragments/layout.html :: footer}"></footer>
-</body>
 </html>

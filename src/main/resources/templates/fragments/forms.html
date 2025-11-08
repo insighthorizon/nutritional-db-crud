@@ -4,13 +4,14 @@
 <!--I had multiple uses before, but I reduced the number of pages in the application.-->
 <!--But if I later extend the project, it will be useful again.-->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head></head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head><title></title></head>
 <body>
 
 <!--search form for searching foods by name (reusable fragment)-->
 <form th:fragment="searchForm"
-      th:action="@{/foods}">
+      th:action="@{/foods}"
+      method="get">
     <div class="input-group">
         <!-- submitting this form will result in get request with additional url request attribute
         with the name given by the html attribute name-->

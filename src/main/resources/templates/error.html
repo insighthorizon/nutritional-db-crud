@@ -1,11 +1,8 @@
 <!-- template: default error page - displayed when "undefined" error occurs -->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:replace="~{fragments/layout.html :: head}"></head>
-
-<body class="min-vh-100 d-flex flex-column">
-<!--navbar-->
-<header th:replace="~{fragments/layout.html :: header}"></header>
+<html th:replace="~{fragments/layout.html :: pageLayout(content=~{::main})}"
+      lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <main class="my-5 mx-3 flex-fill">
     <!-- telling the user that an error occured -->
@@ -30,6 +27,4 @@
 
 </main>
 
-<footer th:replace="~{fragments/layout.html :: footer}"></footer>
-</body>
 </html>

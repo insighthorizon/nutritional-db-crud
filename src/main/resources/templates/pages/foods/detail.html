@@ -1,13 +1,9 @@
 <!-- template: page for showing details of a particular food entry-->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head th:replace="~{fragments/layout.html :: head}"></head>
+<html th:replace="~{fragments/layout.html :: pageLayout(content=~{::main}, foodsLink='active')}"
+      lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
-<body class="min-vh-100 d-flex flex-column">
-<!--navbar-->
-<header th:replace="~{fragments/layout.html :: header (foodsLink='active')}"></header>
-
-<!--the actual details -->
 <main class="my-5 mx-3 flex-fill">
     <h3 class="text-center">Food detail</h3>
 
@@ -53,6 +49,4 @@
     </p>
 </main>
 
-<footer th:replace="~{fragments/layout.html :: footer}"></footer>
-</body>
 </html>
