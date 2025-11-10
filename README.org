@@ -15,13 +15,7 @@
 - Thymeleaf template system
 - HTML with Bootstrap
 
-* How to run: Demo
-** Prerequisites
-- Docker Engine
-
-** TODO Instructions
-
-* How to run: Development
+* How to run (development)
 ** Prerequisites
 - Java 21
 - Maven or IDE (IntelliJ Idea)
