@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.6</version>
+        <version>4.2.0</version>
         <relativePath/>
     </parent>
 
@@ -17,7 +17,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>21</java.version>
+        <java.version>25</java.version>
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
     </properties>
 
@@ -45,23 +45,11 @@
             <version>5.3.8</version>
         </dependency>
 
-        <!-- to avoid the need to specify version when refering to bootstrap in html file -->
+        <!-- to avoid the need to specify version when refering to bootstrap in HTML file -->
         <!-- https://mvnrepository.com/artifact/org.webjars/webjars-locator -->
         <dependency>
             <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator</artifactId>
-            <version>0.52</version>
-            <exclusions>
-                <exclusion> <!-- vulnerability -->
-                    <groupId>org.apache.commons</groupId>
-                    <artifactId>commons-lang3</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.18.0</version>
+            <artifactId>webjars-locator-lite</artifactId>
         </dependency>
 
         <!-- bean validation -->
@@ -83,7 +71,6 @@
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
-            <version>3.5.6</version>
         </dependency>
 
         <!-- mapstruct for automatic generation of mappers (annotatoin @Mapper)-->
@@ -94,19 +81,18 @@
             <version>${org.mapstruct.version}</version> <!-- quoting the version from properties -->
         </dependency>
 
-        <!-- spring security (authentication and authorization) -->
+        <!-- Spring Security (authentication and authorization) -->
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- additional Thymeleaf security-related features (rendering html tags depending on user role) -->
+        <!-- additional Thymeleaf security-related features (rendering HTML tags depending on user role) -->
         <!-- https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity6 -->
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity6</artifactId>
-            <version>3.1.2.RELEASE</version>
         </dependency>
 
     </dependencies>
@@ -117,7 +103,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.14.0</version>
                 <configuration>
                     <annotationProcessorPaths>
                         <path>
