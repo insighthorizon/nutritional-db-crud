@@ -78,7 +78,7 @@ public class FoodServiceImpl implements FoodService {
         switch (sortAttribute) { // check that the sorting mode we are asking for is alright
             // the cases correspond to the attributes we can sort by
             case "foodId", "name", "kcal" -> sort = Sort.by(Sort.Direction.ASC, sortAttribute);
-            case "protein", "fats" -> sort = Sort.by(Sort.Direction.DESC, sortAttribute);
+            case "protein", "fats", "carbs" -> sort = Sort.by(Sort.Direction.DESC, sortAttribute);
             default -> sort = Sort.by(Sort.Direction.ASC, "foodId");
         }
 

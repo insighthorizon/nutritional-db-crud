@@ -32,7 +32,7 @@ public interface FoodService {
      * @param pageSize Size of the requested page.
      * @param searchedName Substring that must be contained in each food entry. Note: empty string is contained
      *                     in all names. So we can use this method even without searching.
-     * @param sortAttribute Name of the food attribute (id, name, kcal, protein, fats) by which to sort the pages.
+     * @param sortAttribute Name of the food attribute (foodId, name, kcal, protein, fats, carbs) by which to sort the pages.
      *                      Note: First all pages are sorted, and only then the page with requested number is extracted.
      * @return Page of food entries (as DTOs) that was found based on the above parameters.
      */

@@ -18,7 +18,8 @@
 
     <!-- table listing the foods found (if not empty) -->
     <div class="col-auto container" th:if="${!foods.isEmpty()}">
-        <table class="table table-bordered">
+        <table class="table table-bordered caption-top">
+            <caption>Nutrition values per 100 g</caption>
             <thead>
             <tr> <!-- table header contains clickable links for sorting by a given attribute -->
                 <th><a th:href="@{
@@ -31,17 +32,23 @@
                 '&search=' + ${searchedName} +
                 '&sort=name'}"
                        scope="col">Food name</a></th> <!-- food name column -->
-                <th><a th:href="@{
+                <th scope="col"><a th:href="@{
                 '/foods?page=' + ${currentPageNumber} +
                 '&search=' + ${searchedName} +
-                '&sort=kcal'}"
-                       scope="col">Energy per 100 g</a></th> <!-- food kcal column -->
-                <th><a th:href="@{
+                '&sort=kcal'}">Energy</a></th>
+                <th scope="col"><a th:href="@{
                 '/foods?page=' + ${currentPageNumber} +
                 '&search=' + ${searchedName} +
-                '&sort=protein'}"
-                       scope="col">Protein per 100 g</a></th> <!-- food protein column -->
-                <th></th> <!-- "detail/edit/delete" colum -->
+                '&sort=fats'}">Fat</a></th>
+                <th scope="col"><a th:href="@{
+                '/foods?page=' + ${currentPageNumber} +
+                '&search=' + ${searchedName} +
+                '&sort=protein'}">Protein</a></th>
+                <th scope="col"><a th:href="@{
+                '/foods?page=' + ${currentPageNumber} +
+                '&search=' + ${searchedName} +
+                '&sort=carbs'}">Carbohydrates</a></th>
+                <th scope="col" sec:authorize="hasRole('ADMIN')">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -51,21 +58,19 @@
                 <td th:text="${food.foodId}"></td>
                 <td th:text="${food.name}"></td>
                 <td th:text="${food.kcal} + ' kcal'"></td>
+                <td th:text="${food.fats} + ' g'"></td>
                 <td th:text="${food.protein} + ' g'"></td>
-                <td> <!-- here are links for detail, edit and delete for the given food -->
-                    <a th:href="@{'/foods/detail/' + ${food.foodId}}">Detail</a>
-                    <span sec:authorize="hasRole('ADMIN')"> <!-- edit and delete visible only to admin accounts -->
-                        | <a th:href="@{'/foods/edit/' + ${food.foodId}}">Edit</a>
-                        |
-                        <form th:method="DELETE"
-                              th:action="@{'/foods/delete/' + ${food.foodId}}"
-                              class="d-inline">
-                            <button type="submit"
-                                    class="btn btn-danger py-0 px-1"
-                                    onclick="return confirm('Are you sure?')"> <!-- only js I used ... TODO use some modal dialog and separate js-->
-                                Delete</button>
-                        </form>
-                    </span>
+                <td th:text="${food.carbs} + ' g'"></td>
+                <td sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{'/foods/edit/' + ${food.foodId}}">Edit</a>
+                    |
+                    <form th:method="DELETE"
+                          th:action="@{'/foods/delete/' + ${food.foodId}}"
+                          class="d-inline">
+                        <button type="submit"
+                                class="btn btn-danger py-0 px-1"
+                                onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
                 </td>
             </tr>
             </tbody>

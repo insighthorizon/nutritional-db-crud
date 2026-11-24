@@ -192,24 +192,6 @@ public class FoodsController {
     }
 
     /**
-     * Handles GET request at the "/foods/detail/{foodId}" URL address by renderin gthe /foods/detail.html template;
-     * The URL contains the id of the food as a path variable (@PathVariable).
-     * (@ModelAttribute exposes the food data to the rendered template (view).)
-     * @param foodId ID of the food selected for deletion.
-     * @param foodDTO Data of the selected food.
-     * @return Reference to the /foods/detail.html template.
-     * @throws FoodNotFoundException handled by {@link #handleFoodNotFoundException(RedirectAttributes)}
-     */
-    @GetMapping("detail/{foodId}")
-    public String renderDetail(@PathVariable("foodId") long foodId,
-                               @ModelAttribute FoodDTO foodDTO) throws FoodNotFoundException {
-        FoodDTO fetchedFood = foodService.getById(foodId); // can throw FoodNotFoundException
-        foodMapper.updateFoodDTO(fetchedFood, foodDTO);
-
-        return "/pages/foods/detail";
-    }
-
-    /**
      * Handles DELETE request at the "/foods/detete/{foodId}" URL address by attempting to delete
      * the food with given id from the database;
      * The URL contains the id of the food as a path variable (@PathVariable).
