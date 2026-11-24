@@ -1,5 +1,5 @@
 # https://docs.docker.com/compose/
-# https://hub.docker.com/_/mariadb
+# https://hub.docker.com/_/postgres
 # https://hub.docker.com/_/adminer
 
 #*This is needed so that our containers will be up again after restart (if they were turned on before the reboot):*
@@ -9,22 +9,24 @@
 # path/containing/docker-compose/$ sudo docker compose up -d
 
 #Adminer: http://localhost:8081
-#Server: mariadb
-#Username: root
+#System: PostgreSQL
+#Server: postgres
+#Username: nutr_app
 #Password: secret
 #Database: nutr_db
 
 # docker-compose.yml
 services:
-  mariadb:
-    image: mariadb:latest
+  postgres:
+    image: postgres:18
     environment:
-      MARIADB_ROOT_PASSWORD: secret
-      MARIADB_DATABASE: nutr_db
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: nutr_db
+      POSTGRES_USER: nutr_app
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - mariadb_data:/var/lib/mysql # volume path for database persistance
+      - postgres_data:/var/lib/postgresql # volume path for database persistence
     networks:
       - nutr-net
     restart: unless-stopped # for auto-start after reboot
@@ -34,14 +36,14 @@ services:
     ports:
       - "8081:8080"
     depends_on:
-      - mariadb
+      - postgres
     networks:
       - nutr-net
     restart: unless-stopped # for auto-start after reboot
 
-networks: # we have internal network so that adminer can easily reach MariaDB
+networks: # Adminer uses this network to reach PostgreSQL
   nutr-net:
     driver: bridge
 
 volumes: # we set up a volume to persist the database
-  mariadb_data:
+  postgres_data:

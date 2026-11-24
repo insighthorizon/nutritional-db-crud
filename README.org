@@ -12,39 +12,36 @@
 * Frameworks / Libraries used
 - Spring Boot (MVC, Tomcat)
 - Hibernate
+- PostgreSQL 18
 - Thymeleaf template system
 - HTML with Bootstrap
 
 * How to run (development)
 ** Prerequisites
-- Java 21
+- JDK 25
 - Maven or IDE (IntelliJ Idea)
 - Docker Engine
 
 ** Instructions
 1. git clone https://github.com/insighthorizon/nutritional-db-crud.git
 2. cd nutritional-db-crud
-3. docker compose up -d
-4. ./mvnw spring-boot:run # on linux
-   
-    mvnw.cmd spring-boot:run # on Windows
-    
-    (or use IntelliJ Idea)
-5. To interact through the user interface visit:
-   
+3. Start PostgreSQL and Adminer with ~docker compose up -d~.
+   Use ~sudo~ if your Docker setup requires it.
+   On first start, PostgreSQL creates ~nutr_db~.
+4. Start the app with ~./mvnw spring-boot:run~ on Linux,
+   ~mvnw.cmd spring-boot:run~ on Windows, or run it from IntelliJ IDEA.
+5. To interact through the web user interface visit:
     http://localhost:8080
-6. There is now also Adminer running for direct DB access:
-   
-    http://localhost:8081
-    
-    Server: mariadb
-    
-    Username: root
-    
-    Password: secret
-    
-    Database: nutr_db
-    
-   (According to application.properties)
+6. Open Adminer at http://localhost:8081 and use these settings.
+   | Field    | Value      |
+   |----------+------------|
+   | System   | PostgreSQL |
+   | Server   | ~postgres~ |
+   | Username | ~nutr_app~ |
+   | Password | ~secret~   |
+   | Database | ~nutr_db~  |
+
+   (according to application.properties)
+
 7. To upgrade an account to admin, change the is_admin boolean tag to true (directly from within Adminer)
 

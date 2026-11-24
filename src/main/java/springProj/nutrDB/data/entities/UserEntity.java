@@ -43,12 +43,6 @@ public class UserEntity implements UserDetails {
     /**
      * user email - unique
      * represented as unique, varchar(255), not null in SQL
-     * Hibernate:
-     *     alter table user_entity
-     *        drop index if exists UK_4xad1enskw4j1t2866f7sodrx
-     * Hibernate:
-     *     alter table user_entity
-     *        add constraint UK_4xad1enskw4j1t2866f7sodrx unique (email)
      */
     @Column(nullable = false, unique = true)
     private String email;
