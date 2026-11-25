@@ -6,8 +6,6 @@
 
 
 [[./showcase/food_index.png]]
-[[./showcase/food_edit.png]]
-[[./showcase/account_login.png]]
 
 * Frameworks / Libraries used
 - Spring Boot (MVC, Tomcat)

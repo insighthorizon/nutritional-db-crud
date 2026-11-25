@@ -42,7 +42,7 @@ public class FoodDTO {
 
     /**
      * protein content of the food - grams of protein per 100 grams of the food
-     * validation constraints: 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part, min=0, max=100
+     * validation constraints: at most 3 integer digits and 1 fractional digit; value must be between 0.0 and 100.0
      */
     @DecimalMin(value = "0.0", message = "Gram value must be positive.")
     @DecimalMax(value = "100.0", message = "Impossibly big gram value.")
@@ -51,7 +51,7 @@ public class FoodDTO {
 
     /**
      * carbohydrate content of the food - grams of carbohydrates per 100 grams of the food
-     * validation constraints: 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part, min=0, max=100
+     * validation constraints: at most 3 integer digits and 1 fractional digit; value must be between 0.0 and 100.0
      */
     @DecimalMin(value = "0.0", message = "Gram value must be positive.")
     @DecimalMax(value = "100.0", message = "Impossibly big gram value.")
@@ -60,7 +60,7 @@ public class FoodDTO {
 
     /**
      * fat content of the food - grams of fat per 100 grams of the food
-     * validation constraints: 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part, min=0, max=100
+     * validation constraints: at most 3 integer digits and 1 fractional digit; value must be between 0.0 and 100.0
      */
     @DecimalMin(value = "0.0", message = "Gram value must be positive.")
     @DecimalMax(value = "100.0", message = "Impossibly big gram value.")

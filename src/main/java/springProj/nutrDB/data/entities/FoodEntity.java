@@ -52,29 +52,23 @@ public class FoodEntity {
 
     /**
      * protein content of the food - grams of protein per 100 grams of the food
-     * 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part
-     * represented as decimal(3,1), not null in SQL
-     * - takes up 2 bytes in the database, see <a href="https://mariadb.com/kb/en/data-type-storage-requirements/">Data Type Storage Requirements</a>
+     * represented as numeric(4,1), not null in PostgreSQL
      */
-    @Column(precision = 3, scale = 1, nullable = false)
+    @Column(precision = 4, scale = 1, nullable = false)
     private BigDecimal protein;
 
     /**
      * carbohydrate content of the food - grams of carbohydrates per 100 grams of the food
-     * 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part
-     * represented as decimal(3,1), not null in SQL
-     * - takes up 2 bytes in the database, see <a href="https://mariadb.com/kb/en/data-type-storage-requirements/">Data Type Storage Requirements</a>
+     * represented as numeric(4,1), not null in PostgreSQL
      */
-    @Column(precision = 3, scale = 1, nullable = false)
+    @Column(precision = 4, scale = 1, nullable = false)
     private BigDecimal carbs;
 
     /**
      * fat content of the food - grams of fat per 100 grams of the food
-     * 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part
-     * represented as decimal(3,1), not null in SQL
-     * - takes up 2 bytes in the database, see <a href="https://mariadb.com/kb/en/data-type-storage-requirements/">Data Type Storage Requirements</a>
+     * represented as numeric(4,1), not null in PostgreSQL
      */
-    @Column(precision = 3, scale = 1, nullable = false)
+    @Column(precision = 4, scale = 1, nullable = false)
     private BigDecimal fats;
 
      /**
