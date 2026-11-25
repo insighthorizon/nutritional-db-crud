@@ -33,10 +33,11 @@ public interface FoodService {
      * @param searchedName Substring that must be contained in each food entry. Note: empty string is contained
      *                     in all names. So we can use this method even without searching.
      * @param sortAttribute Name of the food attribute (foodId, name, kcal, protein, fats, carbs) by which to sort the pages.
+     * @param sortDirection Sort direction, either asc or desc.
      *                      Note: First all pages are sorted, and only then the page with requested number is extracted.
      * @return Page of food entries (as DTOs) that was found based on the above parameters.
      */
-    Page<FoodDTO> getPage(int pageNumber, int pageSize, String searchedName, String sortAttribute);
+    Page<FoodDTO> getPage(int pageNumber, int pageSize, String searchedName, String sortAttribute, String sortDirection);
 
     /**
      * Get one food entry (as DTO) by its id.

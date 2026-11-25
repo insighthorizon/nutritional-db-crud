@@ -66,21 +66,19 @@ public class FoodServiceImpl implements FoodService {
      * So there is no information about that given.
      */
     @Override
-    public Page<FoodDTO> getPage(int pageNumber, int pageSize, String searchedName, String sortAttribute) {
+    public Page<FoodDTO> getPage(
+            int pageNumber, int pageSize, String searchedName, String sortAttribute, String sortDirection) {
         // check that the page we are asking for makes sense
         if (pageNumber < 1) pageNumber = 1;
 
-        // resolve the sorting mode
-        Sort sort;
-        if (sortAttribute == null)
-            sortAttribute = "";
-
-        switch (sortAttribute) { // check that the sorting mode we are asking for is alright
-            // the cases correspond to the attributes we can sort by
-            case "foodId", "name", "kcal" -> sort = Sort.by(Sort.Direction.ASC, sortAttribute);
-            case "protein", "fats", "carbs" -> sort = Sort.by(Sort.Direction.DESC, sortAttribute);
-            default -> sort = Sort.by(Sort.Direction.ASC, "foodId");
-        }
+        Sort.Direction direction = "desc".equalsIgnoreCase(sortDirection)
+                ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
+        String sortableAttribute = switch (sortAttribute == null ? "" : sortAttribute) {
+            case "foodId", "name", "kcal", "protein", "fats", "carbs" -> sortAttribute;
+            default -> "foodId";
+        };
+        Sort sort = Sort.by(direction, sortableAttribute);
 
         // getting the page
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize, sort);

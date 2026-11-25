@@ -59,27 +59,19 @@ public class FoodsController {
     @GetMapping
     public String renderIndex(
             @RequestParam(value = "sort", required = false) String sortAttribute,
+            @RequestParam(value = "direction", defaultValue = "asc") String sortDirection,
             @RequestParam(name = "search", defaultValue = "") String searchedFoodName,
             @RequestParam(name = "page", defaultValue = "1") int currentPageNumber,
             Model model) {
-// add test data
-//        FoodDTO food = new FoodDTO();
-//        for (int i = 0; i < 26; i++) {
-//            char c = (char)('a' + i);
-//            String string = Character.toString('a' + i);
-//            string = string + string + string + string;
-//            food.setName(string);
-//            food.setKcal((short)(10 * i));
-//            food.setCarbs(BigDecimal.valueOf(4 * i));
-//            food.setProtein(BigDecimal.valueOf(15 * i, 1));
-//            food.setFats(BigDecimal.valueOf(5 * i, 1));
-//
-//            foodService.create(food);
-//        }
 
         final int PAGE_SIZE = 10; // max size of one page for pagination in food entries
+        if (sortAttribute == null) {
+            sortAttribute = "foodId";
+        }
+        sortDirection = "desc".equalsIgnoreCase(sortDirection) ? "desc" : "asc";
 
-        Page<FoodDTO> foodsPage = foodService.getPage(currentPageNumber, PAGE_SIZE, searchedFoodName, sortAttribute);
+        Page<FoodDTO> foodsPage = foodService.getPage(
+                currentPageNumber, PAGE_SIZE, searchedFoodName, sortAttribute, sortDirection);
 
         // making data avaiable to the template (view)
         model.addAttribute("foods", foodsPage.getContent());
@@ -87,6 +79,7 @@ public class FoodsController {
         model.addAttribute("totalPages", foodsPage.getTotalPages());
         model.addAttribute("searchedName", searchedFoodName);
         model.addAttribute("sortAttribute", sortAttribute);
+        model.addAttribute("sortDirection", sortDirection);
 
         return "/pages/foods/index";
     }

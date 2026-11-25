@@ -22,32 +22,13 @@
             <caption>Nutrition values per 100 g</caption>
             <thead>
             <tr> <!-- table header contains clickable links for sorting by a given attribute -->
-                <th><a th:href="@{
-                '/foods?page=' + ${currentPageNumber} +
-                '&search=' + ${searchedName} +
-                '&sort=foodId'}"
-                       scope="col"># id</a></th> <!-- food id column -->
-                <th><a th:href="@{
-                '/foods?page=' + ${currentPageNumber} +
-                '&search=' + ${searchedName} +
-                '&sort=name'}"
-                       scope="col">Food name</a></th> <!-- food name column -->
-                <th scope="col"><a th:href="@{
-                '/foods?page=' + ${currentPageNumber} +
-                '&search=' + ${searchedName} +
-                '&sort=kcal'}">Energy</a></th>
-                <th scope="col"><a th:href="@{
-                '/foods?page=' + ${currentPageNumber} +
-                '&search=' + ${searchedName} +
-                '&sort=fats'}">Fat</a></th>
-                <th scope="col"><a th:href="@{
-                '/foods?page=' + ${currentPageNumber} +
-                '&search=' + ${searchedName} +
-                '&sort=protein'}">Protein</a></th>
-                <th scope="col"><a th:href="@{
-                '/foods?page=' + ${currentPageNumber} +
-                '&search=' + ${searchedName} +
-                '&sort=carbs'}">Carbohydrates</a></th>
+                <!-- the ternary operator usage here implements toggle of the sorting order -->
+                <th scope="col"><a th:href="@{/foods(page=${currentPageNumber},search=${searchedName},sort='foodId',direction=${sortAttribute == 'foodId' and sortDirection == 'asc' ? 'desc' : 'asc'})}"># id</a></th>
+                <th scope="col"><a th:href="@{/foods(page=${currentPageNumber},search=${searchedName},sort='name',direction=${sortAttribute == 'name' and sortDirection == 'asc' ? 'desc' : 'asc'})}">Food name</a></th>
+                <th scope="col"><a th:href="@{/foods(page=${currentPageNumber},search=${searchedName},sort='kcal',direction=${sortAttribute == 'kcal' and sortDirection == 'asc' ? 'desc' : 'asc'})}">Energy</a></th>
+                <th scope="col"><a th:href="@{/foods(page=${currentPageNumber},search=${searchedName},sort='fats',direction=${sortAttribute == 'fats' and sortDirection == 'asc' ? 'desc' : 'asc'})}">Fat</a></th>
+                <th scope="col"><a th:href="@{/foods(page=${currentPageNumber},search=${searchedName},sort='protein',direction=${sortAttribute == 'protein' and sortDirection == 'asc' ? 'desc' : 'asc'})}">Protein</a></th>
+                <th scope="col"><a th:href="@{/foods(page=${currentPageNumber},search=${searchedName},sort='carbs',direction=${sortAttribute == 'carbs' and sortDirection == 'asc' ? 'desc' : 'asc'})}">Carbohydrates</a></th>
                 <th scope="col" sec:authorize="hasRole('ADMIN')">Actions</th>
             </tr>
             </thead>
@@ -88,10 +69,8 @@
         <ul class="pagination justify-content-center">
             <!-- first page -->
             <li th:if="${currentPageNumber} gt 1" class="page-item">
-                <a class="page-link" th:href="@{
-                '/foods?page=1' +
-                '&search=' + ${searchedName} +
-                '&sort=' + ${sortAttribute}}">1</a>
+                <a class="page-link"
+                   th:href="@{/foods(page=1,search=${searchedName},sort=${sortAttribute},direction=${sortDirection})}">1</a>
             </li>
             <!-- in-between -->
             <li th:if="${currentPageNumber} gt 3" class="page-item disabled">
@@ -99,20 +78,14 @@
             </li>
             <!-- previous page -->
             <li th:if="${currentPageNumber gt 2}" class="page-item">
-                <a th:href="@{
-                '/foods?page=' + ${currentPageNumber - 1} +
-                '&search=' + ${searchedName} +
-                '&sort=' + ${sortAttribute}}"
+                <a th:href="@{/foods(page=${currentPageNumber - 1},search=${searchedName},sort=${sortAttribute},direction=${sortDirection})}"
                    th:text="${currentPageNumber - 1}" class="page-link"></a>
             </li>
             <!-- current page -->
             <li class="page-item active"><a th:text="${currentPageNumber}" class="page-link" href></a></li>
             <!-- next page -->
             <li th:if="${currentPageNumber + 1} lt ${totalPages}" class="page-item">
-                <a th:href="@{
-                '/foods?page=' + ${currentPageNumber + 1} +
-                '&search=' + ${searchedName} +
-                '&sort=' + ${sortAttribute}}"
+                <a th:href="@{/foods(page=${currentPageNumber + 1},search=${searchedName},sort=${sortAttribute},direction=${sortDirection})}"
                    th:text="${currentPageNumber + 1}" class="page-link"></a>
             </li>
             <!-- in-between -->
@@ -121,9 +94,7 @@
             </li>
             <!-- last page -->
             <li th:if="${currentPageNumber} lt ${totalPages}" class="page-item">
-                <a th:href="@{'/foods?page=' + ${totalPages} +
-                '&search=' + ${searchedName} +
-                '&sort=' + ${sortAttribute}}"
+                <a th:href="@{/foods(page=${totalPages},search=${searchedName},sort=${sortAttribute},direction=${sortDirection})}"
                    th:text="${totalPages}" class="page-link"></a>
             </li>
         </ul>
