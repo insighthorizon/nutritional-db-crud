@@ -37,10 +37,17 @@
             </div>
         </div>
 
-        <hr> <!-- header of the form layout - legend for the "columns" -->
-        <div class="row">
-            <div class="col fw-bold">Nutritional value</div> <!-- name of the column containing nutrient name -->
-            <div class="col fw-bold">per 100 g</div> <!-- name of the column containing the quantity -->
+        <hr>
+        <div class="row align-items-center mb-3">
+            <label for="nutritionBasis" class="col form-label fw-bold">Values per</label>
+            <div class="col">
+                <select th:field="*{nutritionBasis}" id="nutritionBasis" class="form-select">
+                    <option value="PER_100_GRAMS">100 g</option>
+                    <option value="PER_100_MILLILITERS">100 ml</option>
+                </select>
+                <small th:errors="*{nutritionBasis}" class="text-danger"></small>
+                <small th:errors="*{nutrientValuesValidForBasis}" class="text-danger"></small>
+            </div>
         </div>
         <hr>
 

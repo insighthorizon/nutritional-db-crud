@@ -19,7 +19,7 @@
     <!-- table listing the foods found (if not empty) -->
     <div class="col-auto container" th:if="${!foods.isEmpty()}">
         <table class="table table-bordered caption-top">
-            <caption>Nutrition values per 100 g</caption>
+            <caption>Nutrition values per 100 g or 100 ml, as shown for each food</caption>
             <thead>
             <tr> <!-- table header contains clickable links for sorting by a given attribute -->
                 <!-- the ternary operator usage here implements toggle of the sorting order -->
@@ -29,6 +29,7 @@
                 <th scope="col"><a th:href="@{/foods(page=${currentPageNumber},search=${searchedName},sort='fats',direction=${sortAttribute == 'fats' and sortDirection == 'asc' ? 'desc' : 'asc'})}">Fat</a></th>
                 <th scope="col"><a th:href="@{/foods(page=${currentPageNumber},search=${searchedName},sort='protein',direction=${sortAttribute == 'protein' and sortDirection == 'asc' ? 'desc' : 'asc'})}">Protein</a></th>
                 <th scope="col"><a th:href="@{/foods(page=${currentPageNumber},search=${searchedName},sort='carbs',direction=${sortAttribute == 'carbs' and sortDirection == 'asc' ? 'desc' : 'asc'})}">Carbohydrates</a></th>
+                <th scope="col">Basis</th>
                 <th scope="col" sec:authorize="hasRole('ADMIN')">Actions</th>
             </tr>
             </thead>
@@ -42,6 +43,7 @@
                 <td th:text="${food.fats} + ' g'"></td>
                 <td th:text="${food.protein} + ' g'"></td>
                 <td th:text="${food.carbs} + ' g'"></td>
+                <td th:text="${food.nutritionBasis.label}"></td>
                 <td sec:authorize="hasRole('ADMIN')">
                     <a th:href="@{'/foods/edit/' + ${food.foodId}}">Edit</a>
                     |

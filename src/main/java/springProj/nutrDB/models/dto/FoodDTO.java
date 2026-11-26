@@ -1,11 +1,12 @@
 package springProj.nutrDB.models.dto;
 
 import jakarta.validation.constraints.*;
+import springProj.nutrDB.data.entities.NutritionBasis;
 
 import java.math.BigDecimal;
 
 /**
- * Defines the Data-transfer object for FoodEntity - for transfering data between model and view. It's structure reflects {@link springProj.nutrDB.data.entities.FoodEntity}.<br><br>
+ * Defines the Data-transfer object for FoodEntity - for transfering data between model and view. Its structure reflects {@link springProj.nutrDB.data.entities.FoodEntity}.<br><br>
  * The annotations on private fields of this class specify validation constraints of the user intput together with error messages
  * about when the validation constraint gets broken. WHEN validation is applied is defined by another annotation in a controller.<br>
  * - functionality provided by Jakarta Validation API (Hibernate implementation).
@@ -32,8 +33,11 @@ public class FoodDTO {
     @Size(max = 40, message = "Food name is too long.")
     private String name = "";
 
+    @NotNull(message = "Choose whether the values are per 100 g or per 100 ml.")
+    private NutritionBasis nutritionBasis = NutritionBasis.PER_100_GRAMS;
+
     /**
-     * caloric content of the food - kcal per 100 grams of the food
+     * caloric content of the food - kcal per selected nutrition basis
      * validation constraints: has to be between 0 and 900
      */
     @Min(value = 0, message = "Kcal value must be positive.")
@@ -41,31 +45,47 @@ public class FoodDTO {
     private short kcal = 0;
 
     /**
-     * protein content of the food - grams of protein per 100 grams of the food
-     * validation constraints: at most 3 integer digits and 1 fractional digit; value must be between 0.0 and 100.0
+     * protein content of the food - grams per selected nutrition basis
+     * validation constraints: at most 3 integer digits and 1 fractional digit; per-100-g values cannot exceed 100 g
      */
     @DecimalMin(value = "0.0", message = "Gram value must be positive.")
-    @DecimalMax(value = "100.0", message = "Impossibly big gram value.")
     @Digits(integer = 3, fraction = 1, message = "Maximum three digits can be saved.")
     private BigDecimal protein = BigDecimal.valueOf(0, 1);
 
     /**
-     * carbohydrate content of the food - grams of carbohydrates per 100 grams of the food
-     * validation constraints: at most 3 integer digits and 1 fractional digit; value must be between 0.0 and 100.0
+     * carbohydrate content of the food - grams per selected nutrition basis
+     * validation constraints: at most 3 integer digits and 1 fractional digit; per-100-g values cannot exceed 100 g
      */
     @DecimalMin(value = "0.0", message = "Gram value must be positive.")
-    @DecimalMax(value = "100.0", message = "Impossibly big gram value.")
     @Digits(integer = 3, fraction = 1, message = "Maximum three digits can be saved.")
     private BigDecimal carbs = BigDecimal.valueOf(0, 1);
 
     /**
-     * fat content of the food - grams of fat per 100 grams of the food
-     * validation constraints: at most 3 integer digits and 1 fractional digit; value must be between 0.0 and 100.0
+     * fat content of the food - grams per selected nutrition basis
+     * validation constraints: at most 3 integer digits and 1 fractional digit; per-100-g values cannot exceed 100 g
      */
     @DecimalMin(value = "0.0", message = "Gram value must be positive.")
-    @DecimalMax(value = "100.0", message = "Impossibly big gram value.")
     @Digits(integer = 3, fraction = 1, message = "Maximum three digits can be saved.")
     private BigDecimal fats = BigDecimal.valueOf(0, 1);
+
+    /**
+     * A 100 g serving cannot contain more than 100 g of any macronutrient.
+     * Per-100-ml values may exceed 100 g for dense liquids.
+     * Spring calls this Bean Validation check after binding form data to this DTO
+     * and before entering the create or edit controller method, because those
+     * methods receive the DTO with @Valid.
+     */
+    @AssertTrue(message = "A per-100-g macronutrient value cannot exceed 100 g.")
+    public boolean isNutrientValuesValidForBasis() {
+        if (nutritionBasis != NutritionBasis.PER_100_GRAMS) {
+            return true;
+        }
+        return isAtMost100(protein) && isAtMost100(carbs) && isAtMost100(fats);
+    }
+
+    private boolean isAtMost100(BigDecimal value) {
+        return value == null || value.compareTo(BigDecimal.valueOf(100)) <= 0;
+    }
 
     /**
      * ID - primary key in the database table
@@ -99,10 +119,18 @@ public class FoodDTO {
         this.name = name;
     }
 
+    public NutritionBasis getNutritionBasis() {
+        return nutritionBasis;
+    }
+
+    public void setNutritionBasis(NutritionBasis nutritionBasis) {
+        this.nutritionBasis = nutritionBasis;
+    }
+
     /**
      * Returns caloric content of the food<br>
      * validation constraints: has to be between 0 and 900
-     * @return kcal per 100 grams of the food
+     * @return kcal per selected nutrition basis
      */
     public short getKcal() {
         return kcal;
@@ -111,7 +139,7 @@ public class FoodDTO {
     /**
      * Sets caloric content of the food<br>
      * validation constraints: has to be between 0 and 900
-     * @param kcal kcal per 100 grams of the food
+     * @param kcal kcal per selected nutrition basis
      */
     public void setKcal(short kcal) {
         this.kcal = kcal;
@@ -119,8 +147,8 @@ public class FoodDTO {
 
     /**
      * Returns protein content of the food<br>
-     * validation constraints: 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part, min=0, max=100
-     * @return grams of protein per 100 grams of the food
+     * validation constraints: non-negative, at most 3 integer digits and 1 fractional digit; per-100-g values are capped at 100 g
+     * @return grams of protein per selected nutrition basis
      */
     public BigDecimal getProtein() {
         return protein;
@@ -128,8 +156,8 @@ public class FoodDTO {
 
     /**
      * Sets protein content of the food<br>
-     * validation constraints: 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part, min=0, max=100
-     * @param protein grams of protein per 100 grams of the food
+     * validation constraints: non-negative, at most 3 integer digits and 1 fractional digit; per-100-g values are capped at 100 g
+     * @param protein grams of protein per selected nutrition basis
      */
     public void setProtein(BigDecimal protein) {
         this.protein = protein;
@@ -137,8 +165,8 @@ public class FoodDTO {
 
     /**
      * Returns carbohydrate content of the food<br>
-     * validation constraints: 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part, min=0, max=100
-     * @return grams of carbohydrates per 100 grams of the food
+     * validation constraints: non-negative, at most 3 integer digits and 1 fractional digit; per-100-g values are capped at 100 g
+     * @return grams of carbohydrates per selected nutrition basis
      */
     public BigDecimal getCarbs() {
         return carbs;
@@ -146,8 +174,8 @@ public class FoodDTO {
 
     /**
      * Sets carbohydrate content of the food<br>
-     * validation constraints: 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part, min=0, max=100
-     * @param carbs grams of carbohydrates per 100 grams of the food
+     * validation constraints: non-negative, at most 3 integer digits and 1 fractional digit; per-100-g values are capped at 100 g
+     * @param carbs grams of carbohydrates per selected nutrition basis
      */
     public void setCarbs(BigDecimal carbs) {
         this.carbs = carbs;
@@ -155,8 +183,8 @@ public class FoodDTO {
 
     /**
      * Returns fat content of the food<br>
-     * validation constraints: 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part, min=0, max=100
-     * @return grams of fat per 100 grams of the food
+     * validation constraints: non-negative, at most 3 integer digits and 1 fractional digit; per-100-g values are capped at 100 g
+     * @return grams of fat per selected nutrition basis
      */
     public BigDecimal getFats() {
         return fats;
@@ -164,8 +192,8 @@ public class FoodDTO {
 
     /**
      * Sets fat content of the food<br>
-     * validation constraints: 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part, min=0, max=100
-     * @param fats grams of fat per 100 grams of the food
+     * validation constraints: non-negative, at most 3 integer digits and 1 fractional digit; per-100-g values are capped at 100 g
+     * @param fats grams of fat per selected nutrition basis
      */
     public void setFats(BigDecimal fats) {
         this.fats = fats;

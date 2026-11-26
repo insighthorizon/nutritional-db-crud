@@ -6,14 +6,14 @@ import java.math.BigDecimal;
 
 /**
  * Represents one food entry in the persistence layer (one row of the database table - table structure).
- * A food entity has an id, name and nutritional content per 100 grams.
+ * A food entity has an id, name and nutritional content per 100 grams or 100 milliliters.
  * Nutritional content consists of four values:<br>
  * caloric content (kcal),<br>
  * protein content (grams),<br>
  * carbohydrate content (grams),<br>
  * fat content (grams).<br>
- * Those values are per 100 grams of the food.<br><br>
- * The annotations in this class specify representation of FoodEntity in the MySQL database. (See the private fields in source code.)<br>
+ * The nutrition basis is stored with each food. Macronutrients are measured in grams.<br><br>
+ * The annotations in this class specify the PostgreSQL representation of FoodEntity. (See the private fields in source code.)<br>
  * Conversion between object and database row is based on ORM (Object-relational mapping)
  * and is provided by Jakarta Persistence API (Hibernate implementation). Both annotation and attribute data type
  * have an effect on how it is represented as a database column.
@@ -44,28 +44,36 @@ public class FoodEntity {
     private String name;
 
     /**
-     * caloric content of the food - kcal per 100 grams of the food
+     * Reference amount for the energy and macronutrient values.
+     * The database default assigns existing rows to per 100 grams when this column is added.
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "varchar(32) default 'PER_100_GRAMS'")
+    private NutritionBasis nutritionBasis = NutritionBasis.PER_100_GRAMS;
+
+    /**
+     * caloric content of the food - kcal per selected nutrition basis
      * represented as smallint(6), not null in SQL
      */
     @Column(nullable = false)
     private short kcal;
 
     /**
-     * protein content of the food - grams of protein per 100 grams of the food
+     * protein content of the food - grams per selected nutrition basis
      * represented as numeric(4,1), not null in PostgreSQL
      */
     @Column(precision = 4, scale = 1, nullable = false)
     private BigDecimal protein;
 
     /**
-     * carbohydrate content of the food - grams of carbohydrates per 100 grams of the food
+     * carbohydrate content of the food - grams per selected nutrition basis
      * represented as numeric(4,1), not null in PostgreSQL
      */
     @Column(precision = 4, scale = 1, nullable = false)
     private BigDecimal carbs;
 
     /**
-     * fat content of the food - grams of fat per 100 grams of the food
+     * fat content of the food - grams per selected nutrition basis
      * represented as numeric(4,1), not null in PostgreSQL
      */
     @Column(precision = 4, scale = 1, nullable = false)
@@ -98,85 +106,81 @@ public class FoodEntity {
         this.name = name;
     }
 
+    public NutritionBasis getNutritionBasis() {
+        return nutritionBasis;
+    }
+
+    public void setNutritionBasis(NutritionBasis nutritionBasis) {
+        this.nutritionBasis = nutritionBasis;
+    }
+
     /**
-     * Returns the caloric content of the food - kcal per 100 grams of the food
+     * Returns the caloric content of the food - kcal per selected nutrition basis
      * represented as smallint(6), not null in SQL
-     * @return kcal per 100 grams of the food
+     * @return kcal per selected nutrition basis
      */
     public short getKcal() {
         return kcal;
     }
 
     /**
-     * Sets the caloric content of the food - kcal per 100 grams of the food
+     * Sets the caloric content of the food - kcal per selected nutrition basis
      * represented as smallint(6), not null in SQL
-     * @param kcal kcal per 100 grams of the food
+     * @param kcal kcal per selected nutrition basis
      */
     public void setKcal(short kcal) {
         this.kcal = kcal;
     }
 
     /**
-     * Returns protein content of the food - grams of protein per 100 grams of the food.<br>
-     * 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part
-     * represented as decimal(3,1), not null in SQL
-     * - takes up 2 bytes in the database, see <a href="https://mariadb.com/kb/en/data-type-storage-requirements/">Data Type Storage Requirements</a>
-     * @return grams of protein per 100 grams of the food
+     * Returns protein content of the food in grams per selected nutrition basis.<br>
+     * represented as numeric(4,1), not null in PostgreSQL
+     * @return grams of protein per selected nutrition basis
      */
     public BigDecimal getProtein() {
         return protein;
     }
 
     /**
-     * Returns protein content of the food - grams of protein per 100 grams of the food.<br>
-     * 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part
-     * represented as decimal(3,1), not null in SQL
-     * - takes up 2 bytes in the database, see <a href="https://mariadb.com/kb/en/data-type-storage-requirements/">Data Type Storage Requirements</a>
-     * @param protein grams of protein per 100 grams of the food
+     * Sets protein content of the food in grams per selected nutrition basis.<br>
+     * represented as numeric(4,1), not null in PostgreSQL
+     * @param protein grams of protein per selected nutrition basis
      */
     public void setProtein(BigDecimal protein) {
         this.protein = protein;
     }
 
     /**
-     * Returns carbohydrate content of the food - grams of carbohydrates per 100 grams of the food.<br>
-     * 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part
-     * represented as decimal(3,1), not null in SQL
-     * - takes up 2 bytes in the database, see <a href="https://mariadb.com/kb/en/data-type-storage-requirements/">Data Type Storage Requirements</a>
-     * @return grams of carbs per 100 grams of the food
+     * Returns carbohydrate content of the food in grams per selected nutrition basis.<br>
+     * represented as numeric(4,1), not null in PostgreSQL
+     * @return grams of carbs per selected nutrition basis
      */
     public BigDecimal getCarbs() {
         return carbs;
     }
 
     /**
-     * Sets carbohydrate content of the food - grams of carbohydrates per 100 grams of the food.<br>
-     * 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part
-     * represented as decimal(3,1), not null in SQL
-     * - takes up 2 bytes in the database, see <a href="https://mariadb.com/kb/en/data-type-storage-requirements/">Data Type Storage Requirements</a>
-     * @param carbs grams of carbs per 100 grams of the food
+     * Sets carbohydrate content of the food in grams per selected nutrition basis.<br>
+     * represented as numeric(4,1), not null in PostgreSQL
+     * @param carbs grams of carbs per selected nutrition basis
      */
     public void setCarbs(BigDecimal carbs) {
         this.carbs = carbs;
     }
 
     /**
-     * Returns fat content of the food - grams of fat per 100 grams of the food.<br>
-     * 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part
-     * represented as decimal(3,1), not null in SQL
-     * - takes up 2 bytes in the database, see <a href="https://mariadb.com/kb/en/data-type-storage-requirements/">Data Type Storage Requirements</a>
-     * @return grams of fat per 100 grams of the food
+     * Returns fat content of the food in grams per selected nutrition basis.<br>
+     * represented as numeric(4,1), not null in PostgreSQL
+     * @return grams of fat per selected nutrition basis
      */
     public BigDecimal getFats() {
         return fats;
     }
 
     /**
-     * Sets fat content of the food - grams of fat per 100 grams of the food.<br>
-     * 3-digit decimal number, 2 digits for integer part, 1 digit for the decimal part
-     * represented as decimal(3,1), not null in SQL
-     * - takes up 2 bytes in the database, see <a href="https://mariadb.com/kb/en/data-type-storage-requirements/">Data Type Storage Requirements</a>
-     * @param fats grams of fat per 100 grams of the food
+     * Sets fat content of the food in grams per selected nutrition basis.<br>
+     * represented as numeric(4,1), not null in PostgreSQL
+     * @param fats grams of fat per selected nutrition basis
      */
     public void setFats(BigDecimal fats) {
         this.fats = fats;

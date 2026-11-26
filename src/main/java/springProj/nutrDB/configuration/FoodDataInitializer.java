@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import springProj.nutrDB.data.entities.FoodEntity;
+import springProj.nutrDB.data.entities.NutritionBasis;
 import springProj.nutrDB.data.repositories.FoodRepository;
 
 import java.math.BigDecimal;
@@ -96,8 +97,8 @@ public class FoodDataInitializer implements CommandLineRunner {
                 food("Shrimp", 99, "24.0", "0.2", "0.3"),
                 food("Egg", 143, "12.6", "0.7", "9.5"),
                 food("Egg white", 52, "10.9", "0.7", "0.2"),
-                food("Whole milk", 61, "3.2", "4.8", "3.3"),
-                food("Semi-skimmed milk", 50, "3.4", "4.8", "1.8"),
+                food("Whole milk", 63, "3.3", "4.9", "3.4", NutritionBasis.PER_100_MILLILITERS),
+                food("Semi-skimmed milk", 52, "3.5", "4.9", "1.9", NutritionBasis.PER_100_MILLILITERS),
                 food("Cheddar cheese", 403, "25.0", "1.3", "33.0"),
                 food("Mozzarella", 280, "28.0", "3.1", "17.0"),
                 food("Parmesan", 431, "38.0", "4.1", "29.0"),
@@ -127,7 +128,7 @@ public class FoodDataInitializer implements CommandLineRunner {
                 food("Peanut butter", 588, "25.0", "20.0", "50.0"),
                 food("Chia seeds", 486, "16.5", "42.1", "30.7"),
                 food("Sunflower seeds", 584, "20.8", "20.0", "51.5"),
-                food("Olive oil", 884, "0.0", "0.0", "100.0"),
+                food("Olive oil", 810, "0.0", "0.0", "91.6", NutritionBasis.PER_100_MILLILITERS),
                 food("Honey", 304, "0.3", "82.4", "0.0"),
                 food("Dark chocolate, 70%", 598, "7.8", "45.9", "42.6"),
                 food("Rye crispbread", 366, "10.0", "75.0", "3.0")
@@ -135,8 +136,14 @@ public class FoodDataInitializer implements CommandLineRunner {
     }
 
     private static FoodEntity food(String name, int kcal, String protein, String carbs, String fats) {
+        return food(name, kcal, protein, carbs, fats, NutritionBasis.PER_100_GRAMS);
+    }
+
+    private static FoodEntity food(
+            String name, int kcal, String protein, String carbs, String fats, NutritionBasis nutritionBasis) {
         FoodEntity food = new FoodEntity();
         food.setName(name);
+        food.setNutritionBasis(nutritionBasis);
         food.setKcal((short) kcal);
         food.setProtein(new BigDecimal(protein));
         food.setCarbs(new BigDecimal(carbs));
