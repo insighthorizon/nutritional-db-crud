@@ -1,6 +1,7 @@
 package springProj.nutrDB.data.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
 
@@ -46,9 +47,11 @@ public class FoodEntity {
     /**
      * Reference amount for the energy and macronutrient values.
      * The database default assigns existing rows to per 100 grams when this column is added.
+     * {@link ColumnDefault} keeps the default expression separate from the type used in ALTER COLUMN TYPE.
      */
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, columnDefinition = "varchar(32) default 'PER_100_GRAMS'")
+    @Column(nullable = false, length = 32)
+    @ColumnDefault("'PER_100_GRAMS'")
     private NutritionBasis nutritionBasis = NutritionBasis.PER_100_GRAMS;
 
     /**
@@ -106,10 +109,15 @@ public class FoodEntity {
         this.name = name;
     }
 
+    /** {@return the reference amount for the stored energy and macronutrient values} */
     public NutritionBasis getNutritionBasis() {
         return nutritionBasis;
     }
 
+    /**
+     * Sets the reference amount for the stored energy and macronutrient values.
+     * @param nutritionBasis the reference amount to store
+     */
     public void setNutritionBasis(NutritionBasis nutritionBasis) {
         this.nutritionBasis = nutritionBasis;
     }

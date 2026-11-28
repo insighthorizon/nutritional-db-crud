@@ -15,8 +15,7 @@ public interface FoodRepository extends CrudRepository<FoodEntity, Long>, Paging
     /**
      * Get a page of food entries containing a given substring in their name.
      * <br>
-     * Spring Data JPA automatically generates implementation for this method:
-     * Corresponding to the sql query "… where x.name like ?1 (parameter bound wrapped in %)";
+     * Spring Data JPA automatically generates a case-insensitive substring query for this method.
      * Source: <a href="https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html">Spring Doc</a><br><br>
      * This performs the LIMIT OFFSET pagination (drifting possible, so the user may miss entries when paging);<br>
      * <a href="https://www.youtube.com/watch?v=zwDIN04lIpc">Explanation video</a><br><br>
@@ -27,5 +26,5 @@ public interface FoodRepository extends CrudRepository<FoodEntity, Long>, Paging
      *                    what attribute to sort by ...
      * @return resulting page of food entities
      */
-    Page<FoodEntity> findByNameContaining(String searchedName, Pageable pageRequest);
+    Page<FoodEntity> findByNameContainingIgnoreCase(String searchedName, Pageable pageRequest);
 }

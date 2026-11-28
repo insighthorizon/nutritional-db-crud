@@ -1,11 +1,11 @@
 package springProj.nutrDB.controllers;
 
-import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import springProj.nutrDB.models.dto.FoodDTO;
@@ -48,6 +48,7 @@ public class FoodsController {
      * Informs the client if no foods were found.
      * @param sortAttribute Food attribute by which to sort displayed foods;
      *                      Passed as URL parameter (@RequestParam).
+     * @param sortDirection {@code asc} for ascending order or {@code desc} for descending order
      * @param searchedFoodName Substring required in food name of all foods being displayed;
      *                         (Empty string is substring of every string);
      *                         Passed as URL parameter (@RequestParam).
@@ -102,7 +103,8 @@ public class FoodsController {
     /**
      * Handles POST request at "/foods/create" URL by creating a new food entry
      * if the provided food data was validated without errors and informs the client about the result;
-     * (The validation is performed before this method is even reached. But it is specified here through @Valid that it has to happen.)
+     * Spring binds the form fields to the DTO, then {@link Validated} selects the {@link FoodDTO.Save}
+     * group sequence. Spring records binding and validation errors in {@link BindingResult}.
      * Action available only to authenticated users with role "ROLE_USER" or "ROLE_ADMIN" (@Secured).
      * @param foodDTO ModelAttribute exposes the food data to the rendered template (view). New food data provided by the user;
      *                DTO is data not yet saved in database or a copy of actual database entry;
@@ -110,16 +112,18 @@ public class FoodsController {
      * @param result Result of validation.
      * @param redirectAttributes Will contain result message sent to the template this method may redirect to.
      * @return Redirection to "/foods" URL or reference to template to render.
+     * @see <a href="https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/modelattrib-method-args.html">Spring MVC examples of form binding, validation, and BindingResult</a>
+     * @see <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/validation/annotation/Validated.html">Spring API for selecting validation groups with @Validated</a>
      */
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @PostMapping("create")
     public String create(
-            @Valid @ModelAttribute FoodDTO foodDTO,
+            @Validated(FoodDTO.Save.class) @ModelAttribute FoodDTO foodDTO,
             BindingResult result,
             RedirectAttributes redirectAttributes
     ) {
         if (result.hasErrors()) // check for validation errors
-            return renderCreateForm(foodDTO); // DTO will automatically contain the error messages (bean validation API)
+            return renderCreateForm(foodDTO); // The form reads the error messages from BindingResult.
 
         foodService.create(foodDTO);
 
@@ -153,15 +157,16 @@ public class FoodsController {
     }
 
     /**
-     * Handles PUT request at "/foods/edit{foodId}" URL address by editing the food entry in the database
+     * Handles PUT request at "/foods/edit/{foodId}" URL address by editing the food entry in the database
      * based on the foodDTO if it was validated without errors and informs the client about the result.
-     * (The validation is performed before this method is even reached. But it is specified here through @Valid that it has to happen.)
+     * {@link Validated} selects the same {@link FoodDTO.Save} group sequence as the create handler.
      * The URL contains the id of the food as a path variable (@PathVariable).
      * (@ModelAttribute exposes the food data to the rendered template (view).)
      * Action available only to authenticated users with role "ROLE_ADMIN" (@Secured).
      * @param foodId ID of the edited food.
      * @param foodDTO The food data being edited.
      * @param result Result of validation.
+     * @param model Supplies the food ID for the form action when validation fails.
      * @param redirectAttributes Will contain result message sent to the template this method may redirect to.
      * @return Reference to /foods/edit.html template or redirection to "/foods" URL.
      * @throws FoodNotFoundException handled by {@link #handleFoodNotFoundException(RedirectAttributes)}
@@ -170,13 +175,18 @@ public class FoodsController {
     @PutMapping("edit/{foodId}")
     public String edit(
             @PathVariable("foodId") long foodId,
-            @Valid @ModelAttribute FoodDTO foodDTO,
+            @Validated(FoodDTO.Save.class) @ModelAttribute FoodDTO foodDTO,
             BindingResult result,
+            Model model,
             RedirectAttributes redirectAttributes
     ) throws FoodNotFoundException{
-        if (result.hasErrors()) // check for validation errors
-            return renderEditForm(foodId, foodDTO); // DTO will automatically contain the error messages (bean validation API)
+        if (result.hasErrors()) {
+            // Redisplay the submitted values and their errors so the user can correct them.
+            model.addAttribute("foodId", foodId);
+            return "/pages/foods/edit";
+        }
 
+        foodDTO.setFoodId(foodId);
         foodService.edit(foodDTO); // can throw FoodNotFoundException
 
         // A food entry was edited, produce an appropriate response to the client.

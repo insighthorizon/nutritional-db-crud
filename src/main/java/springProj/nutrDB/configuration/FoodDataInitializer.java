@@ -19,6 +19,10 @@ public class FoodDataInitializer implements CommandLineRunner {
 
     private final FoodRepository foodRepository;
 
+    /**
+     * Creates the initializer that seeds an empty food table.
+     * @param foodRepository repository used to check for and insert food entries
+     */
     public FoodDataInitializer(FoodRepository foodRepository) {
         this.foodRepository = foodRepository;
     }

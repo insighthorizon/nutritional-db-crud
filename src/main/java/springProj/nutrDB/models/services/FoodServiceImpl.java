@@ -82,13 +82,13 @@ public class FoodServiceImpl implements FoodService {
 
         // getting the page
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize, sort);
-        Page<FoodEntity> page = foodRepository.findByNameContaining(searchedName, pageRequest);
+        Page<FoodEntity> page = foodRepository.findByNameContainingIgnoreCase(searchedName, pageRequest);
         int totalPages = page.getTotalPages();
         // try to get nonempty page unless the number of pages is 0
         while ((pageNumber > totalPages) && (totalPages != 0)) {
             pageNumber = totalPages;
             pageRequest = PageRequest.of(pageNumber - 1, pageSize, sort);
-            page = foodRepository.findByNameContaining(searchedName, pageRequest);
+            page = foodRepository.findByNameContainingIgnoreCase(searchedName, pageRequest);
             totalPages = page.getTotalPages();
         }
 
